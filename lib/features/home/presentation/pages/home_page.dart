@@ -34,7 +34,14 @@ class _HomePageState extends State<HomePage>
                 style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 11.0),
-              buildCategoriesList()
+              buildCategoriesList(),
+              const SizedBox(height: 25.0),
+              const Text(
+                "Upcoming Events",
+                style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 11.0),
+              buildUpcomingPlaceList(),
             ],
           ),
         ),
@@ -55,6 +62,86 @@ class _HomePageState extends State<HomePage>
     );
   }
 
+  SizedBox buildUpcomingPlaceList() {
+    return SizedBox(
+      height: 199.0,
+      child: GridView.builder(
+        itemCount: 12,
+        scrollDirection: Axis.vertical,
+        itemBuilder: (context, index) {
+          return buildUpcomingEventCard(context, index);
+        },
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 11.0,
+          mainAxisSpacing: 11.0,
+        ),
+      ),
+    );
+  }
+
+  Container buildUpcomingEventCard(BuildContext context, int index) {
+    return Container(
+      margin: const EdgeInsets.only(right: 16.0),
+      width: 155.0,
+      height: 155.0,
+      child: Card(
+        semanticContainer: true,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+        child: Stack(
+          children: [
+            Image.network(
+              "https://i.pinimg.com/originals/f5/a5/cf/f5a5cf3ea8a23ab4eac12925b0ccc075.jpg",
+              fit: BoxFit.fill,
+              height: 155,
+              width: 155,
+            ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                padding: const EdgeInsets.all(8.0),
+                height: 49,
+                width: 49,
+                color: Colors.white,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Text(
+                      "Event name dangerous",
+                      style: TextStyle(
+                          fontSize: 12.0, fontWeight: FontWeight.w400),
+                    ),
+                    Text(
+                      "Dhaka, Bangladesh",
+                      style: TextStyle(
+                          fontSize: 10.0,
+                          color: Color(0xff8f8f8f),
+                          fontWeight: FontWeight.w400),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+              right: 12.0,
+              top: 12.0,
+              child: SvgPicture.asset(
+                "images/icon_save.svg",
+                height: 25,
+                width: 25,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
   SizedBox buildCategoriesList() {
     return SizedBox(
       height: 88.0,
@@ -70,29 +157,48 @@ class _HomePageState extends State<HomePage>
 
   Container buildCategoryCard(BuildContext context, int index) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8.0),
+      margin: const EdgeInsets.only(right: 16.0),
       width: 88.0,
       height: 88.0,
       child: Card(
         semanticContainer: true,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
-        child: Stack(children: [
-          Image.network(
-            "https://i.pinimg.com/originals/f5/a5/cf/f5a5cf3ea8a23ab4eac12925b0ccc075.jpg",
-            fit: BoxFit.fill,
-            height: 88,
-            width: 88,
-          )
-        ]),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+        child: Stack(
+          children: [
+            Image.network(
+              "https://i.pinimg.com/originals/f5/a5/cf/f5a5cf3ea8a23ab4eac12925b0ccc075.jpg",
+              fit: BoxFit.fill,
+              height: 88,
+              width: 88,
+            ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                height: 25,
+                width: 25,
+                color: Colors.white,
+                child: const Center(
+                  child: Text(
+                    "Category 2",
+                    style:
+                        TextStyle(fontSize: 12.0, fontWeight: FontWeight.w400),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Container buildTrendingEventCard(BuildContext context, int index) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8.0),
+      margin: const EdgeInsets.only(right: 20.0),
       width: 312.0,
       height: 199.0,
       child: Card(
@@ -172,7 +278,16 @@ class _HomePageState extends State<HomePage>
                     ),
                   ),
                 ),
-              ))
+              )),
+          Positioned(
+            right: 12.0,
+            top: 12.0,
+            child: SvgPicture.asset(
+              "images/icon_save.svg",
+              height: 25,
+              width: 25,
+            ),
+          )
         ]),
       ),
     );
