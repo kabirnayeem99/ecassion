@@ -2,7 +2,7 @@ import 'package:ecassion/features/home/data/dto/event_dto.dart';
 
 class EventLocalDataSource {
   Future<List<EventDto>> getTrendingEvents() async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds:4));
     return [
       EventDto(
         name: "BNP Paribas World Team Cup",
@@ -58,7 +58,7 @@ class EventLocalDataSource {
   }
 
   Future<List<EventDto>> getUpcomingEvents() async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 2));
     return [
       EventDto(
         name: "BNP Paribas World Team Cup",

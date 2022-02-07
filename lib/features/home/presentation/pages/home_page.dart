@@ -1,8 +1,11 @@
 import 'package:ecassion/core/utility.dart';
+import 'package:ecassion/features/home/domain/entity/category.dart';
 import 'package:ecassion/features/home/domain/entity/trending_event.dart';
 import 'package:ecassion/features/home/domain/entity/upcoming_event.dart';
+import 'package:ecassion/features/home/domain/use_cases/get_categories.dart';
 import 'package:ecassion/features/home/domain/use_cases/get_trending_event.dart';
 import 'package:ecassion/features/home/domain/use_cases/get_upcoming_event.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -15,8 +18,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
-  GetTrendingEvent getTrendingEvent = GetTrendingEvent();
-  GetUpcomingEvent getUpcomingEvent = GetUpcomingEvent();
+  GetTrendingEvent _getTrendingEvent = GetTrendingEvent();
+  GetUpcomingEvent _getUpcomingEvent = GetUpcomingEvent();
+  GetCategories _getCategories = GetCategories();
 
   @override
   Widget build(BuildContext context) {
@@ -59,11 +63,10 @@ class _HomePageState extends State<HomePage>
 
   FutureBuilder<List<TrendingEvent>> buildTrendingPlaceList() {
     return FutureBuilder(
-      future: getTrendingEvent.getTrendingEvents(),
-      initialData: [],
+      future: _getTrendingEvent.getTrendingEvents(),
       builder:
           (BuildContext context, AsyncSnapshot<List<TrendingEvent>> snapshot) {
-        if (snapshot.hasData && snapshot.data != null) {
+        if (snapshot.hasData) {
           return SizedBox(
             height: 199.0,
             child: ListView.builder(
@@ -75,7 +78,7 @@ class _HomePageState extends State<HomePage>
             ),
           );
         } else {
-          return Container(height: 199.0);
+          return CupertinoActivityIndicator();
         }
       },
     );
@@ -83,7 +86,7 @@ class _HomePageState extends State<HomePage>
 
   FutureBuilder<List<UpcomingEvent>> buildUpcomingPlaceList() {
     return FutureBuilder(
-      future: getUpcomingEvent.getUpcomingEvents(),
+      future: _getUpcomingEvent.getUpcomingEvents(),
       builder: (context, AsyncSnapshot<List<UpcomingEvent>> snapshot) {
         if (snapshot.hasData) {
           return Expanded(
@@ -102,7 +105,7 @@ class _HomePageState extends State<HomePage>
             ),
           );
         } else {
-          return Container();
+          return CupertinoActivityIndicator();
         }
       },
     );
@@ -176,17 +179,26 @@ class _HomePageState extends State<HomePage>
   SizedBox buildCategoriesList() {
     return SizedBox(
       height: 88.0,
-      child: ListView.builder(
-        itemCount: 8,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return buildCategoryCard(context, index);
-        },
-      ),
+      child: FutureBuilder(
+          future: _getCategories.getCategoryList(),
+          builder: (context, AsyncSnapshot<List<Category>> snapshot) {
+            if (snapshot.hasData) {
+              return ListView.builder(
+                itemCount: snapshot.data!.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  final category = snapshot.data![index];
+                  return buildCategoryCard(context, category);
+                },
+              );
+            } else {
+              return CupertinoActivityIndicator();
+            }
+          }),
     );
   }
 
-  Container buildCategoryCard(BuildContext context, int index) {
+  Container buildCategoryCard(BuildContext context, Category category) {
     return Container(
       margin: const EdgeInsets.only(right: 16.0),
       width: 88.0,
@@ -199,7 +211,7 @@ class _HomePageState extends State<HomePage>
         child: Stack(
           children: [
             Image.network(
-              "https://i.pinimg.com/originals/f5/a5/cf/f5a5cf3ea8a23ab4eac12925b0ccc075.jpg",
+              category.imageUrl,
               fit: BoxFit.fill,
               height: 88,
               width: 88,
@@ -212,9 +224,9 @@ class _HomePageState extends State<HomePage>
                 height: 25,
                 width: 25,
                 color: Colors.white,
-                child: const Center(
+                child: Center(
                   child: Text(
-                    "Category 2",
+                    category.name,
                     style:
                         TextStyle(fontSize: 12.0, fontWeight: FontWeight.w400),
                   ),
