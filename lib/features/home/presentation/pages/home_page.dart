@@ -5,6 +5,7 @@ import 'package:ecassion/features/home/domain/entity/upcoming_event.dart';
 import 'package:ecassion/features/home/domain/use_cases/get_categories.dart';
 import 'package:ecassion/features/home/domain/use_cases/get_trending_event.dart';
 import 'package:ecassion/features/home/domain/use_cases/get_upcoming_event.dart';
+import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -21,40 +22,78 @@ class _HomePageState extends State<HomePage>
   GetTrendingEvent _getTrendingEvent = GetTrendingEvent();
   GetUpcomingEvent _getUpcomingEvent = GetUpcomingEvent();
   GetCategories _getCategories = GetCategories();
+  double test = 0;
+  bool _shouldShowOtherList = true;
+  final _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    _scrollController.addListener(() {
+      setState(() {
+        test = _scrollController.position.pixels;
+        if (test > 58) {
+          _shouldShowOtherList = false;
+        } else if (test == 0) {
+          _shouldShowOtherList = true;
+        }
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final double statusBarHeight = MediaQuery.of(context).padding.top;
+    final double pinnedHeaderHeight = statusBarHeight + kToolbarHeight;
+
     return Scaffold(
       body: SafeArea(
         child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildAppBar(),
-              const SizedBox(height: 31.0),
-              const Text(
-                "Trending Events near you",
-                style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 11.0),
-              buildTrendingPlaceList(),
-              const SizedBox(height: 25.0),
-              const Text(
-                "Category",
-                style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 11.0),
-              buildCategoriesList(),
-              const SizedBox(height: 25.0),
-              const Text(
-                "Upcoming Events",
-                style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 11.0),
-              buildUpcomingPlaceList(),
-            ],
+          margin: EdgeInsets.symmetric(horizontal: 16.0),
+          child: ExtendedNestedScrollView(
+            headerSliverBuilder: (BuildContext c, bool f) {
+              return [buildAppBar()];
+            },
+            pinnedHeaderSliverHeightBuilder: () {
+              return pinnedHeaderHeight;
+            },
+            onlyOneScrollInBody: true,
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: _shouldShowOtherList ? 26.0 : 0.0),
+                Container(
+                  height: _shouldShowOtherList ? 16.0 : 0.0,
+                  child: Text(
+                    "Trending Events near you" +
+                        _shouldShowOtherList.toString(),
+                    style:
+                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                const SizedBox(height: 11.0),
+                buildTrendingPlaceList(),
+                const SizedBox(height: 25.0),
+                Container(
+                  height: _shouldShowOtherList ? 16.0 : 0.0,
+                  child: const Text(
+                    "Category",
+                    style:
+                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                SizedBox(height: _shouldShowOtherList ? 11.0 : 0),
+                buildCategoriesList(),
+                SizedBox(height: _shouldShowOtherList ? 25.0 : 0),
+                const Text(
+                  "Upcoming Events",
+                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 11.0),
+                buildUpcomingPlaceList(),
+              ],
+            ),
           ),
         ),
       ),
@@ -67,15 +106,21 @@ class _HomePageState extends State<HomePage>
       builder:
           (BuildContext context, AsyncSnapshot<List<TrendingEvent>> snapshot) {
         if (snapshot.hasData) {
-          return SizedBox(
-            height: 199.0,
-            child: ListView.builder(
-              itemCount: snapshot.data?.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return buildTrendingEventCard(context, snapshot.data![index]);
-              },
-            ),
+          return AnimatedSwitcher(
+            duration: loadRandomDuration(),
+            child: _shouldShowOtherList
+                ? SizedBox(
+                    height: 199.0,
+                    child: ListView.builder(
+                      itemCount: snapshot.data?.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return buildTrendingEventCard(
+                            context, snapshot.data![index]);
+                      },
+                    ),
+                  )
+                : Container(),
           );
         } else {
           return CupertinoActivityIndicator();
@@ -91,7 +136,10 @@ class _HomePageState extends State<HomePage>
         if (snapshot.hasData) {
           return Expanded(
             child: GridView.builder(
+              controller: _scrollController,
+              shrinkWrap: true,
               itemCount: snapshot.data!.length,
+              physics: const ClampingScrollPhysics(),
               scrollDirection: Axis.vertical,
               itemBuilder: (context, index) {
                 final upcomingEvent = snapshot.data![index];
@@ -124,8 +172,8 @@ class _HomePageState extends State<HomePage>
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
         child: Stack(
           children: [
-            Image.network(
-              upcomingEvent.imageUrl,
+            loadNetworkImage(
+              url: upcomingEvent.imageUrl,
               fit: BoxFit.fill,
               height: 155,
               width: 155,
@@ -178,12 +226,13 @@ class _HomePageState extends State<HomePage>
 
   SizedBox buildCategoriesList() {
     return SizedBox(
-      height: 88.0,
+      height: _shouldShowOtherList ? 88.0 : 0.0,
       child: FutureBuilder(
           future: _getCategories.getCategoryList(),
           builder: (context, AsyncSnapshot<List<Category>> snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
+                shrinkWrap: true,
                 itemCount: snapshot.data!.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
@@ -210,8 +259,8 @@ class _HomePageState extends State<HomePage>
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
         child: Stack(
           children: [
-            Image.network(
-              category.imageUrl,
+            loadNetworkImage(
+              url: category.imageUrl,
               fit: BoxFit.fill,
               height: 88,
               width: 88,
@@ -250,8 +299,8 @@ class _HomePageState extends State<HomePage>
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
         child: Stack(children: [
-          Image.network(
-            event.imageUrl,
+          loadNetworkImage(
+            url: event.imageUrl,
             fit: BoxFit.fill,
             height: 199,
             width: 312,
@@ -339,20 +388,44 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  Row buildAppBar() {
+  Widget buildAppBar() {
+    final sliverAppbar = SliverAppBar(
+      backgroundColor: Colors.transparent,
+      leadingWidth: 30,
+      leading: Container(
+        child:
+            SvgPicture.asset("images/splash_logo.svg", height: 30, width: 30),
+      ),
+      actions: [
+        Container(
+          child: Center(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),
+              child: loadNetworkImage(
+                url:
+                    "https://media.istockphoto.com/vectors/man-avatar-icon-man-flat-icon-man-faceless-avatar-man-character-vector-id1027705716?k=6&m=1027705716&s=170667a&w=0&h=aTAhPe2CvnQGIbI25T_d7XNZwNyumn5Xe1fOMfhELx4=",
+                height: 30,
+                width: 30,
+              ),
+            ),
+          ),
+        )
+      ],
+    );
     Row appBar = Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         SvgPicture.asset("images/splash_logo.svg", height: 30, width: 30),
         ClipRRect(
             borderRadius: BorderRadius.circular(20.0),
-            child: Image.network(
-              "https://media.istockphoto.com/vectors/man-avatar-icon-man-flat-icon-man-faceless-avatar-man-character-vector-id1027705716?k=6&m=1027705716&s=170667a&w=0&h=aTAhPe2CvnQGIbI25T_d7XNZwNyumn5Xe1fOMfhELx4=",
+            child: loadNetworkImage(
+              url:
+                  "https://media.istockphoto.com/vectors/man-avatar-icon-man-flat-icon-man-faceless-avatar-man-character-vector-id1027705716?k=6&m=1027705716&s=170667a&w=0&h=aTAhPe2CvnQGIbI25T_d7XNZwNyumn5Xe1fOMfhELx4=",
               height: 30,
               width: 30,
             ))
       ],
     );
-    return appBar;
+    return sliverAppbar;
   }
 }

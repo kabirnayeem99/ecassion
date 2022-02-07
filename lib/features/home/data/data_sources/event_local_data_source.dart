@@ -1,8 +1,9 @@
+import 'package:ecassion/core/utility.dart';
 import 'package:ecassion/features/home/data/dto/event_dto.dart';
 
 class EventLocalDataSource {
   Future<List<EventDto>> getTrendingEvents() async {
-    await Future.delayed(const Duration(seconds:4));
+    await Future.delayed(loadRandomDuration());
     return [
       EventDto(
         name: "BNP Paribas World Team Cup",
@@ -58,7 +59,7 @@ class EventLocalDataSource {
   }
 
   Future<List<EventDto>> getUpcomingEvents() async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(loadRandomDuration());
     return [
       EventDto(
         name: "BNP Paribas World Team Cup",
@@ -109,7 +110,167 @@ class EventLocalDataSource {
             "4 Wilford Ln, West Bridgford, Nottingham NG2 7QX, United Kingdom",
         isSaved: false,
         isTop: false,
-      )
+      ),
+      EventDto(
+        name: "Nottingham Trophy",
+        imageUrl:
+            "https://i.dailymail.co.uk/i/pix/2014/09/14/1410700830401_wps_18_NOTTINGHAM_ENGLAND_SEPTEM.jpg",
+        price: 1500,
+        address:
+            "4 Wilford Ln, West Bridgford, Nottingham NG2 7QX, United Kingdom",
+        isSaved: false,
+        isTop: false,
+      ),
+      EventDto(
+        name: "Nottingham Trophy",
+        imageUrl:
+            "https://i.dailymail.co.uk/i/pix/2014/09/14/1410700830401_wps_18_NOTTINGHAM_ENGLAND_SEPTEM.jpg",
+        price: 1500,
+        address:
+            "4 Wilford Ln, West Bridgford, Nottingham NG2 7QX, United Kingdom",
+        isSaved: false,
+        isTop: false,
+      ),
+      EventDto(
+        name: "Nottingham Trophy",
+        imageUrl:
+            "https://i.dailymail.co.uk/i/pix/2014/09/14/1410700830401_wps_18_NOTTINGHAM_ENGLAND_SEPTEM.jpg",
+        price: 1500,
+        address:
+            "4 Wilford Ln, West Bridgford, Nottingham NG2 7QX, United Kingdom",
+        isSaved: false,
+        isTop: false,
+      ),
+      EventDto(
+        name: "Nottingham Trophy",
+        imageUrl:
+            "https://i.dailymail.co.uk/i/pix/2014/09/14/1410700830401_wps_18_NOTTINGHAM_ENGLAND_SEPTEM.jpg",
+        price: 1500,
+        address:
+            "4 Wilford Ln, West Bridgford, Nottingham NG2 7QX, United Kingdom",
+        isSaved: false,
+        isTop: false,
+      ),
+      EventDto(
+        name: "Nottingham Trophy",
+        imageUrl:
+            "https://i.dailymail.co.uk/i/pix/2014/09/14/1410700830401_wps_18_NOTTINGHAM_ENGLAND_SEPTEM.jpg",
+        price: 1500,
+        address:
+            "4 Wilford Ln, West Bridgford, Nottingham NG2 7QX, United Kingdom",
+        isSaved: false,
+        isTop: false,
+      ),
+      EventDto(
+        name: "Nottingham Trophy",
+        imageUrl:
+            "https://i.dailymail.co.uk/i/pix/2014/09/14/1410700830401_wps_18_NOTTINGHAM_ENGLAND_SEPTEM.jpg",
+        price: 1500,
+        address:
+            "4 Wilford Ln, West Bridgford, Nottingham NG2 7QX, United Kingdom",
+        isSaved: false,
+        isTop: false,
+      ),
+      EventDto(
+        name: "Nottingham Trophy",
+        imageUrl:
+            "https://i.dailymail.co.uk/i/pix/2014/09/14/1410700830401_wps_18_NOTTINGHAM_ENGLAND_SEPTEM.jpg",
+        price: 1500,
+        address:
+            "4 Wilford Ln, West Bridgford, Nottingham NG2 7QX, United Kingdom",
+        isSaved: false,
+        isTop: false,
+      ),
+      EventDto(
+        name: "Nottingham Trophy",
+        imageUrl:
+            "https://i.dailymail.co.uk/i/pix/2014/09/14/1410700830401_wps_18_NOTTINGHAM_ENGLAND_SEPTEM.jpg",
+        price: 1500,
+        address:
+            "4 Wilford Ln, West Bridgford, Nottingham NG2 7QX, United Kingdom",
+        isSaved: false,
+        isTop: false,
+      ),
+      EventDto(
+        name: "Nottingham Trophy",
+        imageUrl:
+            "https://i.dailymail.co.uk/i/pix/2014/09/14/1410700830401_wps_18_NOTTINGHAM_ENGLAND_SEPTEM.jpg",
+        price: 1500,
+        address:
+            "4 Wilford Ln, West Bridgford, Nottingham NG2 7QX, United Kingdom",
+        isSaved: false,
+        isTop: false,
+      ),
+      EventDto(
+        name: "Nottingham Trophy",
+        imageUrl:
+            "https://i.dailymail.co.uk/i/pix/2014/09/14/1410700830401_wps_18_NOTTINGHAM_ENGLAND_SEPTEM.jpg",
+        price: 1500,
+        address:
+            "4 Wilford Ln, West Bridgford, Nottingham NG2 7QX, United Kingdom",
+        isSaved: false,
+        isTop: false,
+      ),
+      EventDto(
+        name: "Nottingham Trophy",
+        imageUrl:
+            "https://i.dailymail.co.uk/i/pix/2014/09/14/1410700830401_wps_18_NOTTINGHAM_ENGLAND_SEPTEM.jpg",
+        price: 1500,
+        address:
+            "4 Wilford Ln, West Bridgford, Nottingham NG2 7QX, United Kingdom",
+        isSaved: false,
+        isTop: false,
+      ),
+      EventDto(
+        name: "Nottingham Trophy",
+        imageUrl:
+            "https://i.dailymail.co.uk/i/pix/2014/09/14/1410700830401_wps_18_NOTTINGHAM_ENGLAND_SEPTEM.jpg",
+        price: 1500,
+        address:
+            "4 Wilford Ln, West Bridgford, Nottingham NG2 7QX, United Kingdom",
+        isSaved: false,
+        isTop: false,
+      ),
+      EventDto(
+        name: "Nottingham Trophy",
+        imageUrl:
+            "https://i.dailymail.co.uk/i/pix/2014/09/14/1410700830401_wps_18_NOTTINGHAM_ENGLAND_SEPTEM.jpg",
+        price: 1500,
+        address:
+            "4 Wilford Ln, West Bridgford, Nottingham NG2 7QX, United Kingdom",
+        isSaved: false,
+        isTop: false,
+      ),
+      EventDto(
+        name: "Nottingham Trophy",
+        imageUrl:
+            "https://i.dailymail.co.uk/i/pix/2014/09/14/1410700830401_wps_18_NOTTINGHAM_ENGLAND_SEPTEM.jpg",
+        price: 1500,
+        address:
+            "4 Wilford Ln, West Bridgford, Nottingham NG2 7QX, United Kingdom",
+        isSaved: false,
+        isTop: false,
+      ),
+      EventDto(
+        name: "Nottingham Trophy",
+        imageUrl:
+            "https://i.dailymail.co.uk/i/pix/2014/09/14/1410700830401_wps_18_NOTTINGHAM_ENGLAND_SEPTEM.jpg",
+        price: 1500,
+        address:
+            "4 Wilford Ln, West Bridgford, Nottingham NG2 7QX, United Kingdom",
+        isSaved: false,
+        isTop: false,
+      ),
+      EventDto(
+        name: "Nottingham Trophy",
+        imageUrl:
+            "https://i.dailymail.co.uk/i/pix/2014/09/14/1410700830401_wps_18_NOTTINGHAM_ENGLAND_SEPTEM.jpg",
+        price: 1500,
+        address:
+            "4 Wilford Ln, West Bridgford, Nottingham NG2 7QX, United Kingdom",
+        isSaved: false,
+        isTop: false,
+      ),
     ];
   }
 }

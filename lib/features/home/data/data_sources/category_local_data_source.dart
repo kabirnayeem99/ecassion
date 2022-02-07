@@ -1,11 +1,12 @@
+import 'package:ecassion/core/utility.dart';
 import 'package:ecassion/features/home/data/dto/category_dto.dart';
 
 class CategoryLocalDataSource {
   Future<List<CategoryDto>> getCategoryList() async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(loadRandomDuration());
     return <CategoryDto>[
       CategoryDto(
-          id: "802",
+          id: "809892",
           name: "Sports",
           imageUrl:
               "https://arlingtonva.s3.dualstack.us-east-1.amazonaws.com/wp-content/uploads/sites/17/2014/02/badminton-1.jpg"),
@@ -21,10 +22,10 @@ class CategoryLocalDataSource {
           imageUrl:
               "https://media.istockphoto.com/vectors/seamless-pattern-social-concept-of-people-communication-in-flat-style-vector-id624126636?k=6&m=624126636&s=170667a&w=0&h=ccy_FszqtAODsAimm3Lv6YpTAFLGYREiWqd8hcMUEO8="),
       CategoryDto(
-          id: "4q234243",
-          name: "Issue",
-          imageUrl:
-              "https://arlingtonva.s3.dualstack.us-east-1.amazonaws.com/wp-content/uploads/sites/17/2014/02/badminton-1.jpg"),
+        id: "4q234243",
+        name: "Issue",
+        imageUrl: "https://libcom.org/files/1982_Falklands[1].jpg",
+      ),
       CategoryDto(
           id: "r243",
           name: "Fun",

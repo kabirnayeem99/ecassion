@@ -2,6 +2,8 @@ import 'package:ecassion/features/home/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../core/utility.dart';
+
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
 
@@ -19,7 +21,7 @@ class _SplashPageState extends State<SplashPage>
   void initState() {
     _tweenSize = Tween(begin: 0.1, end: 100);
     _animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 600))
+        vsync: this, duration: loadRandomDuration())
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           Navigator.push(
@@ -46,7 +48,7 @@ class _SplashPageState extends State<SplashPage>
         animation: _animationSize,
         builder: (context, child) {
           return AnimatedContainer(
-            duration: const Duration(milliseconds: 600),
+            duration: loadRandomDuration(),
             color: Color.fromRGBO(101, 100, 219, 1 / _animationSize.value),
             child: Center(
               child: SvgPicture.asset(

@@ -6,11 +6,11 @@ import 'package:ecassion/features/home/domain/repositories/event_repository.dart
 import '../../domain/entity/upcoming_event.dart';
 
 class EventRepositoryImpl extends EventRepository {
-  final eventLocalDataSource = EventLocalDataSource();
+  final EventLocalDataSource _eventLocalDataSource = EventLocalDataSource();
 
   @override
   Future<List<TrendingEvent>> getTrendingEvents() async {
-    final eventDtoList = await eventLocalDataSource.getTrendingEvents();
+    final eventDtoList = await _eventLocalDataSource.getTrendingEvents();
     final trendingEvents = eventDtoList
         .map((dto) => EventParsing(dto).mapToTrendingEvent())
         .toList(growable: false);
@@ -19,7 +19,7 @@ class EventRepositoryImpl extends EventRepository {
 
   @override
   Future<List<UpcomingEvent>> getUpcomingEvents() async {
-    final eventDtoList = await eventLocalDataSource.getTrendingEvents();
+    final eventDtoList = await _eventLocalDataSource.getUpcomingEvents();
     final upcomingEvents = eventDtoList
         .map((dto) => EventParsing(dto).mapToUpcomingEvent())
         .toList(growable: false);

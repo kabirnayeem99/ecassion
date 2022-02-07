@@ -5,11 +5,11 @@ import 'package:ecassion/features/home/domain/repositories/category_repository.d
 import '../../domain/entity/category.dart';
 
 class CategoryRepositoryImpl extends CategoryRepository {
-  final categoryDataSource = CategoryLocalDataSource();
+  final CategoryLocalDataSource _categoryDataSource = CategoryLocalDataSource();
 
   @override
   Future<List<Category>> getCategoryList() async {
-    final categoryDtoList = await categoryDataSource.getCategoryList();
+    final categoryDtoList = await _categoryDataSource.getCategoryList();
     final categories = categoryDtoList
         .map((dto) => CategoryParsing(dto).mapToCategory())
         .toList(growable: false);
