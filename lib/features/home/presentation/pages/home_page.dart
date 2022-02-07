@@ -1,3 +1,8 @@
+import 'package:ecassion/core/utility.dart';
+import 'package:ecassion/features/home/domain/entity/trending_event.dart';
+import 'package:ecassion/features/home/domain/entity/upcoming_event.dart';
+import 'package:ecassion/features/home/domain/use_cases/get_trending_event.dart';
+import 'package:ecassion/features/home/domain/use_cases/get_upcoming_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -10,6 +15,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
+  GetTrendingEvent getTrendingEvent = GetTrendingEvent();
+  GetUpcomingEvent getUpcomingEvent = GetUpcomingEvent();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,38 +57,59 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  SizedBox buildTrendingPlaceList() {
-    return SizedBox(
-      height: 199.0,
-      child: ListView.builder(
-        itemCount: 12,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return buildTrendingEventCard(context, index);
-        },
-      ),
+  FutureBuilder<List<TrendingEvent>> buildTrendingPlaceList() {
+    return FutureBuilder(
+      future: getTrendingEvent.getTrendingEvents(),
+      initialData: [],
+      builder:
+          (BuildContext context, AsyncSnapshot<List<TrendingEvent>> snapshot) {
+        if (snapshot.hasData && snapshot.data != null) {
+          return SizedBox(
+            height: 199.0,
+            child: ListView.builder(
+              itemCount: snapshot.data?.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                return buildTrendingEventCard(context, snapshot.data![index]);
+              },
+            ),
+          );
+        } else {
+          return Container(height: 199.0);
+        }
+      },
     );
   }
 
-  SizedBox buildUpcomingPlaceList() {
-    return SizedBox(
-      height: 199.0,
-      child: GridView.builder(
-        itemCount: 12,
-        scrollDirection: Axis.vertical,
-        itemBuilder: (context, index) {
-          return buildUpcomingEventCard(context, index);
-        },
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 11.0,
-          mainAxisSpacing: 11.0,
-        ),
-      ),
+  FutureBuilder<List<UpcomingEvent>> buildUpcomingPlaceList() {
+    return FutureBuilder(
+      future: getUpcomingEvent.getUpcomingEvents(),
+      builder: (context, AsyncSnapshot<List<UpcomingEvent>> snapshot) {
+        if (snapshot.hasData) {
+          return Expanded(
+            child: GridView.builder(
+              itemCount: snapshot.data!.length,
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) {
+                final upcomingEvent = snapshot.data![index];
+                return buildUpcomingEventCard(context, upcomingEvent);
+              },
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 11.0,
+                mainAxisSpacing: 11.0,
+              ),
+            ),
+          );
+        } else {
+          return Container();
+        }
+      },
     );
   }
 
-  Container buildUpcomingEventCard(BuildContext context, int index) {
+  Container buildUpcomingEventCard(
+      BuildContext context, UpcomingEvent upcomingEvent) {
     return Container(
       margin: const EdgeInsets.only(right: 16.0),
       width: 155.0,
@@ -93,7 +122,7 @@ class _HomePageState extends State<HomePage>
         child: Stack(
           children: [
             Image.network(
-              "https://i.pinimg.com/originals/f5/a5/cf/f5a5cf3ea8a23ab4eac12925b0ccc075.jpg",
+              upcomingEvent.imageUrl,
               fit: BoxFit.fill,
               height: 155,
               width: 155,
@@ -110,14 +139,16 @@ class _HomePageState extends State<HomePage>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Text(
-                      "Event name dangerous",
+                      upcomingEvent.name,
+                      maxLines: 1,
                       style: TextStyle(
                           fontSize: 12.0, fontWeight: FontWeight.w400),
                     ),
                     Text(
-                      "Dhaka, Bangladesh",
+                      upcomingEvent.address,
+                      maxLines: 1,
                       style: TextStyle(
                           fontSize: 10.0,
                           color: Color(0xff8f8f8f),
@@ -132,8 +163,8 @@ class _HomePageState extends State<HomePage>
               top: 12.0,
               child: SvgPicture.asset(
                 "images/icon_save.svg",
-                height: 25,
-                width: 25,
+                height: upcomingEvent.isSaved ? 25 : 0.0,
+                width: upcomingEvent.isSaved ? 25 : 0.0,
               ),
             )
           ],
@@ -196,7 +227,7 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  Container buildTrendingEventCard(BuildContext context, int index) {
+  Container buildTrendingEventCard(BuildContext context, TrendingEvent event) {
     return Container(
       margin: const EdgeInsets.only(right: 20.0),
       width: 312.0,
@@ -208,7 +239,7 @@ class _HomePageState extends State<HomePage>
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
         child: Stack(children: [
           Image.network(
-            "https://i.pinimg.com/originals/f5/a5/cf/f5a5cf3ea8a23ab4eac12925b0ccc075.jpg",
+            event.imageUrl,
             fit: BoxFit.fill,
             height: 199,
             width: 312,
@@ -229,9 +260,9 @@ class _HomePageState extends State<HomePage>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Text(
-                          "Laugh with Vir Das / 20.12.2021",
+                          event.name,
                           style: TextStyle(
                             fontSize: 12.0,
                             fontWeight: FontWeight.w500,
@@ -239,7 +270,9 @@ class _HomePageState extends State<HomePage>
                           ),
                         ),
                         Text(
-                          "10:30 PM, 10040 Shirley School Rd Potosi, Missouri(MO), 63664",
+                          convertDateTimeToReadableString(event.time) +
+                              " " +
+                              event.address,
                           style: TextStyle(
                               fontSize: 10.0, color: Color(0xff8D8D8D)),
                         ),
@@ -248,7 +281,7 @@ class _HomePageState extends State<HomePage>
                   ),
                   const SizedBox(width: 12.0),
                   Text(
-                    "Rs " + (1000 * index).toString(),
+                    "BDT " + event.price.toString(),
                     style: const TextStyle(
                       fontSize: 12.0,
                       color: Color(0xff6564DB),
@@ -259,33 +292,34 @@ class _HomePageState extends State<HomePage>
             ),
           ),
           Positioned(
-              top: 0,
-              left: 0,
-              child: Container(
-                decoration: const BoxDecoration(
-                  borderRadius:
-                      BorderRadius.only(bottomRight: Radius.circular(16.0)),
-                  color: Color(0xff6564DB),
-                ),
-                width: 56.0,
-                height: 26.0,
-                child: const Center(
-                  child: Text(
-                    "Top",
-                    style: TextStyle(
-                      fontSize: 12.0,
-                      color: Colors.white,
-                    ),
+            top: 0,
+            left: 0,
+            child: Container(
+              decoration: const BoxDecoration(
+                borderRadius:
+                    BorderRadius.only(bottomRight: Radius.circular(16.0)),
+                color: Color(0xff6564DB),
+              ),
+              width: event.isTop ? 56.0 : 0,
+              height: event.isTop ? 26.0 : 0.0,
+              child: const Center(
+                child: Text(
+                  "Top",
+                  style: TextStyle(
+                    fontSize: 12.0,
+                    color: Colors.white,
                   ),
                 ),
-              )),
+              ),
+            ),
+          ),
           Positioned(
             right: 12.0,
             top: 12.0,
             child: SvgPicture.asset(
               "images/icon_save.svg",
-              height: 25,
-              width: 25,
+              height: event.isSaved ? 25 : 0,
+              width: event.isSaved ? 25 : 0,
             ),
           )
         ]),
