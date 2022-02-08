@@ -23,21 +23,22 @@ class _HomePageState extends State<HomePage>
   GetTrendingEvent _getTrendingEvent = GetTrendingEvent();
   GetUpcomingEvent _getUpcomingEvent = GetUpcomingEvent();
   GetCategories _getCategories = GetCategories();
-  double test = 0;
+
   bool _shouldShowOtherList = true;
   final _scrollController = ScrollController();
 
   @override
   void initState() {
     _scrollController.addListener(() {
-      setState(() {
-        test = _scrollController.position.pixels;
-        if (test > 150) {
+      if (_scrollController.position.pixels > 50) {
+        setState(() {
           _shouldShowOtherList = false;
-        } else if (test == 0) {
+        });
+      } else if (_scrollController.position.pixels < 10) {
+        setState(() {
           _shouldShowOtherList = true;
-        }
-      });
+        });
+      }
     });
     super.initState();
   }
@@ -90,7 +91,7 @@ class _HomePageState extends State<HomePage>
     return AnimatedSizeAndFade(
       child: _shouldShowOtherList
           ? Container(
-              height: 16.0,
+              height: 20.0,
               child: Text(
                 text,
                 style: TextStyle(
@@ -125,8 +126,7 @@ class _HomePageState extends State<HomePage>
       builder:
           (BuildContext context, AsyncSnapshot<List<TrendingEvent>> snapshot) {
         if (snapshot.hasData) {
-          return AnimatedSwitcher(
-            duration: loadRandomDuration(),
+          return AnimatedSizeAndFade(
             child: _shouldShowOtherList
                 ? SizedBox(
                     height: 199.0,
@@ -139,7 +139,7 @@ class _HomePageState extends State<HomePage>
                       },
                     ),
                   )
-                : Container(),
+                : VisibleGoneContainer(),
           );
         } else {
           return CupertinoActivityIndicator();
@@ -152,28 +152,26 @@ class _HomePageState extends State<HomePage>
     return FutureBuilder(
       future: _getUpcomingEvent.getUpcomingEvents(),
       builder: (context, AsyncSnapshot<List<UpcomingEvent>> snapshot) {
-        if (snapshot.hasData) {
-          return Expanded(
-            child: GridView.builder(
-              controller: _scrollController,
-              shrinkWrap: true,
-              itemCount: snapshot.data!.length,
-              physics: const ClampingScrollPhysics(),
-              scrollDirection: Axis.vertical,
-              itemBuilder: (context, index) {
-                final upcomingEvent = snapshot.data![index];
-                return buildUpcomingEventCard(context, upcomingEvent);
-              },
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 11.0,
-                mainAxisSpacing: 11.0,
-              ),
-            ),
-          );
-        } else {
-          return CupertinoActivityIndicator();
-        }
+        return snapshot.hasData
+            ? Expanded(
+                child: GridView.builder(
+                  controller: _scrollController,
+                  shrinkWrap: true,
+                  itemCount: snapshot.data!.length,
+                  physics: const ClampingScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                  itemBuilder: (context, index) {
+                    final upcomingEvent = snapshot.data![index];
+                    return buildUpcomingEventCard(context, upcomingEvent);
+                  },
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 11.0,
+                    mainAxisSpacing: 11.0,
+                  ),
+                ),
+              )
+            : CupertinoActivityIndicator();
       },
     );
   }
@@ -243,26 +241,32 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  SizedBox buildCategoriesList() {
-    return SizedBox(
-      height: _shouldShowOtherList ? 88.0 : 0.0,
+  Widget buildCategoriesList() {
+    return AnimatedSizeAndFade(
       child: FutureBuilder(
-          future: _getCategories.getCategoryList(),
-          builder: (context, AsyncSnapshot<List<Category>> snapshot) {
-            if (snapshot.hasData) {
-              return ListView.builder(
-                shrinkWrap: true,
-                itemCount: snapshot.data!.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  final category = snapshot.data![index];
-                  return buildCategoryCard(context, category);
-                },
-              );
-            } else {
-              return CupertinoActivityIndicator();
-            }
-          }),
+        future: _getCategories.getCategoryList(),
+        builder: (context, AsyncSnapshot<List<Category>> snapshot) {
+          if (snapshot.hasData) {
+            return AnimatedSizeAndFade(
+                child: _shouldShowOtherList
+                    ? SizedBox(
+                        height: 88.0,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            final category = snapshot.data![index];
+                            return buildCategoryCard(context, category);
+                          },
+                        ),
+                      )
+                    : VisibleGoneContainer());
+          } else {
+            return CupertinoActivityIndicator();
+          }
+        },
+      ),
     );
   }
 
@@ -440,7 +444,7 @@ class VisibleGoneContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 0.0,
       width: 0.0,
     );
