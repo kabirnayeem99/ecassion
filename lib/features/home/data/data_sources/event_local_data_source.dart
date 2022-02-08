@@ -55,7 +55,6 @@ class EventLocalDataSource {
   }
 
   Future<List<EventDto>> getUpcomingEvents() async {
-    await Future.delayed(loadRandomDuration());
     return [
       EventDto(
         name: faker.sport.name() + " World Team Cup",
