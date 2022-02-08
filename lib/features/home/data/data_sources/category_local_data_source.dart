@@ -6,77 +6,75 @@ class CategoryLocalDataSource {
   Future<List<CategoryDto>> getCategoryList() async {
     await Future.delayed(loadRandomDuration());
     return <CategoryDto>[
-
       CategoryDto(
           id: faker.guid.guid(),
-          name: faker.lorem.word(),
+          name: faker.sport.name(),
           imageUrl:
               "https://media.istockphoto.com/vectors/seamless-pattern-social-concept-of-people-communication-in-flat-style-vector-id624126636?k=6&m=624126636&s=170667a&w=0&h=ccy_FszqtAODsAimm3Lv6YpTAFLGYREiWqd8hcMUEO8="),
       CategoryDto(
         id: faker.guid.guid(),
-        name: faker.lorem.word(),
+        name: faker.sport.name(),
         imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
       ),
       CategoryDto(
         id: faker.guid.guid(),
-        name: faker.lorem.word(),
+        name: faker.sport.name(),
         imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
       ),
       CategoryDto(
         id: faker.guid.guid(),
-        name: faker.lorem.word(),
+        name: faker.sport.name(),
         imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
       ),
       CategoryDto(
         id: faker.guid.guid(),
-        name: faker.lorem.word(),
+        name: faker.sport.name(),
         imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
       ),
       CategoryDto(
         id: faker.guid.guid(),
-        name: faker.lorem.word(),
+        name: faker.sport.name(),
         imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
       ),
       CategoryDto(
         id: faker.guid.guid(),
-        name: faker.lorem.word(),
+        name: faker.sport.name(),
         imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
       ),
       CategoryDto(
         id: faker.guid.guid(),
-        name: faker.lorem.word(),
+        name: faker.sport.name(),
         imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
       ),
       CategoryDto(
         id: faker.guid.guid(),
-        name: faker.lorem.word(),
+        name: faker.sport.name(),
         imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
       ),
       CategoryDto(
         id: faker.guid.guid(),
-        name: faker.lorem.word(),
+        name: faker.sport.name(),
         imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
       ),
       CategoryDto(
         id: faker.guid.guid(),
-        name: faker.lorem.word(),
+        name: faker.sport.name(),
         imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
       ),
       CategoryDto(
         id: faker.guid.guid(),
-        name: faker.lorem.word(),
+        name: faker.sport.name(),
         imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
       ),
       CategoryDto(
-          id: faker.guid.guid(),
-          name: faker.lorem.word(),
-          imageUrl:
-          "https://arlingtonva.s3.dualstack.us-east-1.amazonaws.com/wp-content/uploads/sites/17/2014/02/badminton-1.jpg"),
+        id: faker.guid.guid(),
+        name: faker.sport.name(),
+        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+      ),
       CategoryDto(
         id: faker.guid.guid(),
-        name: faker.lorem.word(),
-        imageUrl:
-        "https://www.cdc.gov/heartdisease/images/hd-family-history.jpg",
+        name: faker.sport.name(),
+        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
       ),
     ];
   }

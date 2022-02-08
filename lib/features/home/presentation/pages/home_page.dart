@@ -7,6 +7,7 @@ import 'package:ecassion/features/home/domain/use_cases/get_categories.dart';
 import 'package:ecassion/features/home/domain/use_cases/get_trending_event.dart';
 import 'package:ecassion/features/home/domain/use_cases/get_upcoming_event.dart';
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
+import 'package:faker/faker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -365,7 +366,7 @@ class _HomePageState extends State<HomePage>
                   ),
                   const SizedBox(width: 12.0),
                   Text(
-                    "BDT " + event.price.toString(),
+                    faker.currency.code() + " " + event.price.toString(),
                     style: const TextStyle(
                       fontSize: 12.0,
                       color: Color(0xff6564DB),
