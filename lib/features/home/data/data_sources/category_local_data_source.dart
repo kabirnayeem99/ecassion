@@ -7,80 +7,83 @@ class CategoryLocalDataSource {
     await Future.delayed(loadRandomDuration());
     return <CategoryDto>[
       CategoryDto(
-          id: faker.guid.guid(),
-          name: faker.sport.name(),
-          imageUrl:
-              "https://media.istockphoto.com/vectors/seamless-pattern-social-concept-of-people-communication-in-flat-style-vector-id624126636?k=6&m=624126636&s=170667a&w=0&h=ccy_FszqtAODsAimm3Lv6YpTAFLGYREiWqd8hcMUEO8="),
-      CategoryDto(
         id: faker.guid.guid(),
         name: faker.sport.name(),
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: loadRandomImageUrl(),
       ),
       CategoryDto(
         id: faker.guid.guid(),
         name: faker.sport.name(),
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: loadRandomImageUrl(),
       ),
       CategoryDto(
         id: faker.guid.guid(),
         name: faker.sport.name(),
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: loadRandomImageUrl(),
       ),
       CategoryDto(
         id: faker.guid.guid(),
         name: faker.sport.name(),
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: loadRandomImageUrl(),
       ),
       CategoryDto(
         id: faker.guid.guid(),
         name: faker.sport.name(),
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: loadRandomImageUrl(),
       ),
       CategoryDto(
         id: faker.guid.guid(),
         name: faker.sport.name(),
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: loadRandomImageUrl(),
       ),
       CategoryDto(
         id: faker.guid.guid(),
         name: faker.sport.name(),
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: loadRandomImageUrl(),
       ),
       CategoryDto(
         id: faker.guid.guid(),
         name: faker.sport.name(),
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: loadRandomImageUrl(),
       ),
       CategoryDto(
         id: faker.guid.guid(),
         name: faker.sport.name(),
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: loadRandomImageUrl(),
       ),
       CategoryDto(
         id: faker.guid.guid(),
         name: faker.sport.name(),
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: loadRandomImageUrl(),
       ),
       CategoryDto(
         id: faker.guid.guid(),
         name: faker.sport.name(),
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: loadRandomImageUrl(),
       ),
       CategoryDto(
         id: faker.guid.guid(),
         name: faker.sport.name(),
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: loadRandomImageUrl(),
       ),
       CategoryDto(
         id: faker.guid.guid(),
         name: faker.sport.name(),
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: loadRandomImageUrl(),
+      ),
+      CategoryDto(
+        id: faker.guid.guid(),
+        name: faker.sport.name(),
+        imageUrl: loadRandomImageUrl(),
       ),
     ];
   }
 }
 
-const RANDOM_IMAGE_URL = [
+String loadRandomImageUrl() =>
+    randomImageUrl[random.integer(randomImageUrl.length)];
+
+const randomImageUrl = [
   "http://www.speakerboxmind.com/wp-content/uploads/2014/12/Four-Sporting-Experiences-to-Incorporate-into-Your-Holiday.jpg",
   "https://assets.visitphilly.com/wp-content/uploads/2018/02/UnionvGalaxy13_1814-2-1200-2200x1237.jpg",
   "http://www.experiencify.com/wp-content/uploads/2015/12/sports-fans.jpg",

@@ -11,7 +11,7 @@ class EventLocalDataSource {
     return [
       EventDto(
         name: faker.sport.name() + " Cup",
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(10000),
         time: faker.date.dateTime(),
         address: faker.address.city() + ", " + faker.address.country(),
@@ -20,7 +20,7 @@ class EventLocalDataSource {
       ),
       EventDto(
         name: faker.sport.name() + " Open Nottingham",
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(10000),
         time: faker.date.dateTime(),
         address: faker.address.city() + ", " + faker.address.country(),
@@ -29,7 +29,7 @@ class EventLocalDataSource {
       ),
       EventDto(
         name: faker.sport.name(),
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(10000),
         address: faker.address.city() + ", " + faker.address.country(),
         isSaved: random.boolean(),
@@ -38,7 +38,7 @@ class EventLocalDataSource {
       ),
       EventDto(
         name: faker.conference.name(),
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(10000),
         address: faker.address.city() + ", " + faker.address.country(),
         isSaved: random.boolean(),
@@ -47,7 +47,7 @@ class EventLocalDataSource {
       ),
       EventDto(
         name: faker.address.city() + " " + faker.sport.name(),
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(10000),
         address: faker.address.city() + ", " + faker.address.country(),
         isSaved: random.boolean(),
@@ -61,7 +61,7 @@ class EventLocalDataSource {
     return [
       EventDto(
         name: faker.sport.name() + " World Team Cup",
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(10000),
         time: faker.date.dateTime(),
         address: "University Blvd, Nottingham NG7 2QH, UK",
@@ -70,7 +70,7 @@ class EventLocalDataSource {
       ),
       EventDto(
         name: "Viking Open Nottingham",
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(10000),
         time: faker.date.dateTime(),
         address: "Roland-Rainer-Platz 1, 1150 Wien, Austria",
@@ -79,7 +79,7 @@ class EventLocalDataSource {
       ),
       EventDto(
         name: "Viking Open Nottingham",
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(2000),
         address: "University Blvd, Nottingham NG7 2QH, UK",
         isSaved: random.boolean(),
@@ -88,7 +88,7 @@ class EventLocalDataSource {
       ),
       EventDto(
         name: "cinch Championships",
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(10000),
         address: faker.address.city() + ", " + faker.address.country(),
         isSaved: random.boolean(),
@@ -97,7 +97,7 @@ class EventLocalDataSource {
       ),
       EventDto(
         name: faker.sport.name() + " Trophy",
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(10000),
         address: faker.address.city() + ", " + faker.address.country(),
         isSaved: random.boolean(),
@@ -105,7 +105,7 @@ class EventLocalDataSource {
       ),
       EventDto(
         name: faker.sport.name() + " Trophy",
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(10000),
         address: faker.address.city() + ", " + faker.address.country(),
         isSaved: random.boolean(),
@@ -113,7 +113,7 @@ class EventLocalDataSource {
       ),
       EventDto(
         name: faker.sport.name() + " Trophy",
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(10000),
         address: faker.address.city() + ", " + faker.address.country(),
         isSaved: random.boolean(),
@@ -121,7 +121,7 @@ class EventLocalDataSource {
       ),
       EventDto(
         name: faker.sport.name() + " Trophy",
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(10000),
         address: faker.address.city() + ", " + faker.address.country(),
         isSaved: random.boolean(),
@@ -129,7 +129,7 @@ class EventLocalDataSource {
       ),
       EventDto(
         name: faker.sport.name() + " Trophy",
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(10000),
         address: faker.address.city() + ", " + faker.address.country(),
         isSaved: random.boolean(),
@@ -137,7 +137,7 @@ class EventLocalDataSource {
       ),
       EventDto(
         name: faker.sport.name() + " Trophy",
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(10000),
         address: faker.address.city() + ", " + faker.address.country(),
         isSaved: random.boolean(),
@@ -145,7 +145,7 @@ class EventLocalDataSource {
       ),
       EventDto(
         name: faker.sport.name() + " Trophy",
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(10000),
         address: faker.address.city() + ", " + faker.address.country(),
         isSaved: random.boolean(),
@@ -153,7 +153,7 @@ class EventLocalDataSource {
       ),
       EventDto(
         name: faker.sport.name() + " Trophy",
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(10000),
         address: faker.address.city() + ", " + faker.address.country(),
         isSaved: random.boolean(),
@@ -161,7 +161,7 @@ class EventLocalDataSource {
       ),
       EventDto(
         name: faker.sport.name() + " Trophy",
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(10000),
         address: faker.address.city() + ", " + faker.address.country(),
         isSaved: random.boolean(),
@@ -169,7 +169,7 @@ class EventLocalDataSource {
       ),
       EventDto(
         name: faker.sport.name() + " Trophy",
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(10000),
         address: faker.address.city() + ", " + faker.address.country(),
         isSaved: random.boolean(),
@@ -177,7 +177,7 @@ class EventLocalDataSource {
       ),
       EventDto(
         name: faker.sport.name() + " Trophy",
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(10000),
         address: faker.address.city() + ", " + faker.address.country(),
         isSaved: random.boolean(),
@@ -185,7 +185,7 @@ class EventLocalDataSource {
       ),
       EventDto(
         name: faker.sport.name() + " Trophy",
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(10000),
         address: faker.address.city() + ", " + faker.address.country(),
         isSaved: random.boolean(),
@@ -193,7 +193,7 @@ class EventLocalDataSource {
       ),
       EventDto(
         name: faker.sport.name() + " Trophy",
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(10000),
         address: faker.address.city() + ", " + faker.address.country(),
         isSaved: random.boolean(),
@@ -201,7 +201,7 @@ class EventLocalDataSource {
       ),
       EventDto(
         name: faker.sport.name() + " Trophy",
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(10000),
         address: faker.address.city() + ", " + faker.address.country(),
         isSaved: random.boolean(),
@@ -209,7 +209,7 @@ class EventLocalDataSource {
       ),
       EventDto(
         name: faker.sport.name() + " Trophy",
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(10000),
         address: faker.address.city() + ", " + faker.address.country(),
         isSaved: random.boolean(),
@@ -217,7 +217,7 @@ class EventLocalDataSource {
       ),
       EventDto(
         name: faker.sport.name() + " Trophy",
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(10000),
         address: faker.address.city() + ", " + faker.address.country(),
         isSaved: random.boolean(),
@@ -225,7 +225,7 @@ class EventLocalDataSource {
       ),
       EventDto(
         name: faker.sport.name() + " Trophy",
-        imageUrl: RANDOM_IMAGE_URL[random.integer(RANDOM_IMAGE_URL.length)],
+        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(10000),
         address: faker.address.city() + ", " + faker.address.country(),
         isSaved: random.boolean(),
