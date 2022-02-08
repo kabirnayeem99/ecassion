@@ -6,8 +6,6 @@ import 'category_local_data_source.dart';
 
 class EventLocalDataSource {
   Future<List<EventDto>> getTrendingEvents() async {
-    await Future.delayed(loadRandomDuration());
-
     return [
       EventDto(
         name: faker.sport.name() + " Cup",

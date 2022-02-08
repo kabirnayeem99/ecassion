@@ -23,12 +23,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
-  GetTrendingEvent _getTrendingEvent = GetTrendingEvent();
-  GetUpcomingEvent _getUpcomingEvent = GetUpcomingEvent();
-  GetCategories _getCategories = GetCategories();
-
   bool _shouldShowOtherList = true;
   final _scrollController = ScrollController();
+
+  final GetTrendingEvent _getTrendingEvent = GetTrendingEvent();
+  final GetUpcomingEvent _getUpcomingEvent = GetUpcomingEvent();
+  final GetCategories _getCategories = GetCategories();
 
   @override
   void initState() {
@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage>
     return Scaffold(
       body: SafeArea(
         child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 16.0),
+          margin: const EdgeInsets.symmetric(horizontal: 16.0),
           child: ExtendedNestedScrollView(
             headerSliverBuilder: (BuildContext c, bool f) {
               return [buildAppBar()];
@@ -93,17 +93,17 @@ class _HomePageState extends State<HomePage>
   AnimatedSizeAndFade buildHideableHeadingTextView(String text) {
     return AnimatedSizeAndFade(
       child: _shouldShowOtherList
-          ? Container(
+          ? SizedBox(
               height: 20.0,
               child: Text(
                 text,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             )
-          : VisibleGoneContainer(),
+          : const VisibleGoneContainer(),
     );
   }
 
@@ -111,15 +111,15 @@ class _HomePageState extends State<HomePage>
     return AnimatedSizeAndFade(
       child: _shouldShowOtherList
           ? const SizedBox(height: 11.0)
-          : VisibleGoneContainer(),
+          : const VisibleGoneContainer(),
     );
   }
 
   AnimatedSizeAndFade buildHidable25SizedBox() {
     return AnimatedSizeAndFade(
       child: _shouldShowOtherList
-          ? SizedBox(height: 25.0)
-          : VisibleGoneContainer(),
+          ? const SizedBox(height: 25.0)
+          : const VisibleGoneContainer(),
     );
   }
 
@@ -142,10 +142,10 @@ class _HomePageState extends State<HomePage>
                       },
                     ),
                   )
-                : VisibleGoneContainer(),
+                : const VisibleGoneContainer(),
           );
         } else {
-          return CupertinoActivityIndicator();
+          return const CupertinoActivityIndicator();
         }
       },
     );
@@ -173,7 +173,7 @@ class _HomePageState extends State<HomePage>
                   ),
                 ),
               )
-            : CupertinoActivityIndicator();
+            : const CupertinoActivityIndicator();
       },
     );
   }
@@ -213,13 +213,13 @@ class _HomePageState extends State<HomePage>
                     Text(
                       upcomingEvent.name,
                       maxLines: 1,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 12.0, fontWeight: FontWeight.w400),
                     ),
                     Text(
                       upcomingEvent.address,
                       maxLines: 1,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 10.0,
                           color: Color(0xff8f8f8f),
                           fontWeight: FontWeight.w400),
@@ -263,9 +263,9 @@ class _HomePageState extends State<HomePage>
                           },
                         ),
                       )
-                    : VisibleGoneContainer());
+                    : const VisibleGoneContainer());
           } else {
-            return CupertinoActivityIndicator();
+            return const CupertinoActivityIndicator();
           }
         },
       ),
@@ -295,6 +295,7 @@ class _HomePageState extends State<HomePage>
               left: 0,
               right: 0,
               child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 2.0),
                 height: 25,
                 width: 25,
                 color: Colors.white,
@@ -302,7 +303,7 @@ class _HomePageState extends State<HomePage>
                   child: Text(
                     category.name,
                     maxLines: 1,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12.0,
                       fontWeight: FontWeight.w400,
                     ),
@@ -353,7 +354,7 @@ class _HomePageState extends State<HomePage>
                       children: [
                         Text(
                           event.name,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 12.0,
                             fontWeight: FontWeight.w500,
                             color: Colors.black,
@@ -363,7 +364,7 @@ class _HomePageState extends State<HomePage>
                           convertDateTimeToReadableString(event.time) +
                               " " +
                               event.address,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 10.0, color: Color(0xff8D8D8D)),
                         ),
                       ],
@@ -421,20 +422,16 @@ class _HomePageState extends State<HomePage>
     final sliverAppbar = SliverAppBar(
       backgroundColor: Colors.transparent,
       leadingWidth: 30,
-      leading: Container(
-        child:
-            SvgPicture.asset("images/splash_logo.svg", height: 30, width: 30),
-      ),
+      leading:
+          SvgPicture.asset("images/splash_logo.svg", height: 30, width: 30),
       actions: [
-        Container(
-          child: Center(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20.0),
-              child: loadNetworkImage(
-                url: loadRandomImageUrl(),
-                height: 30,
-                width: 30,
-              ),
+        Center(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: loadNetworkImage(
+              url: loadRandomImageUrl(),
+              height: 30,
+              width: 30,
             ),
           ),
         )
@@ -449,7 +446,7 @@ class VisibleGoneContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return const SizedBox(
       height: 0.0,
       width: 0.0,
     );

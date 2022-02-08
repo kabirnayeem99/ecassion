@@ -61,7 +61,7 @@ class AnimatedSizeAndFade extends StatelessWidget {
   final Alignment alignment;
   final bool show;
 
-  AnimatedSizeAndFade({
+  const AnimatedSizeAndFade({
     Key? key,
     this.child,
     this.fadeDuration = const Duration(milliseconds: 500),
@@ -77,7 +77,7 @@ class AnimatedSizeAndFade extends StatelessWidget {
   /// vertical size/fade. To that end, instead of changing the child,
   /// simply change [show]. Note this widget will try to have its width as
   /// big as possible, so put it in a parent with limited width constraints.
-  AnimatedSizeAndFade.showHide({
+  const AnimatedSizeAndFade.showHide({
     Key? key,
     this.child,
     required this.show,
@@ -97,11 +97,11 @@ class AnimatedSizeAndFade extends StatelessWidget {
       child: AnimatedSwitcher(
         child: show
             ? child
-            : Container(
-          key: AnimatedSizeAndFade._key,
-          width: double.infinity,
-          height: 0,
-        ),
+            : SizedBox(
+                key: AnimatedSizeAndFade._key,
+                width: double.infinity,
+                height: 0,
+              ),
         duration: fadeDuration,
         switchInCurve: fadeInCurve,
         switchOutCurve: fadeOutCurve,

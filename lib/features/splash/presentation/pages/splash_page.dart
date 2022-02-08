@@ -1,4 +1,4 @@
-import 'package:ecassion/features/home/presentation/pages/home_page.dart';
+import 'package:ecassion/features/landing/presentation/landing_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -20,16 +20,16 @@ class _SplashPageState extends State<SplashPage>
   @override
   void initState() {
     _tweenSize = Tween(begin: 0.1, end: 100);
-    _animationController = AnimationController(
-        vsync: this, duration: loadRandomDuration())
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const HomePage()),
-          );
-        }
-      });
+    _animationController =
+        AnimationController(vsync: this, duration: loadRandomDuration())
+          ..addStatusListener((status) {
+            if (status == AnimationStatus.completed) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LandingPage()),
+              );
+            }
+          });
     _animationSize = _tweenSize.animate(_animationController);
     _animationController.forward();
     super.initState();

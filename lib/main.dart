@@ -1,3 +1,4 @@
+import 'package:ecassion/features/landing/presentation/landing_page.dart';
 import 'package:ecassion/features/splash/presentation/pages/splash_page.dart';
 import 'package:flutter/material.dart';
 
