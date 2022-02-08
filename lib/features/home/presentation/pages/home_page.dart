@@ -1,4 +1,5 @@
 import 'package:ecassion/core/utility.dart';
+import 'package:ecassion/core/widgets/animated_sized_and_fade.dart';
 import 'package:ecassion/features/home/domain/entity/category.dart';
 import 'package:ecassion/features/home/domain/entity/trending_event.dart';
 import 'package:ecassion/features/home/domain/entity/upcoming_event.dart';
@@ -31,7 +32,7 @@ class _HomePageState extends State<HomePage>
     _scrollController.addListener(() {
       setState(() {
         test = _scrollController.position.pixels;
-        if (test > 58) {
+        if (test > 150) {
           _shouldShowOtherList = false;
         } else if (test == 0) {
           _shouldShowOtherList = true;
@@ -62,30 +63,15 @@ class _HomePageState extends State<HomePage>
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: _shouldShowOtherList ? 26.0 : 0.0),
-                Container(
-                  height: _shouldShowOtherList ? 16.0 : 0.0,
-                  child: Text(
-                    "Trending Events near you" +
-                        _shouldShowOtherList.toString(),
-                    style:
-                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                const SizedBox(height: 11.0),
+                buildHidable25SizedBox(),
+                buildHideableHeadingTextView("Trending Events near you"),
+                buildHidable11SizedBox(),
                 buildTrendingPlaceList(),
-                const SizedBox(height: 25.0),
-                Container(
-                  height: _shouldShowOtherList ? 16.0 : 0.0,
-                  child: const Text(
-                    "Category",
-                    style:
-                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                SizedBox(height: _shouldShowOtherList ? 11.0 : 0),
+                buildHidable25SizedBox(),
+                buildHideableHeadingTextView("Category"),
+                buildHidable11SizedBox(),
                 buildCategoriesList(),
-                SizedBox(height: _shouldShowOtherList ? 25.0 : 0),
+                buildHidable25SizedBox(),
                 const Text(
                   "Upcoming Events",
                   style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
@@ -97,6 +83,39 @@ class _HomePageState extends State<HomePage>
           ),
         ),
       ),
+    );
+  }
+
+  AnimatedSizeAndFade buildHideableHeadingTextView(String text) {
+    return AnimatedSizeAndFade(
+      child: _shouldShowOtherList
+          ? Container(
+              height: 16.0,
+              child: Text(
+                text,
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            )
+          : VisibleGoneContainer(),
+    );
+  }
+
+  AnimatedSizeAndFade buildHidable11SizedBox() {
+    return AnimatedSizeAndFade(
+      child: _shouldShowOtherList
+          ? const SizedBox(height: 11.0)
+          : VisibleGoneContainer(),
+    );
+  }
+
+  AnimatedSizeAndFade buildHidable25SizedBox() {
+    return AnimatedSizeAndFade(
+      child: _shouldShowOtherList
+          ? SizedBox(height: 25.0)
+          : VisibleGoneContainer(),
     );
   }
 
@@ -412,20 +431,18 @@ class _HomePageState extends State<HomePage>
         )
       ],
     );
-    Row appBar = Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        SvgPicture.asset("images/splash_logo.svg", height: 30, width: 30),
-        ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: loadNetworkImage(
-              url:
-                  "https://media.istockphoto.com/vectors/man-avatar-icon-man-flat-icon-man-faceless-avatar-man-character-vector-id1027705716?k=6&m=1027705716&s=170667a&w=0&h=aTAhPe2CvnQGIbI25T_d7XNZwNyumn5Xe1fOMfhELx4=",
-              height: 30,
-              width: 30,
-            ))
-      ],
-    );
     return sliverAppbar;
+  }
+}
+
+class VisibleGoneContainer extends StatelessWidget {
+  const VisibleGoneContainer({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 0.0,
+      width: 0.0,
+    );
   }
 }
