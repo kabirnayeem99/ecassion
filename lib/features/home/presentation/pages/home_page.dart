@@ -12,6 +12,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../data/data_sources/category_local_data_source.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -159,7 +161,6 @@ class _HomePageState extends State<HomePage>
                   controller: _scrollController,
                   shrinkWrap: true,
                   itemCount: snapshot.data!.length,
-                  physics: const ClampingScrollPhysics(),
                   scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) {
                     final upcomingEvent = snapshot.data![index];
@@ -300,8 +301,11 @@ class _HomePageState extends State<HomePage>
                 child: Center(
                   child: Text(
                     category.name,
-                    style:
-                        TextStyle(fontSize: 12.0, fontWeight: FontWeight.w400),
+                    maxLines: 1,
+                    style: TextStyle(
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
               ),
@@ -320,8 +324,9 @@ class _HomePageState extends State<HomePage>
       child: Card(
         semanticContainer: true,
         clipBehavior: Clip.antiAliasWithSaveLayer,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0),
+        ),
         child: Stack(children: [
           loadNetworkImage(
             url: event.imageUrl,
@@ -426,8 +431,7 @@ class _HomePageState extends State<HomePage>
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
               child: loadNetworkImage(
-                url:
-                    "https://media.istockphoto.com/vectors/man-avatar-icon-man-flat-icon-man-faceless-avatar-man-character-vector-id1027705716?k=6&m=1027705716&s=170667a&w=0&h=aTAhPe2CvnQGIbI25T_d7XNZwNyumn5Xe1fOMfhELx4=",
+                url: loadRandomImageUrl(),
                 height: 30,
                 width: 30,
               ),

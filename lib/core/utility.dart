@@ -1,6 +1,5 @@
-import 'dart:math';
-
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:faker/faker.dart';
 import 'package:flutter/cupertino.dart';
 
 String convertDateTimeToReadableString(DateTime? time) {
@@ -36,7 +35,6 @@ Widget loadNetworkImage({
 }
 
 Duration loadRandomDuration() {
-  final random = Random();
-  final randomTimeMs = random.nextInt(1800);
+  final randomTimeMs = random.integer(1000);
   return Duration(milliseconds: randomTimeMs);
 }
