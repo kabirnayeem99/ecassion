@@ -15,6 +15,7 @@ dependencies:
   freezed_annotation:
   cached_network_image:
   extended_nested_scroll_view:
+  faker:
 
 dev_dependencies:
   flutter_test:

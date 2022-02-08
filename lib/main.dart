@@ -2,11 +2,11 @@ import 'package:ecassion/features/splash/presentation/pages/splash_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const EcassionApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class EcassionApp extends StatelessWidget {
+  const EcassionApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
