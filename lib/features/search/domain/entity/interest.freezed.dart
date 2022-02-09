@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'interest_dto.dart';
+part of 'interest.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,14 +15,14 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$InterestDtoTearOff {
-  const _$InterestDtoTearOff();
+class _$InterestTearOff {
+  const _$InterestTearOff();
 
-  _InterestDto call(
+  _Interest call(
       {String id = "",
       String imageUrl = "https://picsum.photos/id/237/200/300",
       String name = ""}) {
-    return _InterestDto(
+    return _Interest(
       id: id,
       imageUrl: imageUrl,
       name: name,
@@ -31,34 +31,33 @@ class _$InterestDtoTearOff {
 }
 
 /// @nodoc
-const $InterestDto = _$InterestDtoTearOff();
+const $Interest = _$InterestTearOff();
 
 /// @nodoc
-mixin _$InterestDto {
+mixin _$Interest {
   String get id => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $InterestDtoCopyWith<InterestDto> get copyWith =>
+  $InterestCopyWith<Interest> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $InterestDtoCopyWith<$Res> {
-  factory $InterestDtoCopyWith(
-          InterestDto value, $Res Function(InterestDto) then) =
-      _$InterestDtoCopyWithImpl<$Res>;
+abstract class $InterestCopyWith<$Res> {
+  factory $InterestCopyWith(Interest value, $Res Function(Interest) then) =
+      _$InterestCopyWithImpl<$Res>;
   $Res call({String id, String imageUrl, String name});
 }
 
 /// @nodoc
-class _$InterestDtoCopyWithImpl<$Res> implements $InterestDtoCopyWith<$Res> {
-  _$InterestDtoCopyWithImpl(this._value, this._then);
+class _$InterestCopyWithImpl<$Res> implements $InterestCopyWith<$Res> {
+  _$InterestCopyWithImpl(this._value, this._then);
 
-  final InterestDto _value;
+  final Interest _value;
   // ignore: unused_field
-  final $Res Function(InterestDto) _then;
+  final $Res Function(Interest) _then;
 
   @override
   $Res call({
@@ -84,24 +83,21 @@ class _$InterestDtoCopyWithImpl<$Res> implements $InterestDtoCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$InterestDtoCopyWith<$Res>
-    implements $InterestDtoCopyWith<$Res> {
-  factory _$InterestDtoCopyWith(
-          _InterestDto value, $Res Function(_InterestDto) then) =
-      __$InterestDtoCopyWithImpl<$Res>;
+abstract class _$InterestCopyWith<$Res> implements $InterestCopyWith<$Res> {
+  factory _$InterestCopyWith(_Interest value, $Res Function(_Interest) then) =
+      __$InterestCopyWithImpl<$Res>;
   @override
   $Res call({String id, String imageUrl, String name});
 }
 
 /// @nodoc
-class __$InterestDtoCopyWithImpl<$Res> extends _$InterestDtoCopyWithImpl<$Res>
-    implements _$InterestDtoCopyWith<$Res> {
-  __$InterestDtoCopyWithImpl(
-      _InterestDto _value, $Res Function(_InterestDto) _then)
-      : super(_value, (v) => _then(v as _InterestDto));
+class __$InterestCopyWithImpl<$Res> extends _$InterestCopyWithImpl<$Res>
+    implements _$InterestCopyWith<$Res> {
+  __$InterestCopyWithImpl(_Interest _value, $Res Function(_Interest) _then)
+      : super(_value, (v) => _then(v as _Interest));
 
   @override
-  _InterestDto get _value => super._value as _InterestDto;
+  _Interest get _value => super._value as _Interest;
 
   @override
   $Res call({
@@ -109,7 +105,7 @@ class __$InterestDtoCopyWithImpl<$Res> extends _$InterestDtoCopyWithImpl<$Res>
     Object? imageUrl = freezed,
     Object? name = freezed,
   }) {
-    return _then(_InterestDto(
+    return _then(_Interest(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -128,8 +124,8 @@ class __$InterestDtoCopyWithImpl<$Res> extends _$InterestDtoCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_InterestDto implements _InterestDto {
-  _$_InterestDto(
+class _$_Interest implements _Interest {
+  _$_Interest(
       {this.id = "",
       this.imageUrl = "https://picsum.photos/id/237/200/300",
       this.name = ""});
@@ -146,14 +142,14 @@ class _$_InterestDto implements _InterestDto {
 
   @override
   String toString() {
-    return 'InterestDto(id: $id, imageUrl: $imageUrl, name: $name)';
+    return 'Interest(id: $id, imageUrl: $imageUrl, name: $name)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _InterestDto &&
+            other is _Interest &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.imageUrl, imageUrl) &&
             const DeepCollectionEquality().equals(other.name, name));
@@ -168,13 +164,12 @@ class _$_InterestDto implements _InterestDto {
 
   @JsonKey(ignore: true)
   @override
-  _$InterestDtoCopyWith<_InterestDto> get copyWith =>
-      __$InterestDtoCopyWithImpl<_InterestDto>(this, _$identity);
+  _$InterestCopyWith<_Interest> get copyWith =>
+      __$InterestCopyWithImpl<_Interest>(this, _$identity);
 }
 
-abstract class _InterestDto implements InterestDto {
-  factory _InterestDto({String id, String imageUrl, String name}) =
-      _$_InterestDto;
+abstract class _Interest implements Interest {
+  factory _Interest({String id, String imageUrl, String name}) = _$_Interest;
 
   @override
   String get id;
@@ -184,6 +179,6 @@ abstract class _InterestDto implements InterestDto {
   String get name;
   @override
   @JsonKey(ignore: true)
-  _$InterestDtoCopyWith<_InterestDto> get copyWith =>
+  _$InterestCopyWith<_Interest> get copyWith =>
       throw _privateConstructorUsedError;
 }

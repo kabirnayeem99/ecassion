@@ -1,10 +1,10 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'event_dto.freezed.dart';
+part 'event.freezed.dart';
 
 @freezed
-class EventDto with _$EventDto {
-  factory EventDto({
+class Event with _$Event {
+  factory Event({
     @Default("Unknown") String name,
     @Default("https://picsum.photos/id/237/200/300") String imageUrl,
     @Default(0) int price,
@@ -12,5 +12,5 @@ class EventDto with _$EventDto {
     @Default("") String address,
     @Default(false) bool isSaved,
     @Default(false) bool isTop,
-  }) = _EventDto;
+  }) = _Event;
 }

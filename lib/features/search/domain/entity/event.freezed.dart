@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'event_dto.dart';
+part of 'event.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,10 +15,10 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$EventDtoTearOff {
-  const _$EventDtoTearOff();
+class _$EventTearOff {
+  const _$EventTearOff();
 
-  _EventDto call(
+  _Event call(
       {String name = "Unknown",
       String imageUrl = "https://picsum.photos/id/237/200/300",
       int price = 0,
@@ -26,7 +26,7 @@ class _$EventDtoTearOff {
       String address = "",
       bool isSaved = false,
       bool isTop = false}) {
-    return _EventDto(
+    return _Event(
       name: name,
       imageUrl: imageUrl,
       price: price,
@@ -39,10 +39,10 @@ class _$EventDtoTearOff {
 }
 
 /// @nodoc
-const $EventDto = _$EventDtoTearOff();
+const $Event = _$EventTearOff();
 
 /// @nodoc
-mixin _$EventDto {
+mixin _$Event {
   String get name => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
   int get price => throw _privateConstructorUsedError;
@@ -52,14 +52,13 @@ mixin _$EventDto {
   bool get isTop => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $EventDtoCopyWith<EventDto> get copyWith =>
-      throw _privateConstructorUsedError;
+  $EventCopyWith<Event> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $EventDtoCopyWith<$Res> {
-  factory $EventDtoCopyWith(EventDto value, $Res Function(EventDto) then) =
-      _$EventDtoCopyWithImpl<$Res>;
+abstract class $EventCopyWith<$Res> {
+  factory $EventCopyWith(Event value, $Res Function(Event) then) =
+      _$EventCopyWithImpl<$Res>;
   $Res call(
       {String name,
       String imageUrl,
@@ -71,12 +70,12 @@ abstract class $EventDtoCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$EventDtoCopyWithImpl<$Res> implements $EventDtoCopyWith<$Res> {
-  _$EventDtoCopyWithImpl(this._value, this._then);
+class _$EventCopyWithImpl<$Res> implements $EventCopyWith<$Res> {
+  _$EventCopyWithImpl(this._value, this._then);
 
-  final EventDto _value;
+  final Event _value;
   // ignore: unused_field
-  final $Res Function(EventDto) _then;
+  final $Res Function(Event) _then;
 
   @override
   $Res call({
@@ -122,9 +121,9 @@ class _$EventDtoCopyWithImpl<$Res> implements $EventDtoCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$EventDtoCopyWith<$Res> implements $EventDtoCopyWith<$Res> {
-  factory _$EventDtoCopyWith(_EventDto value, $Res Function(_EventDto) then) =
-      __$EventDtoCopyWithImpl<$Res>;
+abstract class _$EventCopyWith<$Res> implements $EventCopyWith<$Res> {
+  factory _$EventCopyWith(_Event value, $Res Function(_Event) then) =
+      __$EventCopyWithImpl<$Res>;
   @override
   $Res call(
       {String name,
@@ -137,13 +136,13 @@ abstract class _$EventDtoCopyWith<$Res> implements $EventDtoCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$EventDtoCopyWithImpl<$Res> extends _$EventDtoCopyWithImpl<$Res>
-    implements _$EventDtoCopyWith<$Res> {
-  __$EventDtoCopyWithImpl(_EventDto _value, $Res Function(_EventDto) _then)
-      : super(_value, (v) => _then(v as _EventDto));
+class __$EventCopyWithImpl<$Res> extends _$EventCopyWithImpl<$Res>
+    implements _$EventCopyWith<$Res> {
+  __$EventCopyWithImpl(_Event _value, $Res Function(_Event) _then)
+      : super(_value, (v) => _then(v as _Event));
 
   @override
-  _EventDto get _value => super._value as _EventDto;
+  _Event get _value => super._value as _Event;
 
   @override
   $Res call({
@@ -155,7 +154,7 @@ class __$EventDtoCopyWithImpl<$Res> extends _$EventDtoCopyWithImpl<$Res>
     Object? isSaved = freezed,
     Object? isTop = freezed,
   }) {
-    return _then(_EventDto(
+    return _then(_Event(
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -190,8 +189,8 @@ class __$EventDtoCopyWithImpl<$Res> extends _$EventDtoCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_EventDto implements _EventDto {
-  _$_EventDto(
+class _$_Event implements _Event {
+  _$_Event(
       {this.name = "Unknown",
       this.imageUrl = "https://picsum.photos/id/237/200/300",
       this.price = 0,
@@ -223,14 +222,14 @@ class _$_EventDto implements _EventDto {
 
   @override
   String toString() {
-    return 'EventDto(name: $name, imageUrl: $imageUrl, price: $price, time: $time, address: $address, isSaved: $isSaved, isTop: $isTop)';
+    return 'Event(name: $name, imageUrl: $imageUrl, price: $price, time: $time, address: $address, isSaved: $isSaved, isTop: $isTop)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _EventDto &&
+            other is _Event &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.imageUrl, imageUrl) &&
             const DeepCollectionEquality().equals(other.price, price) &&
@@ -253,19 +252,19 @@ class _$_EventDto implements _EventDto {
 
   @JsonKey(ignore: true)
   @override
-  _$EventDtoCopyWith<_EventDto> get copyWith =>
-      __$EventDtoCopyWithImpl<_EventDto>(this, _$identity);
+  _$EventCopyWith<_Event> get copyWith =>
+      __$EventCopyWithImpl<_Event>(this, _$identity);
 }
 
-abstract class _EventDto implements EventDto {
-  factory _EventDto(
+abstract class _Event implements Event {
+  factory _Event(
       {String name,
       String imageUrl,
       int price,
       DateTime? time,
       String address,
       bool isSaved,
-      bool isTop}) = _$_EventDto;
+      bool isTop}) = _$_Event;
 
   @override
   String get name;
@@ -283,6 +282,5 @@ abstract class _EventDto implements EventDto {
   bool get isTop;
   @override
   @JsonKey(ignore: true)
-  _$EventDtoCopyWith<_EventDto> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$EventCopyWith<_Event> get copyWith => throw _privateConstructorUsedError;
 }

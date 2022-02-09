@@ -1,12 +1,12 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'city_dto.freezed.dart';
+part 'interest.freezed.dart';
 
 @freezed
-class CityDto with _$CityDto {
-  factory CityDto({
+class Interest with _$Interest {
+  factory Interest({
     @Default("") String id,
     @Default("https://picsum.photos/id/237/200/300") String imageUrl,
     @Default("") String name,
-  }) = _CityDto;
+  }) = _Interest;
 }

@@ -9,6 +9,7 @@ class SearchRepositoryImpl extends SearchRepository {
   @override
   List<Object> searchEventByInterest(String interest) {
     return [];
+
   }
 
   @override

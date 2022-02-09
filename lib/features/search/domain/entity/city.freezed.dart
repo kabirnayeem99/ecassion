@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'city_dto.dart';
+part of 'city.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,14 +15,14 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$CityDtoTearOff {
-  const _$CityDtoTearOff();
+class _$CityTearOff {
+  const _$CityTearOff();
 
-  _CityDto call(
+  _City call(
       {String id = "",
       String imageUrl = "https://picsum.photos/id/237/200/300",
       String name = ""}) {
-    return _CityDto(
+    return _City(
       id: id,
       imageUrl: imageUrl,
       name: name,
@@ -31,32 +31,32 @@ class _$CityDtoTearOff {
 }
 
 /// @nodoc
-const $CityDto = _$CityDtoTearOff();
+const $City = _$CityTearOff();
 
 /// @nodoc
-mixin _$CityDto {
+mixin _$City {
   String get id => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $CityDtoCopyWith<CityDto> get copyWith => throw _privateConstructorUsedError;
+  $CityCopyWith<City> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CityDtoCopyWith<$Res> {
-  factory $CityDtoCopyWith(CityDto value, $Res Function(CityDto) then) =
-      _$CityDtoCopyWithImpl<$Res>;
+abstract class $CityCopyWith<$Res> {
+  factory $CityCopyWith(City value, $Res Function(City) then) =
+      _$CityCopyWithImpl<$Res>;
   $Res call({String id, String imageUrl, String name});
 }
 
 /// @nodoc
-class _$CityDtoCopyWithImpl<$Res> implements $CityDtoCopyWith<$Res> {
-  _$CityDtoCopyWithImpl(this._value, this._then);
+class _$CityCopyWithImpl<$Res> implements $CityCopyWith<$Res> {
+  _$CityCopyWithImpl(this._value, this._then);
 
-  final CityDto _value;
+  final City _value;
   // ignore: unused_field
-  final $Res Function(CityDto) _then;
+  final $Res Function(City) _then;
 
   @override
   $Res call({
@@ -82,21 +82,21 @@ class _$CityDtoCopyWithImpl<$Res> implements $CityDtoCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$CityDtoCopyWith<$Res> implements $CityDtoCopyWith<$Res> {
-  factory _$CityDtoCopyWith(_CityDto value, $Res Function(_CityDto) then) =
-      __$CityDtoCopyWithImpl<$Res>;
+abstract class _$CityCopyWith<$Res> implements $CityCopyWith<$Res> {
+  factory _$CityCopyWith(_City value, $Res Function(_City) then) =
+      __$CityCopyWithImpl<$Res>;
   @override
   $Res call({String id, String imageUrl, String name});
 }
 
 /// @nodoc
-class __$CityDtoCopyWithImpl<$Res> extends _$CityDtoCopyWithImpl<$Res>
-    implements _$CityDtoCopyWith<$Res> {
-  __$CityDtoCopyWithImpl(_CityDto _value, $Res Function(_CityDto) _then)
-      : super(_value, (v) => _then(v as _CityDto));
+class __$CityCopyWithImpl<$Res> extends _$CityCopyWithImpl<$Res>
+    implements _$CityCopyWith<$Res> {
+  __$CityCopyWithImpl(_City _value, $Res Function(_City) _then)
+      : super(_value, (v) => _then(v as _City));
 
   @override
-  _CityDto get _value => super._value as _CityDto;
+  _City get _value => super._value as _City;
 
   @override
   $Res call({
@@ -104,7 +104,7 @@ class __$CityDtoCopyWithImpl<$Res> extends _$CityDtoCopyWithImpl<$Res>
     Object? imageUrl = freezed,
     Object? name = freezed,
   }) {
-    return _then(_CityDto(
+    return _then(_City(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -123,8 +123,8 @@ class __$CityDtoCopyWithImpl<$Res> extends _$CityDtoCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_CityDto implements _CityDto {
-  _$_CityDto(
+class _$_City implements _City {
+  _$_City(
       {this.id = "",
       this.imageUrl = "https://picsum.photos/id/237/200/300",
       this.name = ""});
@@ -141,14 +141,14 @@ class _$_CityDto implements _CityDto {
 
   @override
   String toString() {
-    return 'CityDto(id: $id, imageUrl: $imageUrl, name: $name)';
+    return 'City(id: $id, imageUrl: $imageUrl, name: $name)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _CityDto &&
+            other is _City &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.imageUrl, imageUrl) &&
             const DeepCollectionEquality().equals(other.name, name));
@@ -163,12 +163,12 @@ class _$_CityDto implements _CityDto {
 
   @JsonKey(ignore: true)
   @override
-  _$CityDtoCopyWith<_CityDto> get copyWith =>
-      __$CityDtoCopyWithImpl<_CityDto>(this, _$identity);
+  _$CityCopyWith<_City> get copyWith =>
+      __$CityCopyWithImpl<_City>(this, _$identity);
 }
 
-abstract class _CityDto implements CityDto {
-  factory _CityDto({String id, String imageUrl, String name}) = _$_CityDto;
+abstract class _City implements City {
+  factory _City({String id, String imageUrl, String name}) = _$_City;
 
   @override
   String get id;
@@ -178,6 +178,5 @@ abstract class _CityDto implements CityDto {
   String get name;
   @override
   @JsonKey(ignore: true)
-  _$CityDtoCopyWith<_CityDto> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$CityCopyWith<_City> get copyWith => throw _privateConstructorUsedError;
 }
