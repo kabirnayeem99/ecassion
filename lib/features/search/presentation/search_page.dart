@@ -86,6 +86,7 @@ class _SearchPageState extends State<SearchPage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    buildHidable11SizedBox(),
                     buildSearchField(),
                     buildHidable25SizedBox(),
                     buildHideableHeadingTextView("Search by Interest"),
