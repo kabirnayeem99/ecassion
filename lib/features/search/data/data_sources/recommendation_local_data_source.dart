@@ -1,3 +1,4 @@
+import 'package:ecassion/core/utility.dart';
 import 'package:ecassion/features/search/data/dto/event_dto.dart';
 import 'package:faker/faker.dart';
 
@@ -11,6 +12,8 @@ class RecommendationDataSource {
   }
 
   Future<List<EventDto>> getNearbyEvents() async {
+    await Future.delayed(loadRandomDuration());
+
     final currentLocation = await getCurrentLocation();
 
     return [
@@ -62,6 +65,7 @@ class RecommendationDataSource {
   }
 
   Future<List<CityDto>> getPopularCities() async {
+    await Future.delayed(loadRandomDuration());
     return [
       CityDto(
           id: faker.guid.guid(),
@@ -90,6 +94,8 @@ class RecommendationDataSource {
   }
 
   Future<List<InterestDto>> getAllInterests() async {
+    await Future.delayed(loadRandomDuration());
+
     return [
       InterestDto(
         id: faker.guid.guid(),
