@@ -6,10 +6,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class EventDetailsPage extends StatelessWidget {
-  EventDetailsPage({Key? key}) : super(key: key);
+class EventDetailsPage extends StatefulWidget {
+  const EventDetailsPage({Key? key}) : super(key: key);
 
+  @override
+  State<EventDetailsPage> createState() => _EventDetailsPageState();
+}
+
+class _EventDetailsPageState extends State<EventDetailsPage> {
   late Size _size;
+
+  @override
+  void setState(VoidCallback fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -337,7 +349,7 @@ class EventDetailsPage extends StatelessWidget {
               onTap: () {
                 _navigateBack(context);
               },
-              child: Icon(
+              child: const Icon(
                 CupertinoIcons.back,
                 color: Colors.white,
               ),
