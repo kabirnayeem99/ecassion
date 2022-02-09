@@ -34,6 +34,19 @@ Widget loadNetworkImage({
   );
 }
 
+Widget loadRoundedNetworkImage({
+  String url = "https://picsum.photos/id/237/200/300",
+  double height = 0.0,
+  double width = 0.0,
+  BoxFit fit = BoxFit.fill,
+  double radius = 12.0,
+}) {
+  return ClipRRect(
+    child: loadNetworkImage(url: url, height: height, width: width, fit: fit),
+    borderRadius: BorderRadius.circular(radius),
+  );
+}
+
 Duration loadRandomDuration() {
   final randomTimeMs = random.integer(1000);
   return Duration(milliseconds: randomTimeMs);
