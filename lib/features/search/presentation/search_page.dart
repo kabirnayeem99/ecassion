@@ -22,7 +22,7 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final SearchUiState _uiState = SearchUiState();
-
+  late Size _size;
   bool _shouldShowOtherList = true;
   final _scrollController = ScrollController();
 
@@ -84,6 +84,8 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
+    _size = MediaQuery.of(context).size;
+
     return SafeArea(
       child: AnimatedSizeAndFade(
         child: _uiState.isLoading
@@ -147,7 +149,7 @@ class _SearchPageState extends State<SearchPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const EventDetailsPage(),
+        builder: (context) => EventDetailsPage(),
       ),
     );
   }
@@ -159,8 +161,8 @@ class _SearchPageState extends State<SearchPage> {
       },
       child: Container(
         margin: const EdgeInsets.only(right: 16.0),
-        width: 155.0,
-        height: 155.0,
+        width: _size.width * 0.49,
+        height: _size.height * 0.21,
         child: Card(
           semanticContainer: true,
           clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -171,8 +173,8 @@ class _SearchPageState extends State<SearchPage> {
               loadNetworkImage(
                 url: event.imageUrl,
                 fit: BoxFit.fill,
-                height: 155,
-                width: 155,
+                height: _size.height * 0.40,
+                width: _size.width * 0.49,
               ),
               Positioned(
                 bottom: 0,

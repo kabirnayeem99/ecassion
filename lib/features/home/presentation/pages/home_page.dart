@@ -26,6 +26,9 @@ class _HomePageState extends State<HomePage>
 
   final HomePageUiState _uiState = HomePageUiState();
 
+  late Size _size;
+
+
   @override
   void initState() {
     _setUpScrollingHidingAnimationListener();
@@ -37,6 +40,7 @@ class _HomePageState extends State<HomePage>
     final GetTrendingEvent _getTrendingEvent = GetTrendingEvent();
     final GetUpcomingEvent _getUpcomingEvent = GetUpcomingEvent();
     final GetCategories _getCategories = GetCategories();
+
 
     _getCategories.getCategoryList().then((value) => {
           setState(() {
@@ -88,6 +92,7 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     final double statusBarHeight = MediaQuery.of(context).padding.top;
     final double pinnedHeaderHeight = statusBarHeight + kToolbarHeight;
+    _size = MediaQuery.of(context).size;
 
     return Scaffold(
       body: SafeArea(
@@ -208,7 +213,7 @@ class _HomePageState extends State<HomePage>
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const EventDetailsPage(),
+        builder: (context) =>  EventDetailsPage(),
       ),
     );
   }
@@ -221,8 +226,8 @@ class _HomePageState extends State<HomePage>
       },
       child: Container(
         margin: const EdgeInsets.only(right: 16.0),
-        width: 155.0,
-        height: 155.0,
+        width: _size.width * 0.49,
+        height: _size.height * 0.21,
         child: Card(
           semanticContainer: true,
           clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -233,8 +238,8 @@ class _HomePageState extends State<HomePage>
               loadNetworkImage(
                 url: upcomingEvent.imageUrl,
                 fit: BoxFit.fill,
-                height: 155,
-                width: 155,
+                height: _size.height * 0.40,
+                width: _size.width * 0.49,
               ),
               Positioned(
                 bottom: 0,
@@ -362,12 +367,14 @@ class _HomePageState extends State<HomePage>
             borderRadius: BorderRadius.circular(16.0),
           ),
           child: Stack(children: [
-            loadNetworkImage(
-              url: event.imageUrl,
-              fit: BoxFit.fill,
-              height: 199,
-              width: 312,
-            ),
+          Expanded(
+          child: loadNetworkImage(
+          url: event.imageUrl,
+            fit: BoxFit.cover,
+            height: _size.height * 0.20473251,
+            width: _size.width * 0.420987654,
+          ),
+        ),
             Positioned(
               bottom: 0,
               child: Container(

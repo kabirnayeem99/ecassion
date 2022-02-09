@@ -1,14 +1,20 @@
 import 'package:ecassion/core/utility.dart';
 import 'package:ecassion/features/home/data/data_sources/category_local_data_source.dart';
+import 'package:ecassion/features/search/domain/entity/event.dart';
+import 'package:faker/faker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class EventDetailsPage extends StatelessWidget {
-  const EventDetailsPage({Key? key}) : super(key: key);
+  EventDetailsPage({Key? key}) : super(key: key);
+
+  late Size _size;
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    final Size size = MediaQuery.of(context).size;
+    _size = size;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -33,8 +39,96 @@ class EventDetailsPage extends StatelessWidget {
             buildFirstHeader("Recommendations"),
             SizedBox(
               height: size.height,
+              child: GridView.builder(
+                  itemCount: 12,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 11.0,
+                    mainAxisSpacing: 11.0,
+                  ),
+                  itemBuilder: (context, index) {
+                    final event = Event(
+                      name: faker.sport.name() + " World Team Cup",
+                      imageUrl:
+                          randomImageUrl[random.integer(randomImageUrl.length)],
+                      price: random.integer(10000),
+                      time: faker.date.dateTime(),
+                      address: faker.address.city(),
+                      isSaved: random.boolean(),
+                      isTop: random.boolean(),
+                    );
+                    return buildUpcomingEventCard(context, event);
+                  }),
             )
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildUpcomingEventCard(BuildContext context, Event event) {
+    return GestureDetector(
+      child: Container(
+        margin: const EdgeInsets.only(right: 16.0),
+        width: 155.0,
+        height: 155.0,
+        child: Card(
+          semanticContainer: true,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+          child: Stack(
+            children: [
+              Expanded(
+                child: loadNetworkImage(
+                  url: event.imageUrl,
+                  fit: BoxFit.cover,
+                  height: _size.height * 0.29465021,
+                  width: _size.width / 2.1,
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  padding: const EdgeInsets.all(8.0),
+                  height: 49,
+                  width: 49,
+                  color: Colors.white,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        event.name,
+                        maxLines: 1,
+                        style: const TextStyle(
+                            fontSize: 12.0, fontWeight: FontWeight.w400),
+                      ),
+                      Text(
+                        event.address,
+                        maxLines: 1,
+                        style: const TextStyle(
+                            fontSize: 10.0,
+                            color: Color(0xff8f8f8f),
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                right: 12.0,
+                top: 12.0,
+                child: SvgPicture.asset(
+                  "images/icon_save.svg",
+                  height: event.isSaved ? 25 : 0.0,
+                  width: event.isSaved ? 25 : 0.0,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
