@@ -42,6 +42,13 @@ class _SplashPageState extends State<SplashPage>
   }
 
   @override
+  void setState(VoidCallback fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: AnimatedBuilder(

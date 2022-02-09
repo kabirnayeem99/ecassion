@@ -62,6 +62,13 @@ class _HomePageState extends State<HomePage>
     });
   }
 
+  @override
+  void setState(VoidCallback fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
   void _setUpScrollingHidingAnimationListener() {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels > 50) {

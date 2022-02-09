@@ -75,6 +75,13 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   @override
+  void setState(VoidCallback fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: AnimatedSizeAndFade(

@@ -29,10 +29,19 @@ class _LandingPageState extends State<LandingPage> {
   }
 
   @override
+  void setState(VoidCallback fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: homeScreenTabs[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
+        elevation: 0.0,
+        landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
         currentIndex: _selectedIndex,
         onTap: (index) {
           _onItemTapped(index);
