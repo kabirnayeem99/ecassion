@@ -7,12 +7,9 @@ import 'package:ecassion/features/home/domain/use_cases/get_categories.dart';
 import 'package:ecassion/features/home/domain/use_cases/get_trending_event.dart';
 import 'package:ecassion/features/home/domain/use_cases/get_upcoming_event.dart';
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
-import 'package:faker/faker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-import '../../data/data_sources/category_local_data_source.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -26,12 +23,46 @@ class _HomePageState extends State<HomePage>
   bool _shouldShowOtherList = true;
   final _scrollController = ScrollController();
 
-  final GetTrendingEvent _getTrendingEvent = GetTrendingEvent();
-  final GetUpcomingEvent _getUpcomingEvent = GetUpcomingEvent();
-  final GetCategories _getCategories = GetCategories();
+  final HomePageUiState _uiState = HomePageUiState();
 
   @override
   void initState() {
+    _setUpScrollingHidingAnimationListener();
+    _loadAllData();
+    super.initState();
+  }
+
+  void _loadAllData() async {
+    final GetTrendingEvent _getTrendingEvent = GetTrendingEvent();
+    final GetUpcomingEvent _getUpcomingEvent = GetUpcomingEvent();
+    final GetCategories _getCategories = GetCategories();
+
+    _getCategories.getCategoryList().then((value) => {
+          setState(() {
+            _uiState.categories = value;
+          })
+        });
+
+    _getUpcomingEvent.getUpcomingEvents().then((value) => {
+          setState(() {
+            _uiState.upcomingEvents = value;
+          })
+        });
+
+    _getTrendingEvent.getTrendingEvents().then((value) => {
+          setState(() {
+            _uiState.trendingEvents = value;
+            _uiState.isLoading = false;
+          })
+        });
+
+    setState(() {
+      _uiState.profilePictureUrl =
+          "https://cloud.netlifyusercontent.com/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/a683a10f-9473-46dd-971a-3bc100917972/29-angryguybeard.jpg";
+    });
+  }
+
+  void _setUpScrollingHidingAnimationListener() {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels > 50) {
         setState(() {
@@ -43,7 +74,6 @@ class _HomePageState extends State<HomePage>
         });
       }
     });
-    super.initState();
   }
 
   @override
@@ -78,7 +108,10 @@ class _HomePageState extends State<HomePage>
                 buildHidable25SizedBox(),
                 const Text(
                   "Upcoming Events",
-                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 11.0),
                 buildUpcomingPlaceList(),
@@ -90,7 +123,7 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  AnimatedSizeAndFade buildHideableHeadingTextView(String text) {
+  Widget buildHideableHeadingTextView(String text) {
     return AnimatedSizeAndFade(
       child: _shouldShowOtherList
           ? SizedBox(
@@ -107,7 +140,7 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  AnimatedSizeAndFade buildHidable11SizedBox() {
+  Widget buildHidable11SizedBox() {
     return AnimatedSizeAndFade(
       child: _shouldShowOtherList
           ? const SizedBox(height: 11.0)
@@ -115,7 +148,7 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  AnimatedSizeAndFade buildHidable25SizedBox() {
+  Widget buildHidable25SizedBox() {
     return AnimatedSizeAndFade(
       child: _shouldShowOtherList
           ? const SizedBox(height: 25.0)
@@ -123,59 +156,44 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  FutureBuilder<List<TrendingEvent>> buildTrendingPlaceList() {
-    return FutureBuilder(
-      future: _getTrendingEvent.getTrendingEvents(),
-      builder:
-          (BuildContext context, AsyncSnapshot<List<TrendingEvent>> snapshot) {
-        if (snapshot.hasData) {
-          return AnimatedSizeAndFade(
-            child: _shouldShowOtherList
-                ? SizedBox(
-                    height: 199.0,
-                    child: ListView.builder(
-                      itemCount: snapshot.data?.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return buildTrendingEventCard(
-                            context, snapshot.data![index]);
-                      },
-                    ),
-                  )
-                : const VisibleGoneContainer(),
-          );
-        } else {
-          return const CupertinoActivityIndicator();
-        }
-      },
+  Widget buildTrendingPlaceList() {
+    return AnimatedSizeAndFade(
+      child: _shouldShowOtherList
+          ? SizedBox(
+              height: 199.0,
+              child: ListView.builder(
+                itemCount: _uiState.trendingEvents.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return buildTrendingEventCard(
+                      context, _uiState.trendingEvents[index]);
+                },
+              ),
+            )
+          : const VisibleGoneContainer(),
     );
   }
 
-  FutureBuilder<List<UpcomingEvent>> buildUpcomingPlaceList() {
-    return FutureBuilder(
-      future: _getUpcomingEvent.getUpcomingEvents(),
-      builder: (context, AsyncSnapshot<List<UpcomingEvent>> snapshot) {
-        return snapshot.hasData
-            ? Expanded(
-                child: GridView.builder(
-                  controller: _scrollController,
-                  shrinkWrap: true,
-                  itemCount: snapshot.data!.length,
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: (context, index) {
-                    final upcomingEvent = snapshot.data![index];
-                    return buildUpcomingEventCard(context, upcomingEvent);
-                  },
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 11.0,
-                    mainAxisSpacing: 11.0,
-                  ),
-                ),
-              )
-            : const CupertinoActivityIndicator();
-      },
-    );
+  Widget buildUpcomingPlaceList() {
+    return _uiState.upcomingEvents.isNotEmpty
+        ? Expanded(
+            child: GridView.builder(
+              controller: _scrollController,
+              shrinkWrap: true,
+              itemCount: _uiState.upcomingEvents.length,
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) {
+                final upcomingEvent = _uiState.upcomingEvents[index];
+                return buildUpcomingEventCard(context, upcomingEvent);
+              },
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 11.0,
+                mainAxisSpacing: 11.0,
+              ),
+            ),
+          )
+        : const CupertinoActivityIndicator();
   }
 
   Container buildUpcomingEventCard(
@@ -245,34 +263,23 @@ class _HomePageState extends State<HomePage>
 
   Widget buildCategoriesList() {
     return AnimatedSizeAndFade(
-      child: FutureBuilder(
-        future: _getCategories.getCategoryList(),
-        builder: (context, AsyncSnapshot<List<Category>> snapshot) {
-          if (snapshot.hasData) {
-            return AnimatedSizeAndFade(
-                child: _shouldShowOtherList
-                    ? SizedBox(
-                        height: 88.0,
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: snapshot.data!.length,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            final category = snapshot.data![index];
-                            return buildCategoryCard(context, category);
-                          },
-                        ),
-                      )
-                    : const VisibleGoneContainer());
-          } else {
-            return const CupertinoActivityIndicator();
-          }
-        },
-      ),
-    );
+        child: _shouldShowOtherList
+            ? SizedBox(
+                height: 88.0,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: _uiState.categories.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    final category = _uiState.categories[index];
+                    return buildCategoryCard(context, category);
+                  },
+                ),
+              )
+            : const VisibleGoneContainer());
   }
 
-  Container buildCategoryCard(BuildContext context, Category category) {
+  Widget buildCategoryCard(BuildContext context, Category category) {
     return Container(
       margin: const EdgeInsets.only(right: 16.0),
       width: 88.0,
@@ -317,7 +324,7 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  Container buildTrendingEventCard(BuildContext context, TrendingEvent event) {
+  Widget buildTrendingEventCard(BuildContext context, TrendingEvent event) {
     return Container(
       margin: const EdgeInsets.only(right: 20.0),
       width: 312.0,
@@ -354,6 +361,7 @@ class _HomePageState extends State<HomePage>
                       children: [
                         Text(
                           event.name,
+                          maxLines: 1,
                           style: const TextStyle(
                             fontSize: 12.0,
                             fontWeight: FontWeight.w500,
@@ -364,6 +372,7 @@ class _HomePageState extends State<HomePage>
                           convertDateTimeToReadableString(event.time) +
                               " " +
                               event.address,
+                          maxLines: 1,
                           style: const TextStyle(
                               fontSize: 10.0, color: Color(0xff8D8D8D)),
                         ),
@@ -372,7 +381,7 @@ class _HomePageState extends State<HomePage>
                   ),
                   const SizedBox(width: 12.0),
                   Text(
-                    faker.currency.code() + " " + event.price.toString(),
+                    "Rs " + event.price.toString(),
                     style: const TextStyle(
                       fontSize: 12.0,
                       color: Color(0xff6564DB),
@@ -429,7 +438,7 @@ class _HomePageState extends State<HomePage>
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20.0),
             child: loadNetworkImage(
-              url: loadRandomImageUrl(),
+              url: _uiState.profilePictureUrl,
               height: 30,
               width: 30,
             ),
@@ -439,6 +448,15 @@ class _HomePageState extends State<HomePage>
     );
     return sliverAppbar;
   }
+}
+
+class HomePageUiState {
+  List<TrendingEvent> trendingEvents = [];
+  List<UpcomingEvent> upcomingEvents = [];
+  List<Category> categories = [];
+  bool isLoading = false;
+  String message = "";
+  String profilePictureUrl = "";
 }
 
 class VisibleGoneContainer extends StatelessWidget {
