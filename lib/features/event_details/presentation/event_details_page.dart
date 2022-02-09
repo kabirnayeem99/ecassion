@@ -19,7 +19,7 @@ class EventDetailsPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildTopBar(size),
+            buildTopBar(size, context),
             buildEventBySection()[0],
             buildEventBySection()[1],
             buildEventBySection()[2],
@@ -200,7 +200,7 @@ class EventDetailsPage extends StatelessWidget {
     ];
   }
 
-  Widget buildTopBar(Size size) {
+  Widget buildTopBar(Size size, BuildContext context) {
     return SizedBox(
       height: size.height * 0.56,
       width: size.width,
@@ -238,10 +238,15 @@ class EventDetailsPage extends StatelessWidget {
               ),
             ),
           ),
-          const Positioned(
-            child: Icon(
-              CupertinoIcons.back,
-              color: Colors.white,
+          Positioned(
+            child: GestureDetector(
+              onTap: () {
+                _navigateBack(context);
+              },
+              child: Icon(
+                CupertinoIcons.back,
+                color: Colors.white,
+              ),
             ),
             top: 56,
             left: 8,
@@ -263,6 +268,10 @@ class EventDetailsPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _navigateBack(BuildContext context) {
+    Navigator.pop(context);
   }
 
   Widget buildShortDescCard() {

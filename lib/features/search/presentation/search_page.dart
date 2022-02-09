@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../core/utility.dart';
+import '../../event_details/presentation/event_details_page.dart';
 import '../../home/presentation/pages/home_page.dart';
 import '../domain/entity/event.dart';
 
@@ -142,65 +143,79 @@ class _SearchPageState extends State<SearchPage> {
         : const CupertinoActivityIndicator();
   }
 
-  Container buildUpcomingEventCard(BuildContext context, Event event) {
-    return Container(
-      margin: const EdgeInsets.only(right: 16.0),
-      width: 155.0,
-      height: 155.0,
-      child: Card(
-        semanticContainer: true,
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-        child: Stack(
-          children: [
-            loadNetworkImage(
-              url: event.imageUrl,
-              fit: BoxFit.fill,
-              height: 155,
-              width: 155,
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                padding: const EdgeInsets.all(8.0),
-                height: 49,
-                width: 49,
-                color: Colors.white,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      event.name,
-                      maxLines: 1,
-                      style: const TextStyle(
-                          fontSize: 12.0, fontWeight: FontWeight.w400),
-                    ),
-                    Text(
-                      event.address,
-                      maxLines: 1,
-                      style: const TextStyle(
-                          fontSize: 10.0,
-                          color: Color(0xff8f8f8f),
-                          fontWeight: FontWeight.w400),
-                    ),
-                  ],
+  void _navigateToEventDetailsPage(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const EventDetailsPage(),
+      ),
+    );
+  }
+
+  Widget buildUpcomingEventCard(BuildContext context, Event event) {
+    return GestureDetector(
+      onTap: () {
+        _navigateToEventDetailsPage(context);
+      },
+      child: Container(
+        margin: const EdgeInsets.only(right: 16.0),
+        width: 155.0,
+        height: 155.0,
+        child: Card(
+          semanticContainer: true,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+          child: Stack(
+            children: [
+              loadNetworkImage(
+                url: event.imageUrl,
+                fit: BoxFit.fill,
+                height: 155,
+                width: 155,
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  padding: const EdgeInsets.all(8.0),
+                  height: 49,
+                  width: 49,
+                  color: Colors.white,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        event.name,
+                        maxLines: 1,
+                        style: const TextStyle(
+                            fontSize: 12.0, fontWeight: FontWeight.w400),
+                      ),
+                      Text(
+                        event.address,
+                        maxLines: 1,
+                        style: const TextStyle(
+                            fontSize: 10.0,
+                            color: Color(0xff8f8f8f),
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Positioned(
-              right: 12.0,
-              top: 12.0,
-              child: SvgPicture.asset(
-                "images/icon_save.svg",
-                height: event.isSaved ? 25 : 0.0,
-                width: event.isSaved ? 25 : 0.0,
-              ),
-            )
-          ],
+              Positioned(
+                right: 12.0,
+                top: 12.0,
+                child: SvgPicture.asset(
+                  "images/icon_save.svg",
+                  height: event.isSaved ? 25 : 0.0,
+                  width: event.isSaved ? 25 : 0.0,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

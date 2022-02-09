@@ -13,7 +13,7 @@ class EcassionApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: EventDetailsPage(),
+      home: SplashPage(),
     );
   }
 }

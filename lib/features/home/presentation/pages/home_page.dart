@@ -1,5 +1,6 @@
 import 'package:ecassion/core/utility.dart';
 import 'package:ecassion/core/widgets/animated_sized_and_fade.dart';
+import 'package:ecassion/features/event_details/presentation/event_details_page.dart';
 import 'package:ecassion/features/home/domain/entity/category.dart';
 import 'package:ecassion/features/home/domain/entity/trending_event.dart';
 import 'package:ecassion/features/home/domain/entity/upcoming_event.dart';
@@ -203,66 +204,80 @@ class _HomePageState extends State<HomePage>
         : const CupertinoActivityIndicator();
   }
 
-  Container buildUpcomingEventCard(
+  void _navigateToEventDetailsPage(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const EventDetailsPage(),
+      ),
+    );
+  }
+
+  Widget buildUpcomingEventCard(
       BuildContext context, UpcomingEvent upcomingEvent) {
-    return Container(
-      margin: const EdgeInsets.only(right: 16.0),
-      width: 155.0,
-      height: 155.0,
-      child: Card(
-        semanticContainer: true,
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-        child: Stack(
-          children: [
-            loadNetworkImage(
-              url: upcomingEvent.imageUrl,
-              fit: BoxFit.fill,
-              height: 155,
-              width: 155,
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                padding: const EdgeInsets.all(8.0),
-                height: 49,
-                width: 49,
-                color: Colors.white,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      upcomingEvent.name,
-                      maxLines: 1,
-                      style: const TextStyle(
-                          fontSize: 12.0, fontWeight: FontWeight.w400),
-                    ),
-                    Text(
-                      upcomingEvent.address,
-                      maxLines: 1,
-                      style: const TextStyle(
-                          fontSize: 10.0,
-                          color: Color(0xff8f8f8f),
-                          fontWeight: FontWeight.w400),
-                    ),
-                  ],
+    return GestureDetector(
+      onTap: () {
+        _navigateToEventDetailsPage(context);
+      },
+      child: Container(
+        margin: const EdgeInsets.only(right: 16.0),
+        width: 155.0,
+        height: 155.0,
+        child: Card(
+          semanticContainer: true,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+          child: Stack(
+            children: [
+              loadNetworkImage(
+                url: upcomingEvent.imageUrl,
+                fit: BoxFit.fill,
+                height: 155,
+                width: 155,
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  padding: const EdgeInsets.all(8.0),
+                  height: 49,
+                  width: 49,
+                  color: Colors.white,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        upcomingEvent.name,
+                        maxLines: 1,
+                        style: const TextStyle(
+                            fontSize: 12.0, fontWeight: FontWeight.w400),
+                      ),
+                      Text(
+                        upcomingEvent.address,
+                        maxLines: 1,
+                        style: const TextStyle(
+                            fontSize: 10.0,
+                            color: Color(0xff8f8f8f),
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Positioned(
-              right: 12.0,
-              top: 12.0,
-              child: SvgPicture.asset(
-                "images/icon_save.svg",
-                height: upcomingEvent.isSaved ? 25 : 0.0,
-                width: upcomingEvent.isSaved ? 25 : 0.0,
-              ),
-            )
-          ],
+              Positioned(
+                right: 12.0,
+                top: 12.0,
+                child: SvgPicture.asset(
+                  "images/icon_save.svg",
+                  height: upcomingEvent.isSaved ? 25 : 0.0,
+                  width: upcomingEvent.isSaved ? 25 : 0.0,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -332,104 +347,109 @@ class _HomePageState extends State<HomePage>
   }
 
   Widget buildTrendingEventCard(BuildContext context, TrendingEvent event) {
-    return Container(
-      margin: const EdgeInsets.only(right: 20.0),
-      width: 312.0,
-      height: 199.0,
-      child: Card(
-        semanticContainer: true,
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.0),
-        ),
-        child: Stack(children: [
-          loadNetworkImage(
-            url: event.imageUrl,
-            fit: BoxFit.fill,
-            height: 199,
-            width: 312,
+    return GestureDetector(
+      onTap: () {
+        _navigateToEventDetailsPage(context);
+      },
+      child: Container(
+        margin: const EdgeInsets.only(right: 20.0),
+        width: 312.0,
+        height: 199.0,
+        child: Card(
+          semanticContainer: true,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0),
           ),
-          Positioned(
-            bottom: 0,
-            child: Container(
-              height: 53,
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              width: 312.0,
-              color: Colors.white,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: 183.0,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          event.name,
-                          maxLines: 1,
-                          style: const TextStyle(
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
+          child: Stack(children: [
+            loadNetworkImage(
+              url: event.imageUrl,
+              fit: BoxFit.fill,
+              height: 199,
+              width: 312,
+            ),
+            Positioned(
+              bottom: 0,
+              child: Container(
+                height: 53,
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                width: 312.0,
+                color: Colors.white,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: 183.0,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            event.name,
+                            maxLines: 1,
+                            style: const TextStyle(
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                            ),
                           ),
-                        ),
-                        Text(
-                          convertDateTimeToReadableString(event.time) +
-                              " " +
-                              event.address,
-                          maxLines: 1,
-                          style: const TextStyle(
-                              fontSize: 10.0, color: Color(0xff8D8D8D)),
-                        ),
-                      ],
+                          Text(
+                            convertDateTimeToReadableString(event.time) +
+                                " " +
+                                event.address,
+                            maxLines: 1,
+                            style: const TextStyle(
+                                fontSize: 10.0, color: Color(0xff8D8D8D)),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 12.0),
-                  Text(
-                    "Rs " + event.price.toString(),
-                    style: const TextStyle(
-                      fontSize: 12.0,
-                      color: Color(0xff6564DB),
-                    ),
-                  )
-                ],
+                    const SizedBox(width: 12.0),
+                    Text(
+                      "Rs " + event.price.toString(),
+                      style: const TextStyle(
+                        fontSize: 12.0,
+                        color: Color(0xff6564DB),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-          Positioned(
-            top: 0,
-            left: 0,
-            child: Container(
-              decoration: const BoxDecoration(
-                borderRadius:
-                    BorderRadius.only(bottomRight: Radius.circular(16.0)),
-                color: Color(0xff6564DB),
-              ),
-              width: event.isTop ? 56.0 : 0,
-              height: event.isTop ? 26.0 : 0.0,
-              child: const Center(
-                child: Text(
-                  "Top",
-                  style: TextStyle(
-                    fontSize: 12.0,
-                    color: Colors.white,
+            Positioned(
+              top: 0,
+              left: 0,
+              child: Container(
+                decoration: const BoxDecoration(
+                  borderRadius:
+                      BorderRadius.only(bottomRight: Radius.circular(16.0)),
+                  color: Color(0xff6564DB),
+                ),
+                width: event.isTop ? 56.0 : 0,
+                height: event.isTop ? 26.0 : 0.0,
+                child: const Center(
+                  child: Text(
+                    "Top",
+                    style: TextStyle(
+                      fontSize: 12.0,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          Positioned(
-            right: 12.0,
-            top: 12.0,
-            child: SvgPicture.asset(
-              "images/icon_save.svg",
-              height: event.isSaved ? 25 : 0,
-              width: event.isSaved ? 25 : 0,
-            ),
-          )
-        ]),
+            Positioned(
+              right: 12.0,
+              top: 12.0,
+              child: SvgPicture.asset(
+                "images/icon_save.svg",
+                height: event.isSaved ? 25 : 0,
+                width: event.isSaved ? 25 : 0,
+              ),
+            )
+          ]),
+        ),
       ),
     );
   }
