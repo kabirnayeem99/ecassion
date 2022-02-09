@@ -25,7 +25,6 @@ class _SearchPageState extends State<SearchPage> {
   bool _shouldShowOtherList = true;
   final _scrollController = ScrollController();
 
-
   @override
   void initState() {
     _loadAllData();
@@ -116,27 +115,26 @@ class _SearchPageState extends State<SearchPage> {
   Widget buildUpcomingPlaceList() {
     return _uiState.nearbyEvents.isNotEmpty
         ? Expanded(
-      child: GridView.builder(
-        controller: _scrollController,
-        shrinkWrap: true,
-        itemCount: _uiState.nearbyEvents.length,
-        scrollDirection: Axis.vertical,
-        itemBuilder: (context, index) {
-          final upcomingEvent = _uiState.nearbyEvents[index];
-          return buildUpcomingEventCard(context, upcomingEvent);
-        },
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 11.0,
-          mainAxisSpacing: 11.0,
-        ),
-      ),
-    )
+            child: GridView.builder(
+              controller: _scrollController,
+              shrinkWrap: true,
+              itemCount: _uiState.nearbyEvents.length,
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) {
+                final upcomingEvent = _uiState.nearbyEvents[index];
+                return buildUpcomingEventCard(context, upcomingEvent);
+              },
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 11.0,
+                mainAxisSpacing: 11.0,
+              ),
+            ),
+          )
         : const CupertinoActivityIndicator();
   }
 
-  Container buildUpcomingEventCard(
-      BuildContext context, Event event) {
+  Container buildUpcomingEventCard(BuildContext context, Event event) {
     return Container(
       margin: const EdgeInsets.only(right: 16.0),
       width: 155.0,
@@ -145,7 +143,7 @@ class _SearchPageState extends State<SearchPage> {
         semanticContainer: true,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         shape:
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
         child: Stack(
           children: [
             loadNetworkImage(
