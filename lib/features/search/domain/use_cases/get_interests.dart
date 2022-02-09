@@ -1,13 +1,12 @@
-import 'package:ecassion/features/search/domain/entity/event.dart';
-
 import '../../data/repositories/recommendation_repository_impl.dart';
+import '../entity/interest.dart';
 import '../repositories/recommendation_repository.dart';
 
-class GetNearbyEvents {
+class GetInterests {
   final RecommendationRepository recommendationRepository =
       RecommendationRepositoryImpl();
 
-  Future<List<Event>> getNearbyEvents() {
-    return recommendationRepository.getNearbyEvents();
+  Future<List<Interest>> getInterests() {
+    return recommendationRepository.getAllInterests();
   }
 }

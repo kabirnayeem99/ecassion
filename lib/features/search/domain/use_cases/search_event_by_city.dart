@@ -1,9 +1,12 @@
+import 'package:ecassion/features/search/data/repositories/search_repository_impl.dart';
+import 'package:ecassion/features/search/domain/entity/city.dart';
+import 'package:ecassion/features/search/domain/entity/event.dart';
+
 class SearchEventByCity {
-  List<Object> getSearchResult(String city) {
-    if (city.length < 3) {
-      return [];
-    } else {
-      return [];
-    }
+
+  final searchRepository = SearchRepositoryImpl();
+
+  Future<List<Event>> getSearchResult(City city) {
+
   }
 }

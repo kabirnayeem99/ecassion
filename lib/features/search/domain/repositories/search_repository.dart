@@ -1,7 +1,11 @@
+import 'package:ecassion/features/search/domain/entity/city.dart';
+import 'package:ecassion/features/search/domain/entity/event.dart';
+import 'package:ecassion/features/search/domain/entity/interest.dart';
+
 abstract class SearchRepository {
-  List<Object> searchEventByCity(String city);
+  List<Event> searchEventByCity(City city);
 
-  List<Object> searchEventByQuery(String query);
+  List<Event> searchEventByQuery(String query);
 
-  List<Object> searchEventByInterest(String interest);
+  List<Event> searchEventByInterest(Interest interest);
 }
