@@ -5,17 +5,17 @@ import 'package:ecassion/features/search/domain/repositories/search_repository.d
 
 class SearchRepositoryImpl extends SearchRepository {
   @override
-  List<Event> searchEventByCity(City city) {
+  Future<List<Event>> searchEventByCity(City city) async {
     return [];
   }
 
   @override
-  List<Event> searchEventByInterest(Interest interest) {
+  Future<List<Event>> searchEventByInterest(Interest interest) async {
     return [];
   }
 
   @override
-  List<Event> searchEventByQuery(String query) {
+  Future<List<Event>> searchEventByQuery(String query) async {
     return [];
   }
 }
