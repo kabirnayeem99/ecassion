@@ -1,5 +1,4 @@
-import 'package:ecassion/features/event_details/presentation/event_details_page.dart';
-import 'package:ecassion/features/splash/presentation/pages/splash_page.dart';
+import 'package:ecassion/ui/splash/splash_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
