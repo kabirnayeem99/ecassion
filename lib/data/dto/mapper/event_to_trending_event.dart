@@ -1,4 +1,3 @@
-
 import '../../../domain/entity/trending_event.dart';
 import '../../../domain/entity/upcoming_event.dart';
 import '../event_dto.dart';

@@ -19,6 +19,11 @@ class _SplashPageState extends State<SplashPage>
 
   @override
   void initState() {
+    super.initState();
+    _setUpAnimation(context);
+  }
+
+  void _setUpAnimation(BuildContext context) {
     _tweenSize = Tween(begin: 0.1, end: 100);
     _animationController =
         AnimationController(vsync: this, duration: loadRandomDuration())
@@ -32,7 +37,6 @@ class _SplashPageState extends State<SplashPage>
           });
     _animationSize = _tweenSize.animate(_animationController);
     _animationController.forward();
-    super.initState();
   }
 
   @override

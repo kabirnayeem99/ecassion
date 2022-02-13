@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 String convertDateTimeToReadableString(DateTime? time) {
   if (time == null) {
@@ -15,6 +17,24 @@ String convertDateTimeToReadableString(DateTime? time) {
       meridiem = "AM";
     }
     return hour.toString() + ":" + time.minute.toString() + " " + meridiem;
+  }
+}
+
+void launchCaller(String phoneNumber) async {
+  final url = "tel:$phoneNumber";
+  if (await canLaunch(url)) {
+    await launch(url);
+  }
+}
+
+void launchShareMenu(String message) {
+  Share.share(message);
+}
+
+void launchMail(String mailAddress) async {
+  final url = "mailto:$mailAddress";
+  if (await canLaunch(url)) {
+    await launch(url);
   }
 }
 

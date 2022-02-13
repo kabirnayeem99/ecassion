@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../bookmarks/bookmarks_page.dart';
@@ -38,51 +41,61 @@ class _LandingPageState extends State<LandingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: homeScreenTabs[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        elevation: 0.0,
-        landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
-        currentIndex: _selectedIndex,
-        onTap: (index) {
-          _onItemTapped(index);
-        },
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        items: [
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset("images/icon_home.svg"),
-            activeIcon: SvgPicture.asset(
-              "images/icon_home.svg",
-              color: const Color(0xff6564DB),
+    return WillPopScope(
+      onWillPop: () async {
+        if (Platform.isAndroid) {
+          SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+        } else {
+          exit(0);
+        }
+        return false;
+      },
+      child: Scaffold(
+        body: homeScreenTabs[_selectedIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          elevation: 0.0,
+          landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
+          currentIndex: _selectedIndex,
+          onTap: (index) {
+            _onItemTapped(index);
+          },
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          items: [
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset("images/icon_home.svg"),
+              activeIcon: SvgPicture.asset(
+                "images/icon_home.svg",
+                color: const Color(0xff6564DB),
+              ),
+              label: 'Home',
             ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset("images/icon_search.svg"),
-            activeIcon: SvgPicture.asset(
-              "images/icon_search.svg",
-              color: const Color(0xff6564DB),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset("images/icon_search.svg"),
+              activeIcon: SvgPicture.asset(
+                "images/icon_search.svg",
+                color: const Color(0xff6564DB),
+              ),
+              label: 'Search',
             ),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset("images/icon_bookmarks.svg"),
-            activeIcon: SvgPicture.asset(
-              "images/icon_bookmarks.svg",
-              color: const Color(0xff6564DB),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset("images/icon_bookmarks.svg"),
+              activeIcon: SvgPicture.asset(
+                "images/icon_bookmarks.svg",
+                color: const Color(0xff6564DB),
+              ),
+              label: 'Bookmarks',
             ),
-            label: 'Bookmarks',
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset("images/icon_profile.svg"),
-            activeIcon: SvgPicture.asset(
-              "images/icon_profile.svg",
-              color: const Color(0xff6564DB),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset("images/icon_profile.svg"),
+              activeIcon: SvgPicture.asset(
+                "images/icon_profile.svg",
+                color: const Color(0xff6564DB),
+              ),
+              label: 'Profile',
             ),
-            label: 'Profile',
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

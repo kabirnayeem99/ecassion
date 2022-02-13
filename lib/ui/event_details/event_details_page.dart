@@ -63,12 +63,12 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
       backgroundColor: Colors.white,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: buildBookNowButton(),
-      body: SingleChildScrollView(
-        child: AnimatedSizeAndFade(
-          child: !_uiState.isLoading
-              ? SizedBox(
-                  height: _size.height,
-                  width: _size.width,
+      body: AnimatedSizeAndFade(
+        child: !_uiState.isLoading
+            ? SizedBox(
+                height: _size.height,
+                width: _size.width,
+                child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,13 +89,13 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                       buildRecommendedEventList()
                     ],
                   ),
-                )
-              : SizedBox(
-                  height: _size.height,
-                  width: _size.width,
-                  child: const CupertinoActivityIndicator(),
                 ),
-        ),
+              )
+            : SizedBox(
+                height: _size.height,
+                width: _size.width,
+                child: const CupertinoActivityIndicator(),
+              ),
       ),
     );
   }
@@ -146,7 +146,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                 right: 0,
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
-                  height: _size.height * 0.05,
+                  height: _size.height * 0.07,
                   width: _size.width * 0.49,
                   color: Colors.white,
                   child: Column(
@@ -220,19 +220,11 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                 )
               : const VisibleGoneContainer(),
           Expanded(child: Container()),
-          Container(
-            padding: const EdgeInsets.all(2.0),
-            child: const Icon(
-              CupertinoIcons.share,
-              color: Colors.white,
-            ),
-            height: 36.0,
-            width: 36.0,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100.0),
-              color: const Color(0xff6564DB),
-            ),
-          ),
+          GestureDetector(
+              onTap: () {
+                launchShareMenu(_uiState.eventDetails.toString());
+              },
+              child: const RoundedActionButton(icon: CupertinoIcons.share))
         ],
       ),
       height: 63.0,
@@ -346,31 +338,16 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
               ],
             ),
             Expanded(child: Container()),
-            Container(
-              padding: const EdgeInsets.all(2.0),
-              child: const Icon(
-                CupertinoIcons.phone,
-                color: Colors.white,
-              ),
-              height: 36.0,
-              width: 36.0,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100.0),
-                  color: const Color(0xff6564DB)),
-            ),
+            GestureDetector(
+                onTap: () => launchCaller(
+                    _uiState.eventDetails.eventBy?.phoneNumber ?? ""),
+                child: const RoundedActionButton(icon: CupertinoIcons.phone)),
             const SizedBox(width: 16.0),
-            Container(
-              padding: const EdgeInsets.all(2.0),
-              child: const Icon(
-                CupertinoIcons.mail,
-                color: Colors.white,
-              ),
-              height: 36.0,
-              width: 36.0,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100.0),
-                  color: const Color(0xff6564DB)),
-            ),
+            GestureDetector(
+                onTap: () {
+                  launchMail(_uiState.eventDetails.eventBy?.email ?? "");
+                },
+                child: const RoundedActionButton(icon: CupertinoIcons.mail)),
           ],
         ),
       ),
@@ -528,6 +505,28 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(16.0),
       ),
+    );
+  }
+}
+
+class RoundedActionButton extends StatelessWidget {
+  final IconData icon;
+
+  const RoundedActionButton({Key? key, required this.icon}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(2.0),
+      child: Icon(
+        icon,
+        color: Colors.white,
+      ),
+      height: 36.0,
+      width: 36.0,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100.0),
+          color: const Color(0xff6564DB)),
     );
   }
 }

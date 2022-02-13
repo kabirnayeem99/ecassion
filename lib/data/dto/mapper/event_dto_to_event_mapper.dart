@@ -1,4 +1,5 @@
 import 'package:ecassion/domain/entity/event_details.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../../domain/entity/event.dart';
 import '../../../domain/entity/trending_event.dart';
@@ -46,14 +47,13 @@ extension EventDetailsParsing on EventDetailsDto {
     var recommendedEventList = <Event>[];
 
     try {
-      recommendedEventList = recommendedEvents
-          .map((event) {
-            EventParsing(event).mapToEvent();
-          })
-          .cast<Event>()
-          .toList(growable: false);
+      recommendedEventList = recommendedEvents.map((event) {
+        return EventParsing(event).mapToEvent();
+      }).toList(growable: false);
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
 
     return EventDetails(

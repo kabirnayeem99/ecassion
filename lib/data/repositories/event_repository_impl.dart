@@ -1,5 +1,7 @@
+import 'package:ecassion/data/dto/event_details_dto.dart';
 import 'package:ecassion/data/dto/mapper/event_dto_to_event_mapper.dart';
 import 'package:ecassion/domain/entity/event_details.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../domain/entity/trending_event.dart';
 import '../../domain/entity/upcoming_event.dart';
@@ -30,8 +32,12 @@ class EventRepositoryImpl extends EventRepository {
   @override
   Future<EventDetails> getEventDetailsByIndex(int index) async {
     final eventDetailsDto =
-        await _eventLocalDataSource.getEventDetailsByIndex(index);
-    final event = EventDetailsParsing(eventDetailsDto).mapToEventDetails();
+        await compute(_eventLocalDataSource.getEventDetailsByIndex, index);
+    final event = compute(getEventDetailsFromEventDto, eventDetailsDto);
     return event;
+  }
+
+  EventDetails getEventDetailsFromEventDto(EventDetailsDto eventDetailsDto) {
+    return EventDetailsParsing(eventDetailsDto).mapToEventDetails();
   }
 }
