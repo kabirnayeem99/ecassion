@@ -1,6 +1,7 @@
 import 'package:ecassion/data/dto/event_details_dto.dart';
 import 'package:ecassion/data/dto/user_dto.dart';
 import 'package:faker/faker.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../../../core/utility.dart';
 import '../dto/event_dto.dart';
@@ -8,7 +9,7 @@ import 'category_local_data_source.dart';
 
 class EventLocalDataSource {
   static final EventLocalDataSource _singleton =
-      EventLocalDataSource._internal();
+  EventLocalDataSource._internal();
 
   factory EventLocalDataSource() {
     return _singleton;
@@ -231,12 +232,18 @@ class EventLocalDataSource {
   Future<List<EventDto>> getRecommendedEventByEvent(EventDto event) async {
     await Future.delayed(loadRandomDuration());
 
-    var _takenEvents = events.take(10);
-    var _recommendedEvents = _takenEvents
-        .map((e) => e.copyWith(address: event.address))
-        .toList(growable: false);
+    Iterable<EventDto> _takenEvents = events.take(10);
+    var _recommendedEvents = await compute(_eventDtoToEvent, _takenEvents);
 
     return _recommendedEvents;
+  }
+
+  Future<List<EventDto>> _eventDtoToEvent(
+      Iterable<EventDto> takenEvents) async {
+    String address = faker.address.city() + ", " + faker.address.country();
+    return takenEvents
+        .map((e) => e.copyWith(address: address))
+        .toList(growable: false);
   }
 
   Future<UserDto> getEventOwner(int index) async {
@@ -247,7 +254,7 @@ class EventLocalDataSource {
     UserDto(
       id: faker.guid.guid(),
       imageUrl:
-          "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
+      "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
       name: faker.person.name(),
       email: faker.lorem.word() + "@" + faker.lorem.word() + ".com",
       phoneNumber: faker.phoneNumber.us(),
@@ -255,7 +262,7 @@ class EventLocalDataSource {
     UserDto(
       id: faker.guid.guid(),
       imageUrl:
-          "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
+      "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
       name: faker.person.name(),
       email: faker.lorem.word() + "@" + faker.lorem.word() + ".com",
       phoneNumber: faker.phoneNumber.us(),
@@ -263,7 +270,7 @@ class EventLocalDataSource {
     UserDto(
       id: faker.guid.guid(),
       imageUrl:
-          "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
+      "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
       name: faker.person.name(),
       email: faker.lorem.word() + "@" + faker.lorem.word() + ".com",
       phoneNumber: faker.phoneNumber.us(),
@@ -271,7 +278,7 @@ class EventLocalDataSource {
     UserDto(
       id: faker.guid.guid(),
       imageUrl:
-          "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
+      "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
       name: faker.person.name(),
       email: faker.lorem.word() + "@" + faker.lorem.word() + ".com",
       phoneNumber: faker.phoneNumber.us(),
@@ -279,7 +286,7 @@ class EventLocalDataSource {
     UserDto(
       id: faker.guid.guid(),
       imageUrl:
-          "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
+      "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
       name: faker.person.name(),
       email: faker.lorem.word() + "@" + faker.lorem.word() + ".com",
       phoneNumber: faker.phoneNumber.us(),
@@ -287,7 +294,7 @@ class EventLocalDataSource {
     UserDto(
       id: faker.guid.guid(),
       imageUrl:
-          "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
+      "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
       name: faker.person.name(),
       email: faker.lorem.word() + "@" + faker.lorem.word() + ".com",
       phoneNumber: faker.phoneNumber.us(),

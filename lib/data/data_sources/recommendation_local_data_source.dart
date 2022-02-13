@@ -2,6 +2,7 @@ import 'package:ecassion/core/utility.dart';
 import 'package:ecassion/data/data_sources/event_local_data_source.dart';
 import 'package:ecassion/domain/entity/event.dart';
 import 'package:faker/faker.dart';
+import 'package:flutter/foundation.dart';
 
 import '../dto/city_dto.dart';
 import '../dto/event_dto.dart';
@@ -87,12 +88,17 @@ class RecommendationDataSource {
 
   Future<List<EventDto>> getNearbyEvents() async {
     await Future.delayed(loadRandomDuration());
-    final currentLocation = await getCurrentLocation();
-    final nearbyEvents = _events
+    final String currentLocation = await getCurrentLocation();
+    final List<EventDto> nearbyEvents =
+        await compute(_mapNearbyEvents, currentLocation);
+    return nearbyEvents;
+  }
+
+  List<EventDto> _mapNearbyEvents(String currentLocation) {
+    return _events
         .take(8)
         .map((event) => event.copyWith(address: currentLocation))
         .toList(growable: false);
-    return nearbyEvents;
   }
 
   Future<List<CityDto>> getPopularCities() async {
