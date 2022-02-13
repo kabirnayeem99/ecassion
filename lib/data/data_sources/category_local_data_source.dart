@@ -4,80 +4,91 @@ import '../../../../core/utility.dart';
 import '../dto/category_dto.dart';
 
 class CategoryLocalDataSource {
+  static final CategoryLocalDataSource _singleton =
+      CategoryLocalDataSource._internal();
+
+  factory CategoryLocalDataSource() {
+    return _singleton;
+  }
+
+  CategoryLocalDataSource._internal();
+
+  final _categoryList = <CategoryDto>[
+    CategoryDto(
+      id: faker.guid.guid(),
+      name: faker.sport.name(),
+      imageUrl: loadRandomImageUrl(),
+    ),
+    CategoryDto(
+      id: faker.guid.guid(),
+      name: faker.sport.name(),
+      imageUrl: loadRandomImageUrl(),
+    ),
+    CategoryDto(
+      id: faker.guid.guid(),
+      name: faker.sport.name(),
+      imageUrl: loadRandomImageUrl(),
+    ),
+    CategoryDto(
+      id: faker.guid.guid(),
+      name: faker.sport.name(),
+      imageUrl: loadRandomImageUrl(),
+    ),
+    CategoryDto(
+      id: faker.guid.guid(),
+      name: faker.sport.name(),
+      imageUrl: loadRandomImageUrl(),
+    ),
+    CategoryDto(
+      id: faker.guid.guid(),
+      name: faker.sport.name(),
+      imageUrl: loadRandomImageUrl(),
+    ),
+    CategoryDto(
+      id: faker.guid.guid(),
+      name: faker.sport.name(),
+      imageUrl: loadRandomImageUrl(),
+    ),
+    CategoryDto(
+      id: faker.guid.guid(),
+      name: faker.sport.name(),
+      imageUrl: loadRandomImageUrl(),
+    ),
+    CategoryDto(
+      id: faker.guid.guid(),
+      name: faker.sport.name(),
+      imageUrl: loadRandomImageUrl(),
+    ),
+    CategoryDto(
+      id: faker.guid.guid(),
+      name: faker.sport.name(),
+      imageUrl: loadRandomImageUrl(),
+    ),
+    CategoryDto(
+      id: faker.guid.guid(),
+      name: faker.sport.name(),
+      imageUrl: loadRandomImageUrl(),
+    ),
+    CategoryDto(
+      id: faker.guid.guid(),
+      name: faker.sport.name(),
+      imageUrl: loadRandomImageUrl(),
+    ),
+    CategoryDto(
+      id: faker.guid.guid(),
+      name: faker.sport.name(),
+      imageUrl: loadRandomImageUrl(),
+    ),
+    CategoryDto(
+      id: faker.guid.guid(),
+      name: faker.sport.name(),
+      imageUrl: loadRandomImageUrl(),
+    ),
+  ];
+
   Future<List<CategoryDto>> getCategoryList() async {
     await Future.delayed(loadRandomDuration());
-    return <CategoryDto>[
-      CategoryDto(
-        id: faker.guid.guid(),
-        name: faker.sport.name(),
-        imageUrl: loadRandomImageUrl(),
-      ),
-      CategoryDto(
-        id: faker.guid.guid(),
-        name: faker.sport.name(),
-        imageUrl: loadRandomImageUrl(),
-      ),
-      CategoryDto(
-        id: faker.guid.guid(),
-        name: faker.sport.name(),
-        imageUrl: loadRandomImageUrl(),
-      ),
-      CategoryDto(
-        id: faker.guid.guid(),
-        name: faker.sport.name(),
-        imageUrl: loadRandomImageUrl(),
-      ),
-      CategoryDto(
-        id: faker.guid.guid(),
-        name: faker.sport.name(),
-        imageUrl: loadRandomImageUrl(),
-      ),
-      CategoryDto(
-        id: faker.guid.guid(),
-        name: faker.sport.name(),
-        imageUrl: loadRandomImageUrl(),
-      ),
-      CategoryDto(
-        id: faker.guid.guid(),
-        name: faker.sport.name(),
-        imageUrl: loadRandomImageUrl(),
-      ),
-      CategoryDto(
-        id: faker.guid.guid(),
-        name: faker.sport.name(),
-        imageUrl: loadRandomImageUrl(),
-      ),
-      CategoryDto(
-        id: faker.guid.guid(),
-        name: faker.sport.name(),
-        imageUrl: loadRandomImageUrl(),
-      ),
-      CategoryDto(
-        id: faker.guid.guid(),
-        name: faker.sport.name(),
-        imageUrl: loadRandomImageUrl(),
-      ),
-      CategoryDto(
-        id: faker.guid.guid(),
-        name: faker.sport.name(),
-        imageUrl: loadRandomImageUrl(),
-      ),
-      CategoryDto(
-        id: faker.guid.guid(),
-        name: faker.sport.name(),
-        imageUrl: loadRandomImageUrl(),
-      ),
-      CategoryDto(
-        id: faker.guid.guid(),
-        name: faker.sport.name(),
-        imageUrl: loadRandomImageUrl(),
-      ),
-      CategoryDto(
-        id: faker.guid.guid(),
-        name: faker.sport.name(),
-        imageUrl: loadRandomImageUrl(),
-      ),
-    ];
+    return _categoryList;
   }
 }
 

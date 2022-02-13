@@ -7,237 +7,202 @@ import '../dto/event_dto.dart';
 import 'category_local_data_source.dart';
 
 class EventLocalDataSource {
+  static final EventLocalDataSource _singleton =
+      EventLocalDataSource._internal();
+
+  factory EventLocalDataSource() {
+    return _singleton;
+  }
+
+  EventLocalDataSource._internal();
+
+  final events = [
+    EventDto(
+      name: faker.sport.name() + " World Team Cup",
+      imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
+      price: random.integer(10000),
+      time: faker.date.dateTime(),
+      address: faker.address.city() + ", " + faker.address.country(),
+      isSaved: random.boolean(),
+      isTop: random.boolean(),
+    ),
+    EventDto(
+      name: faker.sport.name() + "Conference",
+      imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
+      price: random.integer(10000),
+      time: faker.date.dateTime(),
+      address: faker.address.city() + ", " + faker.address.country(),
+      isSaved: random.boolean(),
+      isTop: random.boolean(),
+    ),
+    EventDto(
+      name: faker.sport.name() + "World Cup",
+      imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
+      price: random.integer(2000),
+      address: faker.address.city() + ", " + faker.address.country(),
+      isSaved: random.boolean(),
+      time: faker.date.dateTime(),
+      isTop: random.boolean(),
+    ),
+    EventDto(
+      name: faker.sport.name(),
+      imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
+      price: random.integer(10000),
+      address: faker.address.city() + ", " + faker.address.country(),
+      isSaved: random.boolean(),
+      time: faker.date.dateTime(),
+      isTop: random.boolean(),
+    ),
+    EventDto(
+      name: faker.sport.name() + " Trophy",
+      imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
+      price: random.integer(10000),
+      address: faker.address.city() + ", " + faker.address.country(),
+      isSaved: random.boolean(),
+      isTop: random.boolean(),
+    ),
+    EventDto(
+      name: faker.sport.name() + " Trophy",
+      imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
+      price: random.integer(10000),
+      address: faker.address.city() + ", " + faker.address.country(),
+      isSaved: random.boolean(),
+      isTop: random.boolean(),
+    ),
+    EventDto(
+      name: faker.sport.name() + " Trophy",
+      imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
+      price: random.integer(10000),
+      address: faker.address.city() + ", " + faker.address.country(),
+      isSaved: random.boolean(),
+      isTop: random.boolean(),
+    ),
+    EventDto(
+      name: faker.sport.name() + " Trophy",
+      imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
+      price: random.integer(10000),
+      address: faker.address.city() + ", " + faker.address.country(),
+      isSaved: random.boolean(),
+      isTop: random.boolean(),
+    ),
+    EventDto(
+      name: faker.sport.name() + " Trophy",
+      imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
+      price: random.integer(10000),
+      address: faker.address.city() + ", " + faker.address.country(),
+      isSaved: random.boolean(),
+      isTop: random.boolean(),
+    ),
+    EventDto(
+      name: faker.sport.name() + " Trophy",
+      imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
+      price: random.integer(10000),
+      address: faker.address.city() + ", " + faker.address.country(),
+      isSaved: random.boolean(),
+      isTop: random.boolean(),
+    ),
+    EventDto(
+      name: faker.sport.name() + " Trophy",
+      imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
+      price: random.integer(10000),
+      address: faker.address.city() + ", " + faker.address.country(),
+      isSaved: random.boolean(),
+      isTop: random.boolean(),
+    ),
+    EventDto(
+      name: faker.sport.name() + " Trophy",
+      imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
+      price: random.integer(10000),
+      address: faker.address.city() + ", " + faker.address.country(),
+      isSaved: random.boolean(),
+      isTop: random.boolean(),
+    ),
+    EventDto(
+      name: faker.sport.name() + " Trophy",
+      imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
+      price: random.integer(10000),
+      address: faker.address.city() + ", " + faker.address.country(),
+      isSaved: random.boolean(),
+      isTop: random.boolean(),
+    ),
+    EventDto(
+      name: faker.sport.name() + " Trophy",
+      imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
+      price: random.integer(10000),
+      address: faker.address.city() + ", " + faker.address.country(),
+      isSaved: random.boolean(),
+      isTop: random.boolean(),
+    ),
+    EventDto(
+      name: faker.sport.name() + " Trophy",
+      imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
+      price: random.integer(10000),
+      address: faker.address.city() + ", " + faker.address.country(),
+      isSaved: random.boolean(),
+      isTop: random.boolean(),
+    ),
+    EventDto(
+      name: faker.sport.name() + " Trophy",
+      imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
+      price: random.integer(10000),
+      address: faker.address.city() + ", " + faker.address.country(),
+      isSaved: random.boolean(),
+      isTop: random.boolean(),
+    ),
+    EventDto(
+      name: faker.sport.name() + " Trophy",
+      imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
+      price: random.integer(10000),
+      address: faker.address.city() + ", " + faker.address.country(),
+      isSaved: random.boolean(),
+      isTop: random.boolean(),
+    ),
+    EventDto(
+      name: faker.sport.name() + " Trophy",
+      imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
+      price: random.integer(10000),
+      address: faker.address.city() + ", " + faker.address.country(),
+      isSaved: random.boolean(),
+      isTop: random.boolean(),
+    ),
+    EventDto(
+      name: faker.sport.name() + " Trophy",
+      imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
+      price: random.integer(10000),
+      address: faker.address.city() + ", " + faker.address.country(),
+      isSaved: random.boolean(),
+      isTop: random.boolean(),
+    ),
+    EventDto(
+      name: faker.sport.name() + " Trophy",
+      imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
+      price: random.integer(10000),
+      address: faker.address.city() + ", " + faker.address.country(),
+      isSaved: random.boolean(),
+      isTop: random.boolean(),
+    ),
+    EventDto(
+      name: faker.sport.name() + " Trophy",
+      imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
+      price: random.integer(10000),
+      address: faker.address.city() + ", " + faker.address.country(),
+      isSaved: random.boolean(),
+      isTop: random.boolean(),
+    ),
+  ];
+
   Future<List<EventDto>> getTrendingEvents() async {
     await Future.delayed(loadRandomDuration());
-    return [
-      EventDto(
-        name: faker.sport.name() + " Cup",
-        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
-        price: random.integer(10000),
-        time: faker.date.dateTime(),
-        address: faker.address.city() + ", " + faker.address.country(),
-        isSaved: random.boolean(),
-        isTop: random.boolean(),
-      ),
-      EventDto(
-        name: faker.sport.name() + " Open Nottingham",
-        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
-        price: random.integer(10000),
-        time: faker.date.dateTime(),
-        address: faker.address.city() + ", " + faker.address.country(),
-        isSaved: random.boolean(),
-        isTop: random.boolean(),
-      ),
-      EventDto(
-        name: faker.sport.name(),
-        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
-        price: random.integer(10000),
-        address: faker.address.city() + ", " + faker.address.country(),
-        isSaved: random.boolean(),
-        time: faker.date.dateTime(),
-        isTop: random.boolean(),
-      ),
-      EventDto(
-        name: faker.conference.name(),
-        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
-        price: random.integer(10000),
-        address: faker.address.city() + ", " + faker.address.country(),
-        isSaved: random.boolean(),
-        time: faker.date.dateTime(),
-        isTop: random.boolean(),
-      ),
-      EventDto(
-        name: faker.address.city() + " " + faker.sport.name(),
-        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
-        price: random.integer(10000),
-        address: faker.address.city() + ", " + faker.address.country(),
-        isSaved: random.boolean(),
-        isTop: random.boolean(),
-      )
-    ];
+    return events.take(8).toList(growable: false);
   }
 
   Future<List<EventDto>> getUpcomingEvents() async {
     await Future.delayed(loadRandomDuration());
-    return [
-      EventDto(
-        name: faker.sport.name() + " World Team Cup",
-        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
-        price: random.integer(10000),
-        time: faker.date.dateTime(),
-        address: faker.address.city() + ", " + faker.address.country(),
-        isSaved: random.boolean(),
-        isTop: random.boolean(),
-      ),
-      EventDto(
-        name: faker.sport.name() + "Conference",
-        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
-        price: random.integer(10000),
-        time: faker.date.dateTime(),
-        address: faker.address.city() + ", " + faker.address.country(),
-        isSaved: random.boolean(),
-        isTop: random.boolean(),
-      ),
-      EventDto(
-        name: faker.sport.name() + "World Cup",
-        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
-        price: random.integer(2000),
-        address: faker.address.city() + ", " + faker.address.country(),
-        isSaved: random.boolean(),
-        time: faker.date.dateTime(),
-        isTop: random.boolean(),
-      ),
-      EventDto(
-        name: faker.sport.name(),
-        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
-        price: random.integer(10000),
-        address: faker.address.city() + ", " + faker.address.country(),
-        isSaved: random.boolean(),
-        time: faker.date.dateTime(),
-        isTop: random.boolean(),
-      ),
-      EventDto(
-        name: faker.sport.name() + " Trophy",
-        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
-        price: random.integer(10000),
-        address: faker.address.city() + ", " + faker.address.country(),
-        isSaved: random.boolean(),
-        isTop: random.boolean(),
-      ),
-      EventDto(
-        name: faker.sport.name() + " Trophy",
-        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
-        price: random.integer(10000),
-        address: faker.address.city() + ", " + faker.address.country(),
-        isSaved: random.boolean(),
-        isTop: random.boolean(),
-      ),
-      EventDto(
-        name: faker.sport.name() + " Trophy",
-        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
-        price: random.integer(10000),
-        address: faker.address.city() + ", " + faker.address.country(),
-        isSaved: random.boolean(),
-        isTop: random.boolean(),
-      ),
-      EventDto(
-        name: faker.sport.name() + " Trophy",
-        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
-        price: random.integer(10000),
-        address: faker.address.city() + ", " + faker.address.country(),
-        isSaved: random.boolean(),
-        isTop: random.boolean(),
-      ),
-      EventDto(
-        name: faker.sport.name() + " Trophy",
-        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
-        price: random.integer(10000),
-        address: faker.address.city() + ", " + faker.address.country(),
-        isSaved: random.boolean(),
-        isTop: random.boolean(),
-      ),
-      EventDto(
-        name: faker.sport.name() + " Trophy",
-        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
-        price: random.integer(10000),
-        address: faker.address.city() + ", " + faker.address.country(),
-        isSaved: random.boolean(),
-        isTop: random.boolean(),
-      ),
-      EventDto(
-        name: faker.sport.name() + " Trophy",
-        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
-        price: random.integer(10000),
-        address: faker.address.city() + ", " + faker.address.country(),
-        isSaved: random.boolean(),
-        isTop: random.boolean(),
-      ),
-      EventDto(
-        name: faker.sport.name() + " Trophy",
-        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
-        price: random.integer(10000),
-        address: faker.address.city() + ", " + faker.address.country(),
-        isSaved: random.boolean(),
-        isTop: random.boolean(),
-      ),
-      EventDto(
-        name: faker.sport.name() + " Trophy",
-        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
-        price: random.integer(10000),
-        address: faker.address.city() + ", " + faker.address.country(),
-        isSaved: random.boolean(),
-        isTop: random.boolean(),
-      ),
-      EventDto(
-        name: faker.sport.name() + " Trophy",
-        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
-        price: random.integer(10000),
-        address: faker.address.city() + ", " + faker.address.country(),
-        isSaved: random.boolean(),
-        isTop: random.boolean(),
-      ),
-      EventDto(
-        name: faker.sport.name() + " Trophy",
-        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
-        price: random.integer(10000),
-        address: faker.address.city() + ", " + faker.address.country(),
-        isSaved: random.boolean(),
-        isTop: random.boolean(),
-      ),
-      EventDto(
-        name: faker.sport.name() + " Trophy",
-        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
-        price: random.integer(10000),
-        address: faker.address.city() + ", " + faker.address.country(),
-        isSaved: random.boolean(),
-        isTop: random.boolean(),
-      ),
-      EventDto(
-        name: faker.sport.name() + " Trophy",
-        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
-        price: random.integer(10000),
-        address: faker.address.city() + ", " + faker.address.country(),
-        isSaved: random.boolean(),
-        isTop: random.boolean(),
-      ),
-      EventDto(
-        name: faker.sport.name() + " Trophy",
-        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
-        price: random.integer(10000),
-        address: faker.address.city() + ", " + faker.address.country(),
-        isSaved: random.boolean(),
-        isTop: random.boolean(),
-      ),
-      EventDto(
-        name: faker.sport.name() + " Trophy",
-        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
-        price: random.integer(10000),
-        address: faker.address.city() + ", " + faker.address.country(),
-        isSaved: random.boolean(),
-        isTop: random.boolean(),
-      ),
-      EventDto(
-        name: faker.sport.name() + " Trophy",
-        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
-        price: random.integer(10000),
-        address: faker.address.city() + ", " + faker.address.country(),
-        isSaved: random.boolean(),
-        isTop: random.boolean(),
-      ),
-      EventDto(
-        name: faker.sport.name() + " Trophy",
-        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
-        price: random.integer(10000),
-        address: faker.address.city() + ", " + faker.address.country(),
-        isSaved: random.boolean(),
-        isTop: random.boolean(),
-      ),
-    ];
+    return events;
   }
 
   Future<EventDetailsDto> getEventDetailsByIndex(int index) async {
-    final trendingEvents = await getTrendingEvents();
-    final eventDto = trendingEvents[index];
+    final eventDto = events[index];
 
     final eventOwner = await getEventOwner(index);
     final sharedUsers = await getSharedByUsers(index);
@@ -265,98 +230,71 @@ class EventLocalDataSource {
 
   Future<List<EventDto>> getRecommendedEventByEvent(EventDto event) async {
     await Future.delayed(loadRandomDuration());
-    return [
-      EventDto(
-        name: faker.sport.name() + " World Team Cup",
-        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
-        price: random.integer(10000),
-        time: faker.date.dateTime(),
-        address: event.address,
-        isSaved: random.boolean(),
-        isTop: random.boolean(),
-      ),
-      EventDto(
-        name: faker.sport.name() + " Conference",
-        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
-        price: random.integer(10000),
-        time: faker.date.dateTime(),
-        address: event.address,
-        isSaved: random.boolean(),
-        isTop: random.boolean(),
-      ),
-      EventDto(
-        name: faker.sport.name() + "World Cup",
-        imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
-        price: random.integer(2000),
-        address: event.address,
-        isSaved: random.boolean(),
-        time: faker.date.dateTime(),
-        isTop: random.boolean(),
-      ),
-    ];
+
+    var _takenEvents = events.take(10);
+    var _recommendedEvents = _takenEvents
+        .map((e) => e.copyWith(address: event.address))
+        .toList(growable: false);
+
+    return _recommendedEvents;
   }
 
   Future<UserDto> getEventOwner(int index) async {
-    return UserDto(
+    return _userList[0];
+  }
+
+  final _userList = [
+    UserDto(
       id: faker.guid.guid(),
       imageUrl:
           "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
       name: faker.person.name(),
       email: faker.lorem.word() + "@" + faker.lorem.word() + ".com",
       phoneNumber: faker.phoneNumber.us(),
-    );
-  }
+    ),
+    UserDto(
+      id: faker.guid.guid(),
+      imageUrl:
+          "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
+      name: faker.person.name(),
+      email: faker.lorem.word() + "@" + faker.lorem.word() + ".com",
+      phoneNumber: faker.phoneNumber.us(),
+    ),
+    UserDto(
+      id: faker.guid.guid(),
+      imageUrl:
+          "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
+      name: faker.person.name(),
+      email: faker.lorem.word() + "@" + faker.lorem.word() + ".com",
+      phoneNumber: faker.phoneNumber.us(),
+    ),
+    UserDto(
+      id: faker.guid.guid(),
+      imageUrl:
+          "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
+      name: faker.person.name(),
+      email: faker.lorem.word() + "@" + faker.lorem.word() + ".com",
+      phoneNumber: faker.phoneNumber.us(),
+    ),
+    UserDto(
+      id: faker.guid.guid(),
+      imageUrl:
+          "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
+      name: faker.person.name(),
+      email: faker.lorem.word() + "@" + faker.lorem.word() + ".com",
+      phoneNumber: faker.phoneNumber.us(),
+    ),
+    UserDto(
+      id: faker.guid.guid(),
+      imageUrl:
+          "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
+      name: faker.person.name(),
+      email: faker.lorem.word() + "@" + faker.lorem.word() + ".com",
+      phoneNumber: faker.phoneNumber.us(),
+    ),
+  ];
 
   Future<List<UserDto>> getSharedByUsers(int index) async {
-    return [
-      UserDto(
-        id: faker.guid.guid(),
-        imageUrl:
-            "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
-        name: faker.person.name(),
-        email: faker.lorem.word() + "@" + faker.lorem.word() + ".com",
-        phoneNumber: faker.phoneNumber.us(),
-      ),
-      UserDto(
-        id: faker.guid.guid(),
-        imageUrl:
-            "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
-        name: faker.person.name(),
-        email: faker.lorem.word() + "@" + faker.lorem.word() + ".com",
-        phoneNumber: faker.phoneNumber.us(),
-      ),
-      UserDto(
-        id: faker.guid.guid(),
-        imageUrl:
-            "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
-        name: faker.person.name(),
-        email: faker.lorem.word() + "@" + faker.lorem.word() + ".com",
-        phoneNumber: faker.phoneNumber.us(),
-      ),
-      UserDto(
-        id: faker.guid.guid(),
-        imageUrl:
-            "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
-        name: faker.person.name(),
-        email: faker.lorem.word() + "@" + faker.lorem.word() + ".com",
-        phoneNumber: faker.phoneNumber.us(),
-      ),
-      UserDto(
-        id: faker.guid.guid(),
-        imageUrl:
-            "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
-        name: faker.person.name(),
-        email: faker.lorem.word() + "@" + faker.lorem.word() + ".com",
-        phoneNumber: faker.phoneNumber.us(),
-      ),
-      UserDto(
-        id: faker.guid.guid(),
-        imageUrl:
-            "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
-        name: faker.person.name(),
-        email: faker.lorem.word() + "@" + faker.lorem.word() + ".com",
-        phoneNumber: faker.phoneNumber.us(),
-      ),
-    ];
+    return _userList;
   }
 }

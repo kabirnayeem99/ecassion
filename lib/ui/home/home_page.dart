@@ -150,27 +150,25 @@ class _HomePageState extends State<HomePage>
   }
 
   Widget buildUpcomingPlaceList() {
-    return AnimatedSizeAndFade(
-        child: _uiState.upcomingEvents.isNotEmpty
-            ? Flexible(
-                child: GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: _uiState.upcomingEvents.length,
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: (context, index) {
-                    final upcomingEvent = _uiState.upcomingEvents[index];
-                    return buildUpcomingEventCard(
-                        context, upcomingEvent, index);
-                  },
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 11.0,
-                    mainAxisSpacing: 11.0,
-                  ),
-                ),
-              )
-            : const CupertinoActivityIndicator());
+    return _uiState.upcomingEvents.isNotEmpty
+        ? Flexible(
+            child: GridView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: _uiState.upcomingEvents.length,
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) {
+                final upcomingEvent = _uiState.upcomingEvents[index];
+                return buildUpcomingEventCard(context, upcomingEvent, index);
+              },
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 11.0,
+                mainAxisSpacing: 11.0,
+              ),
+            ),
+          )
+        : const CupertinoActivityIndicator();
   }
 
   void _navigateToEventDetailsPage(BuildContext context, int index) {

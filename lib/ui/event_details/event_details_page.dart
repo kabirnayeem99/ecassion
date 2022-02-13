@@ -385,7 +385,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
         children: [
           ClipRRect(
             child: loadNetworkImage(
-              url: "https://cdn.wallpapersafari.com/10/68/gw6JbD.jpg",
+              url: _uiState.eventDetails.imageUrl,
               height: size.height * 0.48,
               width: size.width,
               fit: BoxFit.fill,
@@ -478,11 +478,14 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                 ),
               ),
               const SizedBox(height: 5.0),
-              Text(
-                _uiState.eventDetails.name,
-                style: const TextStyle(
-                  fontSize: 10.0,
-                  color: Color(0xff8D8D8D),
+              SizedBox(
+                width: _size.width * 0.6,
+                child: Text(
+                  _uiState.eventDetails.name,
+                  style: const TextStyle(
+                    fontSize: 10.0,
+                    color: Color(0xff8D8D8D),
+                  ),
                 ),
               ),
               const SizedBox(height: 5.0),

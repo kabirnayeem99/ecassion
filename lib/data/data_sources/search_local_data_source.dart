@@ -7,6 +7,15 @@ import '../dto/event_dto.dart';
 import 'category_local_data_source.dart';
 
 class SearchLocalDataSource {
+  static final SearchLocalDataSource _singleton =
+      SearchLocalDataSource._internal();
+
+  factory SearchLocalDataSource() {
+    return _singleton;
+  }
+
+  SearchLocalDataSource._internal();
+
   Future<List<EventDto>> searchEventByCity(City city) async {
     await Future.delayed(loadRandomDuration());
     return [
