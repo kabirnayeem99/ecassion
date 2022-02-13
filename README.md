@@ -2,6 +2,16 @@
 
 Cross platform mobile application for event management.
 
+# Architecture
+
+This project makes use
+of [Uncle Bob's clean architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
+.
+
+![](https://miro.medium.com/max/556/0*zUtZYiJ1bDTugOYY)
+
+It is divided into three modules, namely data, domain and ui.
+
 # Build
 
 ## Requirements
