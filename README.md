@@ -23,22 +23,33 @@ To run this app on iOS devices, you need -
 
 ## Build instructions
 
-Make sure everything is fine and ok by running
+Make sure everything is fine and ok by running-
+
 `flutter doctor -v`
 
 This project uses `Freezed` code generator for its data classes. You need to first generate the
 freezed files by running-
+
 `flutter pub run build_runner build`
+
 Then you need to open a simulator by running-
+
 `open -a simulator`
+
 Or you need to open an Android Emulator-
+
 `/Users/username/Library/Android/sdk/emulator/emulator -avd emulator_name -netdelay none -netspeed full`
 
 Then you can run the project by first cloning it from Git-
+
 `git clone https://github.com/kabirnayeem99/ecassion.git`
+
 And then by going into the directory and running the project-
+
 `cd ecassion`
+
 `flutter pub get`
+
 `flutter run`
 
 # Packages
@@ -50,7 +61,9 @@ And then by going into the directory and running the project-
   data classes.
 - [cached_network_image](https://pub.dev/packages/cached_network_image), to show images from the
   internet and keep them in the cache directory.
-- [faker](https://pub.dev/packages/faker), for generating fake data. flutter_launcher_icons:
+- [faker](https://pub.dev/packages/faker), for generating fake data.
+- [flutter_launcher_icons](https://pub.dev/packages/flutter_launcher_icons), a command-line tool
+  which simplifies the task of updating Flutter app's launcher icon.
 
 # Design
 
