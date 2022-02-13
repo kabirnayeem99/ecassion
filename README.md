@@ -10,7 +10,8 @@ of [Uncle Bob's clean architecture](https://blog.cleancoder.com/uncle-bob/2012/0
 
 ![](https://miro.medium.com/max/556/0*zUtZYiJ1bDTugOYY)
 
-It is divided into three modules, namely data, domain and ui.
+It is divided into three modules, namely data, domain and ui. For state management it will use bloc
+pattern, which is not implemented yet.
 
 # Build
 
