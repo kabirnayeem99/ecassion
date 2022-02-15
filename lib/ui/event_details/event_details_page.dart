@@ -55,6 +55,15 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
     }
   }
 
+  void _navigateToEventDetailsPage(BuildContext context, int index) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EventDetailsPage(index: index),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     _size = MediaQuery.of(context).size;
@@ -116,14 +125,19 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
             itemBuilder: (context, index) {
               final recommendedEvent =
                   _uiState.eventDetails.recommendedEvents[index];
-              return buildRecommendedEventCard(context, recommendedEvent);
+              return buildRecommendedEventCard(
+                  context, recommendedEvent, index);
             }),
       ),
     );
   }
 
-  Widget buildRecommendedEventCard(BuildContext context, Event event) {
+  Widget buildRecommendedEventCard(
+      BuildContext context, Event event, int index) {
     return GestureDetector(
+      onTap: () {
+        _navigateToEventDetailsPage(context, index);
+      },
       child: SizedBox(
         width: _size.width * 0.49,
         height: _size.height * 0.21,
