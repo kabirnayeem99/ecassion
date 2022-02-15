@@ -72,9 +72,11 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     _size = MediaQuery.of(context).size;
 
-    return Scaffold(
-      body: SafeArea(
-        child: Container(
+    return SafeArea(
+      child: Scaffold(
+        appBar: buildAppBar(),
+        body: Container(
+          color: Colors.white,
           margin: const EdgeInsets.symmetric(horizontal: 16.0),
           child: SingleChildScrollView(
             child: Column(
@@ -82,7 +84,6 @@ class _HomePageState extends State<HomePage>
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                buildAppBar(),
                 buildHidable25SizedBox(),
                 buildHideableHeadingTextView("Trending Events near you"),
                 buildHidable11SizedBox(),
@@ -105,7 +106,6 @@ class _HomePageState extends State<HomePage>
             ),
           ),
         ),
-        // ),
       ),
     );
   }
@@ -422,7 +422,7 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  Widget buildAppBar() {
+  AppBar buildAppBar() {
     final sliverAppbar = SizedBox(
       width: _size.width,
       height: _size.height * 0.05,
@@ -432,19 +432,39 @@ class _HomePageState extends State<HomePage>
           SvgPicture.asset("images/splash_logo.svg",
               height: _size.height * 0.05, width: _size.height * 0.05),
           Expanded(child: Container()),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: loadNetworkImage(
-              url: _uiState.profilePictureUrl,
-              height: _size.height * 0.05,
-              width: _size.height * 0.05,
-            ),
-          ),
         ],
       ),
     );
 
-    return sliverAppbar;
+    final appBar = AppBar(
+      elevation: 0.0,
+      backgroundColor: Colors.white,
+      leading: Padding(
+        padding: const EdgeInsets.all(12),
+        child: SizedBox(
+          child: SvgPicture.asset("images/splash_logo.svg"),
+          height: 30,
+          width: 30,
+        ),
+      ),
+      actions: [
+        Padding(
+          padding: const EdgeInsets.all(12),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: SizedBox(
+              height: 30,
+              width: 30,
+              child: loadNetworkImage(
+                url: _uiState.profilePictureUrl,
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+
+    return appBar;
   }
 }
 

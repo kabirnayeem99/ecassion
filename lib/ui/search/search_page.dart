@@ -68,40 +68,43 @@ class _SearchPageState extends State<SearchPage> {
     _size = MediaQuery.of(context).size;
 
     return SafeArea(
-      child: _uiState.isLoading
-          ? const Center(child: CupertinoActivityIndicator())
-          : Container(
-              margin: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    buildHidable11SizedBox(),
-                    buildSearchField(),
-                    buildHidable25SizedBox(),
-                    buildHideableHeadingTextView("Search by Interest"),
-                    buildHidable11SizedBox(),
-                    buildInterestList(),
-                    buildHidable25SizedBox(),
-                    buildHideableHeadingTextView("Search by Popular Cities"),
-                    buildHidable11SizedBox(),
-                    buildPopularCityList(),
-                    buildHidable25SizedBox(),
-                    const Text(
-                      "Currently in your city",
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
+      child: Scaffold(
+        body: _uiState.isLoading
+            ? const Center(child: CupertinoActivityIndicator())
+            : Container(
+                color: Colors.white,
+                margin: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      buildHidable11SizedBox(),
+                      buildSearchField(),
+                      buildHidable25SizedBox(),
+                      buildHideableHeadingTextView("Search by Interest"),
+                      buildHidable11SizedBox(),
+                      buildInterestList(),
+                      buildHidable25SizedBox(),
+                      buildHideableHeadingTextView("Search by Popular Cities"),
+                      buildHidable11SizedBox(),
+                      buildPopularCityList(),
+                      buildHidable25SizedBox(),
+                      const Text(
+                        "Currently in your city",
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 11.0),
-                    buildNearbyEventList(),
-                  ],
+                      const SizedBox(height: 11.0),
+                      buildNearbyEventList(),
+                    ],
+                  ),
                 ),
               ),
-            ),
+      ),
     );
   }
 
