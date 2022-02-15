@@ -4,6 +4,7 @@ import 'package:ecassion/core/utility.dart';
 import 'package:ecassion/core/widgets/animated_sized_and_fade.dart';
 import 'package:ecassion/domain/entity/event_details.dart';
 import 'package:ecassion/domain/use_cases/get_event_details.dart';
+import 'package:ecassion/ui/checkout/checkout_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -64,9 +65,20 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
     );
   }
 
+  void _navigateToCheckoutPage(BuildContext context, int index) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CheckoutPage(index: index),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    _size = MediaQuery.of(context).size;
+    _size = MediaQuery
+        .of(context)
+        .size;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -75,36 +87,36 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
       body: AnimatedSizeAndFade(
         child: !_uiState.isLoading
             ? SizedBox(
-                height: _size.height,
-                width: _size.width,
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      buildTopBar(_size, context),
-                      buildEventBySection()[0],
-                      buildEventBySection()[1],
-                      buildEventBySection()[2],
-                      const SizedBox(height: 25.0),
-                      buildSecondHeader("About"),
-                      const SizedBox(height: 11.0),
-                      buildAboutText(),
-                      const SizedBox(height: 11.0),
-                      buildShareCard(),
-                      const SizedBox(height: 17.0),
-                      buildFirstHeader("Recommendations"),
-                      buildRecommendedEventList()
-                    ],
-                  ),
-                ),
-              )
+          height: _size.height,
+          width: _size.width,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                buildTopBar(_size, context),
+                buildEventBySection()[0],
+                buildEventBySection()[1],
+                buildEventBySection()[2],
+                const SizedBox(height: 25.0),
+                buildSecondHeader("About"),
+                const SizedBox(height: 11.0),
+                buildAboutText(),
+                const SizedBox(height: 11.0),
+                buildShareCard(),
+                const SizedBox(height: 17.0),
+                buildFirstHeader("Recommendations"),
+                buildRecommendedEventList()
+              ],
+            ),
+          ),
+        )
             : SizedBox(
-                height: _size.height,
-                width: _size.width,
-                child: const CupertinoActivityIndicator(),
-              ),
+          height: _size.height,
+          width: _size.width,
+          child: const CupertinoActivityIndicator(),
+        ),
       ),
     );
   }
@@ -124,7 +136,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
             ),
             itemBuilder: (context, index) {
               final recommendedEvent =
-                  _uiState.eventDetails.recommendedEvents[index];
+              _uiState.eventDetails.recommendedEvents[index];
               return buildRecommendedEventCard(
                   context, recommendedEvent, index);
             }),
@@ -132,8 +144,8 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
     );
   }
 
-  Widget buildRecommendedEventCard(
-      BuildContext context, Event event, int index) {
+  Widget buildRecommendedEventCard(BuildContext context, Event event,
+      int index) {
     return GestureDetector(
       onTap: () {
         _navigateToEventDetailsPage(context, index);
@@ -145,7 +157,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
           semanticContainer: true,
           clipBehavior: Clip.antiAliasWithSaveLayer,
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
           child: Stack(
             children: [
               loadNetworkImage(
@@ -212,26 +224,26 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
           const SizedBox(width: 11.0),
           _uiState.eventDetails.sharedUsers.isNotEmpty
               ? loadRoundedNetworkImage(
-                  height: 30,
-                  width: 30,
-                  url: _uiState.eventDetails.sharedUsers[0].imageUrl,
-                )
+            height: 30,
+            width: 30,
+            url: _uiState.eventDetails.sharedUsers[0].imageUrl,
+          )
               : const VisibleGoneContainer(),
           const SizedBox(width: 11.0),
           _uiState.eventDetails.sharedUsers.length >= 2
               ? loadRoundedNetworkImage(
-                  height: 30,
-                  width: 30,
-                  url: _uiState.eventDetails.sharedUsers[1].imageUrl,
-                )
+            height: 30,
+            width: 30,
+            url: _uiState.eventDetails.sharedUsers[1].imageUrl,
+          )
               : const VisibleGoneContainer(),
           const SizedBox(width: 11.0),
           _uiState.eventDetails.sharedUsers.length >= 3
               ? loadRoundedNetworkImage(
-                  height: 30,
-                  width: 30,
-                  url: _uiState.eventDetails.sharedUsers[2].imageUrl,
-                )
+            height: 30,
+            width: 30,
+            url: _uiState.eventDetails.sharedUsers[2].imageUrl,
+          )
               : const VisibleGoneContainer(),
           Expanded(child: Container()),
           GestureDetector(
@@ -261,22 +273,24 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
     return AnimatedSizeAndFade(
       child: !_uiState.isLoading
           ? FloatingActionButton.extended(
-              backgroundColor: const Color(0xff232ED1),
-              onPressed: () {},
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(48.0)),
-              isExtended: true,
-              label: Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 40.0, vertical: 16.0),
-                child: const Text(
-                  "BOOK NOW",
-                  style: TextStyle(
-                    fontSize: 16.0,
-                  ),
-                ),
-              ),
-            )
+        backgroundColor: const Color(0xff232ED1),
+        onPressed: () {
+          _navigateToCheckoutPage(context, widget.index);
+        },
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(48.0)),
+        isExtended: true,
+        label: Container(
+          padding: const EdgeInsets.symmetric(
+              horizontal: 40.0, vertical: 16.0),
+          child: const Text(
+            "BOOK NOW",
+            style: TextStyle(
+              fontSize: 16.0,
+            ),
+          ),
+        ),
+      )
           : const VisibleGoneContainer(),
     );
   }
@@ -343,7 +357,8 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                   ),
                 ),
                 Text(
-                  "Posted on ${convertDateTimeToReadableString(_uiState.eventDetails.time)}",
+                  "Posted on ${convertDateTimeToReadableString(
+                      _uiState.eventDetails.time)}",
                   style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 10.0,
@@ -353,8 +368,9 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
             ),
             Expanded(child: Container()),
             GestureDetector(
-                onTap: () => launchCaller(
-                    _uiState.eventDetails.eventBy?.phoneNumber ?? ""),
+                onTap: () =>
+                    launchCaller(
+                        _uiState.eventDetails.eventBy?.phoneNumber ?? ""),
                 child: const RoundedActionButton(icon: CupertinoIcons.phone)),
             const SizedBox(width: 16.0),
             GestureDetector(
