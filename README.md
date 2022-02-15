@@ -1,6 +1,6 @@
 # Ecassion
 
-Cross platform mobile application for event management.
+Cross-platform mobile application for event management.
 
 # Architecture
 
@@ -10,14 +10,14 @@ of [Uncle Bob's clean architecture](https://blog.cleancoder.com/uncle-bob/2012/0
 
 ![](https://miro.medium.com/max/556/0*zUtZYiJ1bDTugOYY)
 
-It is divided into three modules, namely data, domain and ui. For state management it will use bloc
+It is divided into three modules, namely data, domain, and UI. For state management, it will use bloc
 pattern, which is not implemented yet.
 
 # Build
 
 ## Requirements
 
-Make sure you have Flutter version `2.10.0` and Dart version `2.16.1` installed.
+Ensure you have Flutter version `2.10.0` and Dart version `2.16.1` installed.
 
 To run this app on android devices, you need -
 
@@ -42,16 +42,16 @@ Make sure everything is fine and ok by running-
 
 `flutter doctor -v`
 
-This project uses `Freezed` code generator for its data classes. You need to first generate the
+This project uses `Freezed` code generator for its data classes. You need first to generate the
 freezed files by running-
 
 `flutter pub run build_runner build`
 
-Then you need to open a simulator by running-
+Then you can open a simulator by running-
 
 `open -a simulator`
 
-Or you need to open an Android Emulator-
+Or an Android Emulator-
 
 `/Users/username/Library/Android/sdk/emulator/emulator -avd emulator_name -netdelay none -netspeed full`
 
