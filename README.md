@@ -22,7 +22,7 @@ Make sure you have Flutter version `2.10.0` and Dart version `2.16.1` installed.
 To run this app on android devices, you need -
 
 - Android SDK
-- Platform android-30 or more, build-tools `30.0.0` or more
+- Platform android-30 or more, build-tools `30.0.0` or later
 - Java binary
 - Java version OpenJDK Runtime Environment (build `11.0.11+0-b60-7772763`)
 - All Android licenses accepted.
@@ -30,9 +30,13 @@ To run this app on android devices, you need -
 To run this app on iOS devices, you need -
 
 - Xcode
-- CocoaPods version `1.11.2` or more.
+- CocoaPods version `1.11.2` or later.
 
 ## Build instructions
+
+You can run the project by first cloning it from Git-
+
+`git clone https://github.com/kabirnayeem99/ecassion.git`
 
 Make sure everything is fine and ok by running-
 
@@ -50,10 +54,6 @@ Then you need to open a simulator by running-
 Or you need to open an Android Emulator-
 
 `/Users/username/Library/Android/sdk/emulator/emulator -avd emulator_name -netdelay none -netspeed full`
-
-Then you can run the project by first cloning it from Git-
-
-`git clone https://github.com/kabirnayeem99/ecassion.git`
 
 And then by going into the directory and running the project-
 
