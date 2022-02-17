@@ -9,7 +9,7 @@ import 'category_local_data_source.dart';
 
 class EventLocalDataSource {
   static final EventLocalDataSource _singleton =
-  EventLocalDataSource._internal();
+      EventLocalDataSource._internal();
 
   factory EventLocalDataSource() {
     return _singleton;
@@ -254,7 +254,7 @@ class EventLocalDataSource {
     UserDto(
       id: faker.guid.guid(),
       imageUrl:
-      "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
+          "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
       name: faker.person.name(),
       email: faker.lorem.word() + "@" + faker.lorem.word() + ".com",
       phoneNumber: faker.phoneNumber.us(),
@@ -262,7 +262,7 @@ class EventLocalDataSource {
     UserDto(
       id: faker.guid.guid(),
       imageUrl:
-      "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
+          "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
       name: faker.person.name(),
       email: faker.lorem.word() + "@" + faker.lorem.word() + ".com",
       phoneNumber: faker.phoneNumber.us(),
@@ -270,7 +270,7 @@ class EventLocalDataSource {
     UserDto(
       id: faker.guid.guid(),
       imageUrl:
-      "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
+          "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
       name: faker.person.name(),
       email: faker.lorem.word() + "@" + faker.lorem.word() + ".com",
       phoneNumber: faker.phoneNumber.us(),
@@ -278,7 +278,7 @@ class EventLocalDataSource {
     UserDto(
       id: faker.guid.guid(),
       imageUrl:
-      "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
+          "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
       name: faker.person.name(),
       email: faker.lorem.word() + "@" + faker.lorem.word() + ".com",
       phoneNumber: faker.phoneNumber.us(),
@@ -286,7 +286,7 @@ class EventLocalDataSource {
     UserDto(
       id: faker.guid.guid(),
       imageUrl:
-      "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
+          "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
       name: faker.person.name(),
       email: faker.lorem.word() + "@" + faker.lorem.word() + ".com",
       phoneNumber: faker.phoneNumber.us(),
@@ -294,7 +294,7 @@ class EventLocalDataSource {
     UserDto(
       id: faker.guid.guid(),
       imageUrl:
-      "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
+          "https://pbs.twimg.com/profile_images/865695281492381696/81tOUsc7_400x400.jpg",
       name: faker.person.name(),
       email: faker.lorem.word() + "@" + faker.lorem.word() + ".com",
       phoneNumber: faker.phoneNumber.us(),

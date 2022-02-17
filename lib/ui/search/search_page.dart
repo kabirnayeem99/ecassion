@@ -349,28 +349,10 @@ class _SearchPageState extends State<SearchPage> {
 
   Widget buildSearchField() {
     return SizedBox(
-      height: _size.height * 0.07,
-      child: TextField(
-        maxLines: 1,
-        decoration: InputDecoration(
-          prefixIcon: const Icon(
-            CupertinoIcons.search,
-            color: Colors.black54,
-          ),
-          prefixIconColor: Colors.black,
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 12.0, vertical: 0.0),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8.0),
-            borderSide: BorderSide.none,
-          ),
-          filled: true,
-          hintStyle: const TextStyle(
-            color: Color(0xff6C7072),
-          ),
-          hintText: "Search Events",
-          fillColor: const Color(0xffF2F4F5),
-        ),
+      height: _size.height * 0.06,
+      child: const CupertinoSearchTextField(
+        autofocus: true,
+        autocorrect: true,
       ),
     );
   }
