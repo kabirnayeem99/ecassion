@@ -40,20 +40,19 @@ class _SearchPageState extends State<SearchPage> {
     GetPopularCities getPopularCities = _container.resolve<GetPopularCities>();
     GetNearbyEvents getNearbyEvents = _container.resolve<GetNearbyEvents>();
 
-    getInterests.getInterests().then((value) => setState(
-          () {
-            _uiState.interests = value;
-          },
-        ));
+    getInterests.getInterests().then((value) => setState(() {
+          debugPrint("interests " + value.toString());
+          _uiState.interests = value;
+        }));
 
-    getPopularCities.getCities().then((value) => setState(
-          () {
-            _uiState.cities = value;
-          },
-        ));
+    getPopularCities.getCities().then((value) => setState(() {
+          debugPrint("popular cities " + value.toString());
+          _uiState.cities = value;
+        }));
 
     getNearbyEvents.getNearbyEvents().then((value) => setState(
           () {
+            debugPrint("nearby events " + value.toString());
             _uiState.nearbyEvents = value;
             _uiState.isLoading = false;
           },

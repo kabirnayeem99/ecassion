@@ -21,6 +21,7 @@ import '../../data/data_sources/category_local_data_source.dart';
 import '../../data/data_sources/event_local_data_source.dart';
 import '../../data/data_sources/recommendation_local_data_source.dart';
 import '../../data/data_sources/search_local_data_source.dart';
+import '../../domain/use_cases/get_nearby_events.dart';
 
 KiwiContainer di = KiwiContainer();
 
@@ -55,6 +56,7 @@ void setUpUseCasesInjector() {
   di.registerFactory((container) => GetInterests(container.resolve()));
   di.registerFactory((container) => GetPopularCities(container.resolve()));
   di.registerFactory((container) => GetTrendingEvent(container.resolve()));
+  di.registerFactory((container) => GetNearbyEvents(container.resolve()));
   di.registerFactory((container) => GetUpcomingEvent(container.resolve()));
   di.registerFactory((container) => SearchEventByCity(container.resolve()));
   di.registerFactory((container) => SearchEventByInterest(container.resolve()));
