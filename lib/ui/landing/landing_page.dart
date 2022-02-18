@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../bookmarks/bookmarks_page.dart';
-import '../home/home_page.dart';
+import '../home/bloc/home_page.dart';
 import '../profile/profile_page.dart';
 import '../search/search_page.dart';
 

@@ -1,17 +1,17 @@
-import 'package:ecassion/ui/home/home_events.dart';
+import 'package:ecassion/ui/home/bloc/home_events.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../core/utility.dart';
-import '../../core/widgets/animated_sized_and_fade.dart';
-import '../../domain/entity/category.dart';
-import '../../domain/entity/trending_event.dart';
-import '../../domain/entity/upcoming_event.dart';
-import '../event_details/event_details_page.dart';
+import '../../../core/utility.dart';
+import '../../../core/widgets/animated_sized_and_fade.dart';
+import '../../../domain/entity/category.dart';
+import '../../../domain/entity/trending_event.dart';
+import '../../../domain/entity/upcoming_event.dart';
+import '../../event_details/event_details_page.dart';
+import '../home_states.dart';
 import 'home_bloc.dart';
-import 'home_states.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   late Size _size;
 
-  late HomeBloc? _homeBloc;
+  late HomeBloc _homeBloc;
 
   @override
   void initState() {
@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage>
 
   @override
   void dispose() {
-    _homeBloc?.close();
+    _homeBloc.close();
     super.dispose();
   }
 
@@ -51,8 +51,7 @@ class _HomePageState extends State<HomePage>
 
     return SafeArea(
       child: BlocProvider(
-        create: (context) => _homeBloc ?? HomeBloc(HomeBlocLoadingState())
-          ..add(InitialBlocLoadEvent()),
+        create: (context) => _homeBloc..add(InitialBlocLoadEvent()),
         child: BlocBuilder<HomeBloc, HomeBlocState>(
           builder: (context, state) {
             if (state is HomeBlocSuccessState) {

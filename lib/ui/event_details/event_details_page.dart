@@ -3,16 +3,18 @@ import 'dart:core';
 import 'package:ecassion/core/utility.dart';
 import 'package:ecassion/core/widgets/animated_sized_and_fade.dart';
 import 'package:ecassion/domain/entity/event_details.dart';
-import 'package:ecassion/domain/use_cases/get_event_details.dart';
 import 'package:ecassion/ui/checkout/checkout_page.dart';
+import 'package:ecassion/ui/event_details/bloc/event_details_bloc.dart';
+import 'package:ecassion/ui/event_details/bloc/event_details_events.dart';
+import 'package:ecassion/ui/event_details/bloc/event_details_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:kiwi/kiwi.dart';
 
 import '../../data/data_sources/category_local_data_source.dart';
 import '../../domain/entity/event.dart';
-import '../home/home_page.dart';
+import '../home/bloc/home_page.dart';
 
 class EventDetailsPage extends StatefulWidget {
   final int index;
@@ -26,30 +28,15 @@ class EventDetailsPage extends StatefulWidget {
 class _EventDetailsPageState extends State<EventDetailsPage> {
   late Size _size;
 
-  final KiwiContainer _container = KiwiContainer();
-
-  final _uiState = EventDetailsUiState();
+  late EventDetailsBloc _eventDetailsBloc;
 
   var _index = 0;
 
   @override
   void initState() {
-    _getData();
-    super.initState();
-  }
-
-  void _getData() {
-    setState(() {
-      _uiState.isLoading = true;
-    });
-    GetEventDetails getEventDetails = _container.resolve<GetEventDetails>();
+    _eventDetailsBloc = EventDetailsBloc(EventDetailsBlocLoadingState());
     _index = widget.index;
-    getEventDetails.getEventDetailsByIndex(_index).then((value) {
-      setState(() {
-        _uiState.isLoading = false;
-        _uiState.eventDetails = value;
-      });
-    });
+    super.initState();
   }
 
   @override
@@ -81,63 +68,77 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
   Widget build(BuildContext context) {
     _size = MediaQuery.of(context).size;
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: buildBookNowButton(),
-      body: AnimatedSizeAndFade(
-        child: !_uiState.isLoading
-            ? SizedBox(
-                height: _size.height,
-                width: _size.width,
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      buildTopBar(_size, context),
-                      buildEventBySection()[0],
-                      buildEventBySection()[1],
-                      buildEventBySection()[2],
-                      const SizedBox(height: 25.0),
-                      buildSecondHeader("About"),
-                      const SizedBox(height: 11.0),
-                      buildAboutText(),
-                      const SizedBox(height: 11.0),
-                      buildShareCard(),
-                      const SizedBox(height: 17.0),
-                      buildFirstHeader("Recommendations"),
-                      buildRecommendedEventList()
-                    ],
+    return BlocProvider(
+      create: (context) =>
+          _eventDetailsBloc..add(EventDetailsBlocInitialLoadingEvent(_index)),
+      child: BlocBuilder<EventDetailsBloc, EventDetailsBlocState>(
+          builder: (context, state) {
+        return Scaffold(
+          backgroundColor: Colors.white,
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
+          floatingActionButton: buildBookNowButton(state),
+          body: AnimatedSizeAndFade(
+            child: state is EventDetailsBlocSuccessState
+                ? SizedBox(
+                    height: _size.height,
+                    width: _size.width,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          buildTopBar(_size, context,
+                              state.eventDetailsUiState.eventDetails),
+                          buildEventBySection(
+                              state.eventDetailsUiState.eventDetails)[0],
+                          buildEventBySection(
+                              state.eventDetailsUiState.eventDetails)[1],
+                          buildEventBySection(
+                              state.eventDetailsUiState.eventDetails)[2],
+                          const SizedBox(height: 25.0),
+                          buildSecondHeader("About"),
+                          const SizedBox(height: 11.0),
+                          buildAboutText(
+                              state.eventDetailsUiState.eventDetails),
+                          const SizedBox(height: 11.0),
+                          buildShareCard(
+                              state.eventDetailsUiState.eventDetails),
+                          const SizedBox(height: 17.0),
+                          buildFirstHeader("Recommendations"),
+                          buildRecommendedEventList(state.eventDetailsUiState
+                              .eventDetails.recommendedEvents)
+                        ],
+                      ),
+                    ),
+                  )
+                : SizedBox(
+                    height: _size.height,
+                    width: _size.width,
+                    child: const CupertinoActivityIndicator(),
                   ),
-                ),
-              )
-            : SizedBox(
-                height: _size.height,
-                width: _size.width,
-                child: const CupertinoActivityIndicator(),
-              ),
-      ),
+          ),
+        );
+      }),
     );
   }
 
-  Flexible buildRecommendedEventList() {
+  Flexible buildRecommendedEventList(List<Event> recommendedEvents) {
     return Flexible(
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 12.0),
         child: GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: _uiState.eventDetails.recommendedEvents.length,
+            itemCount: recommendedEvents.length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               crossAxisSpacing: 8.0,
               mainAxisSpacing: 8.0,
             ),
             itemBuilder: (context, index) {
-              final recommendedEvent =
-                  _uiState.eventDetails.recommendedEvents[index];
+              final recommendedEvent = recommendedEvents[index];
               return buildRecommendedEventCard(
                   context, recommendedEvent, index);
             }),
@@ -203,9 +204,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                 top: 12.0,
                 child: SvgPicture.asset(
                   "images/icon_save.svg",
-                  color: _uiState.eventDetails.isSaved
-                      ? Colors.deepPurple
-                      : Colors.white,
+                  color: event.isSaved ? Colors.deepPurple : Colors.white,
                   height: event.isSaved ? 25 : 0.0,
                   width: event.isSaved ? 25 : 0.0,
                 ),
@@ -217,39 +216,39 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
     );
   }
 
-  Container buildShareCard() {
+  Container buildShareCard(EventDetails eventDetails) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 22.0),
       child: Row(
         children: [
           const SizedBox(width: 11.0),
-          _uiState.eventDetails.sharedUsers.isNotEmpty
+          eventDetails.sharedUsers.isNotEmpty
               ? loadRoundedNetworkImage(
                   height: 30,
                   width: 30,
-                  url: _uiState.eventDetails.sharedUsers[0].imageUrl,
+                  url: eventDetails.sharedUsers[0].imageUrl,
                 )
               : const VisibleGoneContainer(),
           const SizedBox(width: 11.0),
-          _uiState.eventDetails.sharedUsers.length >= 2
+          eventDetails.sharedUsers.length >= 2
               ? loadRoundedNetworkImage(
                   height: 30,
                   width: 30,
-                  url: _uiState.eventDetails.sharedUsers[1].imageUrl,
+                  url: eventDetails.sharedUsers[1].imageUrl,
                 )
               : const VisibleGoneContainer(),
           const SizedBox(width: 11.0),
-          _uiState.eventDetails.sharedUsers.length >= 3
+          eventDetails.sharedUsers.length >= 3
               ? loadRoundedNetworkImage(
                   height: 30,
                   width: 30,
-                  url: _uiState.eventDetails.sharedUsers[2].imageUrl,
+                  url: eventDetails.sharedUsers[2].imageUrl,
                 )
               : const VisibleGoneContainer(),
           Expanded(child: Container()),
           GestureDetector(
               onTap: () {
-                launchShareMenu(_uiState.eventDetails.toString());
+                launchShareMenu(eventDetails.toString());
               },
               child: const RoundedActionButton(icon: CupertinoIcons.share))
         ],
@@ -270,10 +269,11 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
     );
   }
 
-  Widget buildBookNowButton() {
+  Widget buildBookNowButton(EventDetailsBlocState uiState) {
     return AnimatedSizeAndFade(
-      child: !_uiState.isLoading
-          ? FloatingActionButton.extended(
+      child: uiState is EventDetailsBlocLoadingState
+          ? const VisibleGoneContainer()
+          : FloatingActionButton.extended(
               backgroundColor: const Color(0xff232ED1),
               onPressed: () {
                 _navigateToCheckoutPage(context, widget.index);
@@ -291,8 +291,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                   ),
                 ),
               ),
-            )
-          : const VisibleGoneContainer(),
+            ),
     );
   }
 
@@ -322,18 +321,18 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
     );
   }
 
-  Widget buildAboutText() {
+  Widget buildAboutText(EventDetails eventDetails) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 22.0),
       child: Text(
-        _uiState.eventDetails.about,
+        eventDetails.about,
         textAlign: TextAlign.justify,
         style: const TextStyle(fontSize: 12.0, color: Color(0xff5a5a5a)),
       ),
     );
   }
 
-  List<Widget> buildEventBySection() {
+  List<Widget> buildEventBySection(EventDetails eventDetails) {
     return [
       buildFirstHeader("Event By"),
       const SizedBox(height: 16.0),
@@ -351,14 +350,14 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  _uiState.eventDetails.eventBy?.name ?? "Unknown",
+                  eventDetails.eventBy?.name ?? "Unknown",
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 14.0,
                   ),
                 ),
                 Text(
-                  "Posted on ${convertDateTimeToReadableString(_uiState.eventDetails.time)}",
+                  "Posted on ${convertDateTimeToReadableString(eventDetails.time)}",
                   style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 10.0,
@@ -368,13 +367,13 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
             ),
             Expanded(child: Container()),
             GestureDetector(
-                onTap: () => launchCaller(
-                    _uiState.eventDetails.eventBy?.phoneNumber ?? ""),
+                onTap: () =>
+                    launchCaller(eventDetails.eventBy?.phoneNumber ?? ""),
                 child: const RoundedActionButton(icon: CupertinoIcons.phone)),
             const SizedBox(width: 16.0),
             GestureDetector(
                 onTap: () {
-                  launchMail(_uiState.eventDetails.eventBy?.email ?? "");
+                  launchMail(eventDetails.eventBy?.email ?? "");
                 },
                 child: const RoundedActionButton(icon: CupertinoIcons.mail)),
           ],
@@ -383,7 +382,8 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
     ];
   }
 
-  Widget buildTopBar(Size size, BuildContext context) {
+  Widget buildTopBar(
+      Size size, BuildContext context, EventDetails eventDetails) {
     return SizedBox(
       height: size.height * 0.56,
       width: size.width,
@@ -391,7 +391,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
         children: [
           ClipRRect(
             child: loadNetworkImage(
-              url: _uiState.eventDetails.imageUrl,
+              url: eventDetails.imageUrl,
               height: size.height * 0.48,
               width: size.width,
               fit: BoxFit.fill,
@@ -437,9 +437,8 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
           Positioned(
             child: Icon(
               CupertinoIcons.bookmark,
-              color: _uiState.eventDetails.isSaved
-                  ? Colors.white
-                  : const Color(0xff232ED1),
+              color:
+                  eventDetails.isSaved ? Colors.white : const Color(0xff232ED1),
             ),
             top: 56,
             right: 8,
@@ -448,7 +447,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
             top: size.height * 0.42,
             left: 0.0,
             right: 0.0,
-            child: buildShortDescCard(),
+            child: buildShortDescCard(eventDetails),
           ),
         ],
       ),
@@ -459,7 +458,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
     Navigator.pop(context);
   }
 
-  Widget buildShortDescCard() {
+  Widget buildShortDescCard(EventDetails eventDetails) {
     return Container(
       width: _size.width * 0.90,
       padding: const EdgeInsets.all(16.0),
@@ -473,7 +472,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
               SizedBox(
                 width: _size.width * 0.60,
                 child: Text(
-                  _uiState.eventDetails.name,
+                  eventDetails.name,
                   maxLines: 2,
                   softWrap: true,
                   style: const TextStyle(
@@ -487,7 +486,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
               SizedBox(
                 width: _size.width * 0.6,
                 child: Text(
-                  _uiState.eventDetails.name,
+                  eventDetails.name,
                   style: const TextStyle(
                     fontSize: 10.0,
                     color: Color(0xff8D8D8D),
@@ -496,7 +495,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
               ),
               const SizedBox(height: 5.0),
               Text(
-                "Rs. ${_uiState.eventDetails.price.toString()}",
+                "Rs. ${eventDetails.price.toString()}",
                 style: const TextStyle(
                   fontSize: 14.0,
                   color: Color(0xff6564DB),
@@ -558,10 +557,4 @@ class RoundedActionButton extends StatelessWidget {
           color: const Color(0xff6564DB)),
     );
   }
-}
-
-class EventDetailsUiState {
-  bool isLoading = false;
-  String message = "";
-  EventDetails eventDetails = EventDetails();
 }
