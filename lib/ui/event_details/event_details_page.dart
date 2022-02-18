@@ -46,6 +46,14 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
     }
   }
 
+  @override
+  void dispose() {
+    if (!_eventDetailsBloc.isClosed) {
+      _eventDetailsBloc.close();
+    }
+    super.dispose();
+  }
+
   void _navigateToEventDetailsPage(BuildContext context, int index) {
     Navigator.push(
       context,
