@@ -79,7 +79,7 @@ class _SplashPageState extends State<SplashPage>
   }
 
   void _makePageFullScreen() {
-    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual);
+    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
   }
 
   void _exitFullScreenMode() {
