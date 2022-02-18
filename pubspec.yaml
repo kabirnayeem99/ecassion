@@ -17,6 +17,7 @@ dependencies:
   faker:
   url_launcher: ^6.0.20
   share_plus: ^3.0.4
+  kiwi: ^4.0.1
 
 dev_dependencies:
   flutter_test:
