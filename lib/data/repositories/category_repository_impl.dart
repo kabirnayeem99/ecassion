@@ -5,7 +5,9 @@ import '../../domain/repositories/category_repository.dart';
 import '../data_sources/category_local_data_source.dart';
 
 class CategoryRepositoryImpl extends CategoryRepository {
-  final CategoryLocalDataSource _categoryDataSource = CategoryLocalDataSource();
+  final CategoryLocalDataSource _categoryDataSource;
+
+  CategoryRepositoryImpl(this._categoryDataSource);
 
   @override
   Future<List<Category>> getCategoryList() async {

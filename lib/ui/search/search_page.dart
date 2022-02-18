@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:kiwi/kiwi.dart';
 
 import '../../core/utility.dart';
 import '../../domain/entity/city.dart';
@@ -22,6 +23,8 @@ class _SearchPageState extends State<SearchPage> {
   final SearchUiState _uiState = SearchUiState();
   late Size _size;
 
+  final KiwiContainer _container = KiwiContainer();
+
   @override
   void initState() {
     _loadAllData();
@@ -32,9 +35,10 @@ class _SearchPageState extends State<SearchPage> {
     setState(() {
       _uiState.isLoading = true;
     });
-    GetInterests getInterests = GetInterests();
-    GetPopularCities getPopularCities = GetPopularCities();
-    GetNearbyEvents getNearbyEvents = GetNearbyEvents();
+
+    GetInterests getInterests = _container.resolve<GetInterests>();
+    GetPopularCities getPopularCities = _container.resolve<GetPopularCities>();
+    GetNearbyEvents getNearbyEvents = _container.resolve<GetNearbyEvents>();
 
     getInterests.getInterests().then((value) => setState(
           () {

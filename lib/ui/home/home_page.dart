@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:kiwi/kiwi.dart';
 
 import '../../core/utility.dart';
 import '../../core/widgets/animated_sized_and_fade.dart';
@@ -23,6 +24,8 @@ class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   final HomePageUiState _uiState = HomePageUiState();
 
+  final KiwiContainer _container = KiwiContainer();
+
   late Size _size;
 
   @override
@@ -32,9 +35,11 @@ class _HomePageState extends State<HomePage>
   }
 
   void _loadAllData() async {
-    final GetTrendingEvent _getTrendingEvent = GetTrendingEvent();
-    final GetUpcomingEvent _getUpcomingEvent = GetUpcomingEvent();
-    final GetCategories _getCategories = GetCategories();
+    final GetTrendingEvent _getTrendingEvent =
+        _container.resolve<GetTrendingEvent>();
+    final GetUpcomingEvent _getUpcomingEvent =
+        _container.resolve<GetUpcomingEvent>();
+    final GetCategories _getCategories = _container.resolve<GetCategories>();
 
     _getCategories.getCategoryList().then((value) => {
           setState(() {

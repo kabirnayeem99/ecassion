@@ -5,8 +5,9 @@ import '../entity/city.dart';
 import '../repositories/recommendation_repository.dart';
 
 class GetPopularCities {
-  final RecommendationRepository recommendationRepository =
-      RecommendationRepositoryImpl();
+  final RecommendationRepository recommendationRepository;
+
+  GetPopularCities(this.recommendationRepository);
 
   Future<List<City>> getCities() {
     return recommendationRepository.getPopularCities();

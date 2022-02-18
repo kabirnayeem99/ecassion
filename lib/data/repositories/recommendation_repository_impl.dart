@@ -9,8 +9,9 @@ import '../../domain/repositories/recommendation_repository.dart';
 import '../data_sources/recommendation_local_data_source.dart';
 
 class RecommendationRepositoryImpl extends RecommendationRepository {
-  final RecommendationDataSource recommendationLocalDataSource =
-      RecommendationDataSource();
+  final RecommendationDataSource recommendationLocalDataSource;
+
+  RecommendationRepositoryImpl(this.recommendationLocalDataSource);
 
   @override
   Future<List<Event>> getNearbyEvents() async {

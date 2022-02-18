@@ -1,11 +1,12 @@
 import 'package:flutter/foundation.dart';
 
-import '../../data/repositories/event_repository_impl.dart';
 import '../entity/trending_event.dart';
 import '../repositories/event_repository.dart';
 
 class GetTrendingEvent {
-  final EventRepository eventRepository = EventRepositoryImpl();
+  final EventRepository eventRepository;
+
+  GetTrendingEvent(this.eventRepository);
 
   Future<List<TrendingEvent>> getTrendingEvents() {
     try {

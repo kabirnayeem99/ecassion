@@ -9,7 +9,9 @@ import '../../domain/repositories/event_repository.dart';
 import '../data_sources/event_local_data_source.dart';
 
 class EventRepositoryImpl extends EventRepository {
-  final EventLocalDataSource _eventLocalDataSource = EventLocalDataSource();
+  final EventLocalDataSource _eventLocalDataSource;
+
+  EventRepositoryImpl(this._eventLocalDataSource);
 
   @override
   Future<List<TrendingEvent>> getTrendingEvents() async {

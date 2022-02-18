@@ -1,11 +1,14 @@
-import '../../data/repositories/search_repository_impl.dart';
+import 'package:ecassion/domain/repositories/search_repository.dart';
+
 import '../entity/event.dart';
 import '../entity/interest.dart';
 
 class SearchEventByInterest {
-  final searchRepository = SearchRepositoryImpl();
+  final SearchRepository _searchRepository;
+
+  SearchEventByInterest(this._searchRepository);
 
   Future<List<Event>> getSearchResult(Interest interest) {
-    return searchRepository.searchEventByInterest(interest);
+    return _searchRepository.searchEventByInterest(interest);
   }
 }
