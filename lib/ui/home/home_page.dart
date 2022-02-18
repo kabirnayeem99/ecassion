@@ -1,17 +1,17 @@
+import 'package:ecassion/ui/home/home_events.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:kiwi/kiwi.dart';
 
 import '../../core/utility.dart';
 import '../../core/widgets/animated_sized_and_fade.dart';
 import '../../domain/entity/category.dart';
 import '../../domain/entity/trending_event.dart';
 import '../../domain/entity/upcoming_event.dart';
-import '../../domain/use_cases/get_categories.dart';
-import '../../domain/use_cases/get_trending_event.dart';
-import '../../domain/use_cases/get_upcoming_event.dart';
 import '../event_details/event_details_page.dart';
+import 'home_bloc.dart';
+import 'home_states.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -22,48 +22,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
-  final HomePageUiState _uiState = HomePageUiState();
-
-  final KiwiContainer _container = KiwiContainer();
-
   late Size _size;
+
+  late HomeBloc? _homeBloc;
 
   @override
   void initState() {
-    _loadAllData();
     super.initState();
-  }
-
-  void _loadAllData() async {
-    final GetTrendingEvent _getTrendingEvent =
-        _container.resolve<GetTrendingEvent>();
-    final GetUpcomingEvent _getUpcomingEvent =
-        _container.resolve<GetUpcomingEvent>();
-    final GetCategories _getCategories = _container.resolve<GetCategories>();
-
-    _getCategories.getCategoryList().then((value) => {
-          setState(() {
-            _uiState.categories = value;
-          })
-        });
-
-    _getUpcomingEvent.getUpcomingEvents().then((value) => {
-          setState(() {
-            _uiState.upcomingEvents = value;
-          })
-        });
-
-    _getTrendingEvent.getTrendingEvents().then((value) => {
-          setState(() {
-            _uiState.trendingEvents = value;
-            _uiState.isLoading = false;
-          })
-        });
-
-    setState(() {
-      _uiState.profilePictureUrl =
-          "https://cloud.netlifyusercontent.com/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/a683a10f-9473-46dd-971a-3bc100917972/29-angryguybeard.jpg";
-    });
+    _homeBloc = HomeBloc(HomeBlocLoadingState());
   }
 
   @override
@@ -74,42 +40,65 @@ class _HomePageState extends State<HomePage>
   }
 
   @override
+  void dispose() {
+    _homeBloc?.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     _size = MediaQuery.of(context).size;
 
     return SafeArea(
-      child: Scaffold(
-        appBar: buildAppBar(),
-        body: Container(
-          color: Colors.white,
-          margin: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                buildHidable25SizedBox(),
-                buildHideableHeadingTextView("Trending Events near you"),
-                buildHidable11SizedBox(),
-                buildTrendingPlaceList(),
-                buildHidable25SizedBox(),
-                buildHideableHeadingTextView("Category"),
-                buildHidable11SizedBox(),
-                buildCategoriesList(),
-                buildHidable25SizedBox(),
-                const Text(
-                  "Upcoming Events",
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
+      child: BlocProvider(
+        create: (context) => _homeBloc ?? HomeBloc(HomeBlocLoadingState())
+          ..add(InitialBlocLoadEvent()),
+        child: BlocBuilder<HomeBloc, HomeBlocState>(
+          builder: (context, state) {
+            if (state is HomeBlocSuccessState) {
+              return Scaffold(
+                appBar: buildAppBar(state.uiState.profilePictureUrl),
+                body: Container(
+                  color: Colors.white,
+                  margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        buildHidable25SizedBox(),
+                        buildHideableHeadingTextView(
+                            "Trending Events near you"),
+                        buildHidable11SizedBox(),
+                        buildTrendingPlaceList(),
+                        buildHidable25SizedBox(),
+                        buildHideableHeadingTextView("Category"),
+                        buildHidable11SizedBox(),
+                        buildCategoriesList(state.uiState.categories),
+                        buildHidable25SizedBox(),
+                        const Text(
+                          "Upcoming Events",
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 11.0),
+                        buildUpcomingPlaceList(state.uiState.upcomingEvents),
+                      ],
+                    ),
                   ),
                 ),
-                const SizedBox(height: 11.0),
-                buildUpcomingPlaceList(),
-              ],
-            ),
-          ),
+              );
+            } else if (state is HomeBlocLoadingState) {
+              return const Center(child: CupertinoActivityIndicator());
+            } else if (state is HomeBlocErrorState) {
+              return const Center(child: Icon(CupertinoIcons.globe));
+            } else {
+              return const VisibleGoneContainer();
+            }
+          },
         ),
       ),
     );
@@ -137,43 +126,43 @@ class _HomePageState extends State<HomePage>
   }
 
   Widget buildTrendingPlaceList() {
-    return AnimatedSizeAndFade(
-      child: _uiState.trendingEvents.isNotEmpty
-          ? SizedBox(
-              height: _size.height * 0.25,
-              child: ListView.builder(
-                itemCount: _uiState.trendingEvents.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return buildTrendingEventCard(
-                      context, _uiState.trendingEvents[index], index);
-                },
-              ),
-            )
-          : const VisibleGoneContainer(),
-    );
+    return BlocBuilder<HomeBloc, HomeBlocState>(builder: (context, state) {
+      return AnimatedSizeAndFade(
+        child: state is HomeBlocSuccessState
+            ? SizedBox(
+                height: _size.height * 0.25,
+                child: ListView.builder(
+                  itemCount: state.uiState.trendingEvents.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return buildTrendingEventCard(
+                        context, state.uiState.trendingEvents[index], index);
+                  },
+                ),
+              )
+            : const VisibleGoneContainer(),
+      );
+    });
   }
 
-  Widget buildUpcomingPlaceList() {
-    return _uiState.upcomingEvents.isNotEmpty
-        ? Flexible(
-            child: GridView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: _uiState.upcomingEvents.length,
-              scrollDirection: Axis.vertical,
-              itemBuilder: (context, index) {
-                final upcomingEvent = _uiState.upcomingEvents[index];
-                return buildUpcomingEventCard(context, upcomingEvent, index);
-              },
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 11.0,
-                mainAxisSpacing: 11.0,
-              ),
-            ),
-          )
-        : const CupertinoActivityIndicator();
+  Widget buildUpcomingPlaceList(List<UpcomingEvent> upcomingEvents) {
+    return Flexible(
+      child: GridView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: upcomingEvents.length,
+        scrollDirection: Axis.vertical,
+        itemBuilder: (context, index) {
+          final upcomingEvent = upcomingEvents[index];
+          return buildUpcomingEventCard(context, upcomingEvent, index);
+        },
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 11.0,
+          mainAxisSpacing: 11.0,
+        ),
+      ),
+    );
   }
 
   void _navigateToEventDetailsPage(BuildContext context, int index) {
@@ -255,21 +244,17 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  Widget buildCategoriesList() {
-    return AnimatedSizeAndFade(
-      child: _uiState.categories.isNotEmpty
-          ? SizedBox(
-              height: _size.height * 0.12,
-              child: ListView.builder(
-                itemCount: _uiState.categories.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  final category = _uiState.categories[index];
-                  return buildCategoryCard(context, category);
-                },
-              ),
-            )
-          : const VisibleGoneContainer(),
+  Widget buildCategoriesList(List<Category> categories) {
+    return SizedBox(
+      height: _size.height * 0.12,
+      child: ListView.builder(
+        itemCount: categories.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          final category = categories[index];
+          return buildCategoryCard(context, category);
+        },
+      ),
     );
   }
 
@@ -427,7 +412,7 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  AppBar buildAppBar() {
+  AppBar buildAppBar(String profilePictureUrl) {
     final sliverAppbar = SizedBox(
       width: _size.width,
       height: _size.height * 0.05,
@@ -461,7 +446,7 @@ class _HomePageState extends State<HomePage>
               height: 30,
               width: 30,
               child: loadNetworkImage(
-                url: _uiState.profilePictureUrl,
+                url: profilePictureUrl,
               ),
             ),
           ),
@@ -471,15 +456,6 @@ class _HomePageState extends State<HomePage>
 
     return appBar;
   }
-}
-
-class HomePageUiState {
-  List<TrendingEvent> trendingEvents = [];
-  List<UpcomingEvent> upcomingEvents = [];
-  List<Category> categories = [];
-  bool isLoading = false;
-  String message = "";
-  String profilePictureUrl = "";
 }
 
 class VisibleGoneContainer extends StatelessWidget {
