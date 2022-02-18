@@ -59,7 +59,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
   void _navigateToEventDetailsPage(BuildContext context, int index) {
     Navigator.push(
       context,
-      MaterialPageRoute(
+      CupertinoPageRoute(
         builder: (context) => EventDetailsPage(index: index),
       ),
     );
@@ -68,7 +68,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
   void _navigateToCheckoutPage(BuildContext context, int index) {
     Navigator.push(
       context,
-      MaterialPageRoute(
+      CupertinoPageRoute(
         builder: (context) => CheckoutPage(index: index),
       ),
     );

@@ -133,7 +133,7 @@ class _SearchPageState extends State<SearchPage> {
   void _navigateToEventDetailsPage(BuildContext context, int index) {
     Navigator.push(
       context,
-      MaterialPageRoute(
+      CupertinoPageRoute(
         builder: (context) => EventDetailsPage(index: index),
       ),
     );

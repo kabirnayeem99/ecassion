@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../core/utility.dart';
@@ -19,6 +21,7 @@ class _SplashPageState extends State<SplashPage>
 
   @override
   void initState() {
+    _makePageFullScreen();
     super.initState();
     _setUpAnimation(context);
   }
@@ -31,7 +34,7 @@ class _SplashPageState extends State<SplashPage>
             if (status == AnimationStatus.completed) {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const LandingPage()),
+                CupertinoPageRoute(builder: (context) => const LandingPage()),
               );
             }
           });
@@ -43,6 +46,7 @@ class _SplashPageState extends State<SplashPage>
   void dispose() {
     _animationController.dispose();
     _animationController.removeStatusListener((status) {});
+    _exitFullScreenMode();
     super.dispose();
   }
 
@@ -73,5 +77,13 @@ class _SplashPageState extends State<SplashPage>
         },
       ),
     );
+  }
+
+  void _makePageFullScreen() {
+    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual);
+  }
+
+  void _exitFullScreenMode() {
+    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual);
   }
 }

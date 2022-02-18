@@ -174,7 +174,7 @@ class _HomePageState extends State<HomePage>
   void _navigateToEventDetailsPage(BuildContext context, int index) {
     Navigator.push(
       context,
-      MaterialPageRoute(
+      CupertinoPageRoute(
         builder: (context) => EventDetailsPage(index: index),
       ),
     );

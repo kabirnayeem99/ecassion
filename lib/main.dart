@@ -1,3 +1,4 @@
+import 'package:ecassion/core/widgets/no_glow_scroll_behaviour.dart';
 import 'package:ecassion/ui/splash/splash_page.dart';
 import 'package:flutter/material.dart';
 
@@ -10,9 +11,10 @@ class EcassionApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashPage(),
+      scrollBehavior: NoGlowScrollBehaviour(),
+      home: const SplashPage(),
     );
   }
 }
