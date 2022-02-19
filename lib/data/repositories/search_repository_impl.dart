@@ -15,12 +15,24 @@ class SearchRepositoryImpl extends SearchRepository {
 
   @override
   Future<List<Event>> searchEventByCity(City city) async {
-    return [];
+    final List<EventDto> dtoSearchResult =
+        await _searchLocalDataSource.searchEventByQuery(city.name);
+
+    final List<Event> events =
+        await compute(_convertDtosToEvents, dtoSearchResult);
+
+    return events;
   }
 
   @override
   Future<List<Event>> searchEventByInterest(Interest interest) async {
-    return [];
+    final List<EventDto> dtoSearchResult =
+        await _searchLocalDataSource.searchEventByQuery(interest.name);
+
+    final List<Event> events =
+        await compute(_convertDtosToEvents, dtoSearchResult);
+
+    return events;
   }
 
   @override

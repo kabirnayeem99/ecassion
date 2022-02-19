@@ -1,5 +1,4 @@
-import 'package:ecassion/ui/home/bloc/home_page.dart';
-import 'package:ecassion/ui/search/bloc/search_bloc_event.dart';
+import 'package:ecassion/core/widgets/animated_sized_and_fade.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,7 +9,9 @@ import '../../domain/entity/city.dart';
 import '../../domain/entity/event.dart';
 import '../../domain/entity/interest.dart';
 import '../event_details/event_details_page.dart';
+import '../home/bloc/home_page.dart';
 import 'bloc/search_bloc.dart';
+import 'bloc/search_bloc_event.dart';
 import 'bloc/search_bloc_state.dart';
 
 class SearchPage extends StatefulWidget {
@@ -23,22 +24,28 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   late Size _size;
 
-  late SearchBloc _searchBloc;
+  SearchBloc? _searchBloc;
 
   late TextEditingController _searchFieldController;
 
   @override
   void initState() {
-    _searchBloc = SearchBloc(SearchBlocLoadingState())
-      ..add(SearchBlocInitialLoadingEvent());
+    _initBloc();
     _searchFieldController = TextEditingController();
     super.initState();
   }
 
+  void _initBloc() {
+    _searchBloc ??= SearchBloc(SearchBlocLoadingState())
+      ..add(SearchBlocInitialLoadingEvent());
+  }
+
   @override
   void dispose() {
-    if (!_searchBloc.isClosed) {
-      _searchBloc.close();
+    if (_searchBloc != null) {
+      if (!_searchBloc!.isClosed) {
+        _searchBloc!.close();
+      }
     }
     _searchFieldController.dispose();
     super.dispose();
@@ -55,27 +62,42 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     _size = MediaQuery.of(context).size;
 
-    return BlocProvider(
-      create: (context) => _searchBloc,
-      child: SafeArea(
-        child: Scaffold(
-          backgroundColor: const Color(0xfff5f5f9),
-          body: BlocBuilder<SearchBloc, SearchBlocState>(
+    _initBloc();
+
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: BlocProvider(
+        create: (context) => _searchBloc ?? SearchBloc(SearchBlocLoadingState())
+          ..add(SearchBlocInitialLoadingEvent()),
+        child: SafeArea(
+          child: Scaffold(
+            backgroundColor: const Color(0xfff5f5f9),
+            body: BlocBuilder<SearchBloc, SearchBlocState>(
               builder: (context, state) {
-            if (state is SearchBlocLoadingState) {
-              return _buildLoadingState();
-            }
-            if (state is SearchBlocNormalSuccessState) {
-              return _buildPageOnNormalSuccess(state);
-            }
-            if (state is SearchBlocSearchingState) {
-              return _buildSearchResultList(state);
-            }
-            return const VisibleGoneContainer();
-          }),
+                return AnimatedSizeAndFade(
+                  child: _buildWholeAnimatedView(state),
+                );
+              },
+            ),
+          ),
         ),
       ),
     );
+  }
+
+  Widget _buildWholeAnimatedView(SearchBlocState state) {
+    if (state is SearchBlocLoadingState) {
+      return _buildLoadingState();
+    }
+    if (state is SearchBlocNormalSuccessState) {
+      return _buildPageOnNormalSuccess(state);
+    }
+    if (state is SearchBlocSearchingState) {
+      return _buildSearchResultList(state);
+    }
+    return const VisibleGoneContainer();
   }
 
   Widget _buildSearchResultList(SearchBlocSearchingState state) {
@@ -90,12 +112,14 @@ class _SearchPageState extends State<SearchPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildHidable11SizedBox(),
-            buildSearchField(query: state.query),
-            buildHidable25SizedBox(),
-            const Text(
-              "Search Results",
-              style: TextStyle(
+            _buildHidable11SizedBox(),
+            _buildSearchField(query: state.query),
+            _buildHidable25SizedBox(),
+            Text(
+              _searchFieldController.text.isNotEmpty
+                  ? "Search results for '${_searchFieldController.text}'"
+                  : "Search results",
+              style: const TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
               ),
@@ -122,17 +146,17 @@ class _SearchPageState extends State<SearchPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildHidable11SizedBox(),
-            buildSearchField(),
-            buildHidable25SizedBox(),
-            buildHideableHeadingTextView("Search by Interest"),
-            buildHidable11SizedBox(),
-            buildInterestList(_interests),
-            buildHidable25SizedBox(),
-            buildHideableHeadingTextView("Search by Popular Cities"),
-            buildHidable11SizedBox(),
-            buildPopularCityList(_cities),
-            buildHidable25SizedBox(),
+            _buildHidable11SizedBox(),
+            _buildSearchField(),
+            _buildHidable25SizedBox(),
+            _buildHideableHeadingTextView("Search by Interest"),
+            _buildHidable11SizedBox(),
+            _buildInterestList(_interests),
+            _buildHidable25SizedBox(),
+            _buildHideableHeadingTextView("Search by Popular Cities"),
+            _buildHidable11SizedBox(),
+            _buildPopularCityList(_cities),
+            _buildHidable25SizedBox(),
             const Text(
               "Currently in your city",
               style: TextStyle(
@@ -161,7 +185,7 @@ class _SearchPageState extends State<SearchPage> {
         scrollDirection: Axis.vertical,
         itemBuilder: (context, index) {
           final event = events[index];
-          return buildEventCard(context, event, index);
+          return _buildEventCard(context, event, index);
         },
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
@@ -181,7 +205,7 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  Widget buildEventCard(BuildContext context, Event event, int index) {
+  Widget _buildEventCard(BuildContext context, Event event, int index) {
     return GestureDetector(
       onTap: () {
         _navigateToEventDetailsPage(context, index);
@@ -251,7 +275,7 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  Widget buildInterestList(List<Interest> interests) {
+  Widget _buildInterestList(List<Interest> interests) {
     return SizedBox(
       height: _size.height * 0.14,
       child: ListView.builder(
@@ -260,13 +284,13 @@ class _SearchPageState extends State<SearchPage> {
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           final interest = interests[index];
-          return buildInterestCard(context, interest);
+          return _buildInterestCard(context, interest);
         },
       ),
     );
   }
 
-  Widget buildPopularCityList(List<City> cities) {
+  Widget _buildPopularCityList(List<City> cities) {
     return SizedBox(
       height: _size.height * 0.14,
       child: ListView.builder(
@@ -275,101 +299,111 @@ class _SearchPageState extends State<SearchPage> {
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           final city = cities[index];
-          return buildCityCard(context, city);
+          return _buildCityCard(context, city);
         },
       ),
     );
   }
 
-  Widget buildCityCard(BuildContext context, City city) {
-    return Container(
-      margin: const EdgeInsets.only(right: 16.0),
-      width: _size.height * 0.14,
-      height: _size.height * 0.14,
-      child: Card(
-        semanticContainer: true,
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-        child: Stack(
-          children: [
-            loadNetworkImage(
-              url: city.imageUrl,
-              fit: BoxFit.fill,
-              width: _size.height * 0.14,
-              height: _size.height * 0.14,
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                height: 25,
-                width: 25,
-                color: Colors.white,
-                child: Center(
-                  child: Text(
-                    city.name,
-                    maxLines: 1,
-                    style: const TextStyle(
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w400,
+  Widget _buildCityCard(BuildContext context, City city) {
+    return GestureDetector(
+      onTap: () {
+        _searchBloc?.add(SearchBlocSearchByCityEvent(city: city));
+      },
+      child: Container(
+        margin: const EdgeInsets.only(right: 16.0),
+        width: _size.height * 0.14,
+        height: _size.height * 0.14,
+        child: Card(
+          semanticContainer: true,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+          child: Stack(
+            children: [
+              loadNetworkImage(
+                url: city.imageUrl,
+                fit: BoxFit.fill,
+                width: _size.height * 0.14,
+                height: _size.height * 0.14,
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  height: 25,
+                  width: 25,
+                  color: Colors.white,
+                  child: Center(
+                    child: Text(
+                      city.name,
+                      maxLines: 1,
+                      style: const TextStyle(
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget buildInterestCard(BuildContext context, Interest interest) {
-    return Container(
-      margin: const EdgeInsets.only(right: 16.0),
-      width: _size.height * 0.14,
-      height: _size.height * 0.14,
-      child: Card(
-        semanticContainer: true,
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-        child: Stack(
-          children: [
-            loadNetworkImage(
-              url: interest.imageUrl,
-              fit: BoxFit.fill,
-              width: _size.height * 0.14,
-              height: _size.height * 0.14,
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                height: 25,
-                width: 25,
-                color: Colors.white,
-                child: Center(
-                  child: Text(
-                    interest.name,
-                    maxLines: 1,
-                    style: const TextStyle(
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w400,
+  Widget _buildInterestCard(BuildContext context, Interest interest) {
+    return GestureDetector(
+      onTap: () {
+        _searchBloc?.add(SearchBlocSearchByInterestEvent(interest: interest));
+      },
+      child: Container(
+        margin: const EdgeInsets.only(right: 16.0),
+        width: _size.height * 0.14,
+        height: _size.height * 0.14,
+        child: Card(
+          semanticContainer: true,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+          child: Stack(
+            children: [
+              loadNetworkImage(
+                url: interest.imageUrl,
+                fit: BoxFit.fill,
+                width: _size.height * 0.14,
+                height: _size.height * 0.14,
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  height: 25,
+                  width: 25,
+                  color: Colors.white,
+                  child: Center(
+                    child: Text(
+                      interest.name,
+                      maxLines: 1,
+                      style: const TextStyle(
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget buildHideableHeadingTextView(String text) {
+  Widget _buildHideableHeadingTextView(String text) {
     return SizedBox(
       height: 20.0,
       child: Text(
@@ -382,15 +416,15 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  Widget buildHidable25SizedBox() {
+  Widget _buildHidable25SizedBox() {
     return const SizedBox(height: 16.0);
   }
 
-  Widget buildHidable11SizedBox() {
+  Widget _buildHidable11SizedBox() {
     return const SizedBox(height: 8.0);
   }
 
-  Widget buildSearchField({String query = ""}) {
+  Widget _buildSearchField({String query = ""}) {
     if (query.isNotEmpty) {
       _searchFieldController.value = TextEditingValue(text: query);
     }
@@ -402,14 +436,14 @@ class _SearchPageState extends State<SearchPage> {
       autocorrect: true,
       onChanged: (String text) {
         if (text.isEmpty) {
-          _searchBloc.add(SearchBlocAfterClearLoadingEvent());
+          _searchBloc?.add(SearchBlocAfterClearLoadingEvent());
         }
       },
       onSubmitted: (String text) {
         if (text.isNotEmpty) {
-          _searchBloc.add(SearchBlocSearchByQueryEvent(text));
+          _searchBloc?.add(SearchBlocSearchByQueryEvent(text));
         } else {
-          _searchBloc.add(SearchBlocInitialLoadingEvent());
+          _searchBloc?.add(SearchBlocInitialLoadingEvent());
         }
       },
     );
