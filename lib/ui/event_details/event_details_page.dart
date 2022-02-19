@@ -294,6 +294,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                     horizontal: 40.0, vertical: 16.0),
                 child: const Text(
                   "BOOK NOW",
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 16.0,
                   ),
@@ -308,6 +309,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
       margin: const EdgeInsets.symmetric(horizontal: 22.0),
       child: Text(
         header,
+        overflow: TextOverflow.ellipsis,
         style: const TextStyle(
           fontSize: 14.0,
           fontWeight: FontWeight.bold,
@@ -321,6 +323,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
       margin: const EdgeInsets.symmetric(horizontal: 22.0),
       child: Text(
         header,
+        overflow: TextOverflow.ellipsis,
         style: const TextStyle(
           fontSize: 16.0,
           fontWeight: FontWeight.bold,
@@ -334,6 +337,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
       margin: const EdgeInsets.symmetric(horizontal: 22.0),
       child: Text(
         eventDetails.about,
+        overflow: TextOverflow.ellipsis,
         textAlign: TextAlign.justify,
         style: const TextStyle(fontSize: 12.0, color: Color(0xff5a5a5a)),
       ),
@@ -359,6 +363,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
               children: [
                 Text(
                   eventDetails.eventBy?.name ?? "Unknown",
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 14.0,
@@ -366,6 +371,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                 ),
                 Text(
                   "Posted on ${convertDateTimeToReadableString(eventDetails.time)}",
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 10.0,
@@ -481,6 +487,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                 width: _size.width * 0.60,
                 child: Text(
                   eventDetails.name,
+                  overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                   softWrap: true,
                   style: const TextStyle(
@@ -495,6 +502,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                 width: _size.width * 0.6,
                 child: Text(
                   eventDetails.name,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 10.0,
                     color: Color(0xff8D8D8D),
@@ -504,6 +512,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
               const SizedBox(height: 5.0),
               Text(
                 "Rs. ${eventDetails.price.toString()}",
+                overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: 14.0,
                   color: Color(0xff6564DB),

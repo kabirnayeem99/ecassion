@@ -116,6 +116,7 @@ class _SearchPageState extends State<SearchPage> {
               _searchFieldController.text.isNotEmpty
                   ? "Search results for '${_searchFieldController.text}'"
                   : "Search results",
+              overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
@@ -156,6 +157,7 @@ class _SearchPageState extends State<SearchPage> {
             _buildHidable25SizedBox(),
             const Text(
               "Currently in your city",
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: 16.0,
                 fontWeight: FontWeight.bold,
@@ -241,12 +243,14 @@ class _SearchPageState extends State<SearchPage> {
                       Text(
                         event.name,
                         maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                             fontSize: 12.0, fontWeight: FontWeight.w400),
                       ),
                       Text(
                         event.address,
                         maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                             fontSize: 10.0,
                             color: Color(0xff8f8f8f),
@@ -329,12 +333,15 @@ class _SearchPageState extends State<SearchPage> {
                 left: 0,
                 right: 0,
                 child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 6),
                   height: 25,
-                  width: 25,
+                  width: _size.height * 0.14,
                   color: Colors.white,
                   child: Center(
                     child: Text(
                       city.name,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: const TextStyle(
                         fontSize: 12.0,
@@ -378,13 +385,16 @@ class _SearchPageState extends State<SearchPage> {
                 left: 0,
                 right: 0,
                 child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 6.0),
                   height: 25,
-                  width: 25,
+                  width: _size.height * 0.13,
                   color: Colors.white,
                   child: Center(
                     child: Text(
                       interest.name,
                       maxLines: 1,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 12.0,
                         fontWeight: FontWeight.w400,
@@ -405,6 +415,7 @@ class _SearchPageState extends State<SearchPage> {
       height: 20.0,
       child: Text(
         text,
+        overflow: TextOverflow.ellipsis,
         style: const TextStyle(
           fontSize: 16.0,
           fontWeight: FontWeight.bold,

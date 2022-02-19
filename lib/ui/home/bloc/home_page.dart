@@ -285,7 +285,7 @@ class _HomePageState extends State<HomePage>
               left: 0,
               right: 0,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                padding: const EdgeInsets.symmetric(horizontal: 6.0),
                 height: 25,
                 width: 25,
                 color: Colors.white,
@@ -293,6 +293,8 @@ class _HomePageState extends State<HomePage>
                   child: Text(
                     category.name,
                     maxLines: 1,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       fontSize: 12.0,
                       fontWeight: FontWeight.w400,
@@ -350,6 +352,7 @@ class _HomePageState extends State<HomePage>
                         children: [
                           Text(
                             event.name,
+                            overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                             style: const TextStyle(
                               fontSize: 12.0,
@@ -362,6 +365,7 @@ class _HomePageState extends State<HomePage>
                                 " " +
                                 event.address,
                             maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
                                 fontSize: 10.0, color: Color(0xff8D8D8D)),
                           ),
@@ -371,6 +375,7 @@ class _HomePageState extends State<HomePage>
                     const SizedBox(width: 12.0),
                     Text(
                       "Rs " + event.price.toString(),
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 12.0,
                         color: Color(0xff6564DB),
@@ -394,6 +399,7 @@ class _HomePageState extends State<HomePage>
                 child: const Center(
                   child: Text(
                     "Top",
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: 12.0,
                       color: Colors.white,
@@ -495,6 +501,7 @@ class _HomePageState extends State<HomePage>
                   const SizedBox(height: 8),
                   Text(
                     faker.person.name(),
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,
@@ -503,6 +510,7 @@ class _HomePageState extends State<HomePage>
                   const SizedBox(height: 8),
                   Text(
                     "${faker.address.state()}, ${faker.address.country()}",
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       fontSize: 14.0,
                     ),
@@ -510,6 +518,7 @@ class _HomePageState extends State<HomePage>
                   const SizedBox(height: 8),
                   Text(
                     "${faker.lorem.sentence()} ${faker.lorem.sentence()} ${faker.lorem.sentence()}",
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       fontSize: 14.0,
                     ),
@@ -545,20 +554,26 @@ class _HomePageState extends State<HomePage>
       builder: (context) => CupertinoAlertDialog(
         title: const Text(
           "Log Out",
+          overflow: TextOverflow.ellipsis,
         ),
         content: const Text(
-            "Are you sure you want to log out? You need to be logged in to access all the features of the app."),
+          "Are you sure you want to log out? You need to be logged in to access all the features of the app.",
+          overflow: TextOverflow.ellipsis,
+        ),
         actions: <Widget>[
           CupertinoDialogAction(
             onPressed: () => Navigator.of(context).pop(false),
             isDefaultAction: true,
-            child: const Text("Log Out"),
+            child: const Text("Log Out", overflow: TextOverflow.ellipsis),
             textStyle: const TextStyle(color: Color(0xff232ED1)),
           ),
           CupertinoDialogAction(
             textStyle: const TextStyle(color: Color(0xff232ED1)),
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text("Cancel"),
+            child: const Text(
+              "Cancel",
+              overflow: TextOverflow.ellipsis,
+            ),
           )
         ],
       ),
