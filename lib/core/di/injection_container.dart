@@ -25,7 +25,7 @@ import '../../domain/use_cases/get_nearby_events.dart';
 
 KiwiContainer di = KiwiContainer();
 
-void setUpInjector() {
+Future<void> setUpInjector() async {
   setUpDataSourceInjector();
   setUpRepositoryInjector();
   setUpUseCasesInjector();

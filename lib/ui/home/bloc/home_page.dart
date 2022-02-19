@@ -1,4 +1,6 @@
+import 'package:ecassion/data/data_sources/category_local_data_source.dart';
 import 'package:ecassion/ui/home/bloc/home_events.dart';
+import 'package:faker/faker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -437,15 +439,18 @@ class _HomePageState extends State<HomePage>
         ),
       ),
       actions: [
-        Padding(
-          padding: const EdgeInsets.all(12),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: SizedBox(
-              height: 30,
-              width: 30,
-              child: loadNetworkImage(
-                url: profilePictureUrl,
+        GestureDetector(
+          onTap: () => showProfileBottomSheet(_size),
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),
+              child: SizedBox(
+                height: 30,
+                width: 30,
+                child: loadNetworkImage(
+                  url: profilePictureUrl,
+                ),
               ),
             ),
           ),
@@ -454,6 +459,106 @@ class _HomePageState extends State<HomePage>
     );
 
     return appBar;
+  }
+
+  Future<void> showProfileBottomSheet(Size size) {
+    return showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: _size.height * 0.7,
+          color: const Color(0xFF737373),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(14.0),
+                topRight: Radius.circular(14.0),
+              ),
+            ),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  SizedBox(height: _size.height * 0.03),
+                  loadRoundedNetworkImage(
+                    url: loadRandomImageUrl(),
+                    height: size.height * 0.1,
+                    width: size.height * 0.1,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    faker.person.name(),
+                    style: const TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    "${faker.address.state()}, ${faker.address.country()}",
+                    style: const TextStyle(
+                      fontSize: 14.0,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    "${faker.lorem.sentence()} ${faker.lorem.sentence()} ${faker.lorem.sentence()}",
+                    style: const TextStyle(
+                      fontSize: 14.0,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Expanded(child: Container()),
+                  CupertinoButton.filled(
+                    child: const Text("Log Out"),
+                    onPressed: () async => _showLogOutAlertDialog(context),
+                  ),
+                  CupertinoButton(
+                    child: const Text("Go To Profile"),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  CupertinoButton(
+                    child: const Text("Cancel"),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  Expanded(child: Container()),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future _showLogOutAlertDialog(BuildContext context) {
+    Navigator.pop(context);
+    return showCupertinoDialog(
+      context: context,
+      builder: (context) => CupertinoAlertDialog(
+        title: const Text(
+          "Log Out",
+        ),
+        content: const Text(
+            "Are you sure you want to log out? You need to be logged in to access all the features of the app."),
+        actions: <Widget>[
+          CupertinoDialogAction(
+            onPressed: () => Navigator.of(context).pop(false),
+            isDefaultAction: true,
+            child: const Text("Log Out"),
+            textStyle: const TextStyle(color: Color(0xff232ED1)),
+          ),
+          CupertinoDialogAction(
+            textStyle: const TextStyle(color: Color(0xff232ED1)),
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text("Cancel"),
+          )
+        ],
+      ),
+    );
   }
 }
 

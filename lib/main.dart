@@ -3,8 +3,8 @@ import 'package:ecassion/core/widgets/no_glow_scroll_behaviour.dart';
 import 'package:ecassion/ui/splash/splash_page.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  setUpInjector();
+void main() async {
+  await setUpInjector();
   runApp(const EcassionApp());
 }
 
