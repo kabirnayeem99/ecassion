@@ -74,11 +74,11 @@ class _SearchPageState extends State<SearchPage> {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color(0xffeaeaf1),
+        backgroundColor: const Color(0xfff5f5f9),
         body: _uiState.isLoading
             ? const Center(child: CupertinoActivityIndicator())
             : Container(
-                color: const Color(0xffeaeaf1),
+                color: const Color(0xfff5f5f9),
                 margin: const EdgeInsets.symmetric(horizontal: 12.0),
                 child: SingleChildScrollView(
                   child: Column(
@@ -155,6 +155,7 @@ class _SearchPageState extends State<SearchPage> {
         width: _size.width * 0.49,
         height: _size.height * 0.21,
         child: Card(
+          elevation: 0.0,
           semanticContainer: true,
           clipBehavior: Clip.antiAliasWithSaveLayer,
           shape:

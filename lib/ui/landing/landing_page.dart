@@ -51,7 +51,7 @@ class _LandingPageState extends State<LandingPage> {
         return false;
       },
       child: Scaffold(
-        backgroundColor: Color(0xffeaeaf1),
+        backgroundColor: const Color(0xfff5f5f9),
         extendBody: true,
         body: homeScreenTabs[_selectedIndex],
         bottomNavigationBar: ClipRRect(
@@ -66,7 +66,7 @@ class _LandingPageState extends State<LandingPage> {
             onTap: (index) {
               _onItemTapped(index);
             },
-            backgroundColor: Colors.white.withOpacity(0.92),
+            backgroundColor: Colors.white,
             showSelectedLabels: false,
             selectedItemColor: const Color(0xff6564DB),
             showUnselectedLabels: false,

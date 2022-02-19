@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage>
           builder: (context, state) {
             if (state is HomeBlocSuccessState) {
               return Scaffold(
-                backgroundColor: const Color(0xffeaeaf1),
+                backgroundColor: const Color(0xfff5f5f9),
                 appBar: buildAppBar(state.uiState.profilePictureUrl),
                 body: Container(
                   margin: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -159,7 +159,7 @@ class _HomePageState extends State<HomePage>
         },
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          crossAxisSpacing: 4.0,
+          crossAxisSpacing: 2.0,
           mainAxisSpacing: 4.0,
         ),
       ),
@@ -186,6 +186,7 @@ class _HomePageState extends State<HomePage>
         width: _size.width * 0.49,
         height: _size.height * 0.21,
         child: Card(
+          elevation: 0.1,
           semanticContainer: true,
           clipBehavior: Clip.antiAliasWithSaveLayer,
           shape:
@@ -265,7 +266,8 @@ class _HomePageState extends State<HomePage>
       width: _size.height * 0.12,
       height: _size.height * 0.12,
       child: Card(
-        color: const Color(0xfffcfcfe),
+        borderOnForeground: true,
+        elevation: 0.5,
         semanticContainer: true,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         shape:
@@ -316,7 +318,7 @@ class _HomePageState extends State<HomePage>
         width: _size.width * 0.80,
         height: _size.height * 0.25,
         child: Card(
-          color: const Color(0xfffcfcfe),
+          elevation: 0.1,
           semanticContainer: true,
           clipBehavior: Clip.antiAliasWithSaveLayer,
           shape: RoundedRectangleBorder(
@@ -430,8 +432,8 @@ class _HomePageState extends State<HomePage>
     );
 
     final appBar = AppBar(
-      elevation: 0.0,
-      backgroundColor: const Color(0xffeaeaf1),
+      elevation: 0.1,
+      backgroundColor: const Color(0xfff5f5f9),
       leading: Padding(
         padding: const EdgeInsets.all(12),
         child: SizedBox(
@@ -473,7 +475,7 @@ class _HomePageState extends State<HomePage>
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
             decoration: const BoxDecoration(
-              color: Color(0xffeaeaf1),
+              color: Color(0xfff5f5f9),
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20.0),
                 topRight: Radius.circular(20.0),
