@@ -1,4 +1,3 @@
-import 'package:ecassion/core/widgets/animated_sized_and_fade.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -62,8 +61,6 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     _size = MediaQuery.of(context).size;
 
-    _initBloc();
-
     return WillPopScope(
       onWillPop: () async {
         return false;
@@ -76,7 +73,7 @@ class _SearchPageState extends State<SearchPage> {
             backgroundColor: const Color(0xfff5f5f9),
             body: BlocBuilder<SearchBloc, SearchBlocState>(
               builder: (context, state) {
-                return AnimatedSizeAndFade(
+                return Container(
                   child: _buildWholeAnimatedView(state),
                 );
               },

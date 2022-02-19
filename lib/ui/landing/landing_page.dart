@@ -13,7 +13,7 @@ const homeScreenTabs = [
   HomePage(),
   SearchPage(),
   BookmarksPage(),
-  ProfilePage()
+  ProfilePage(),
 ];
 
 class LandingPage extends StatefulWidget {
@@ -60,6 +60,7 @@ class _LandingPageState extends State<LandingPage> {
             topRight: Radius.circular(30.0),
           ),
           child: BottomNavigationBar(
+            elevation: 1,
             type: BottomNavigationBarType.fixed,
             landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
             currentIndex: _selectedIndex,
