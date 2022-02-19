@@ -51,50 +51,60 @@ class _LandingPageState extends State<LandingPage> {
         return false;
       },
       child: Scaffold(
+        backgroundColor: Color(0xffeaeaf1),
+        extendBody: true,
         body: homeScreenTabs[_selectedIndex],
-        bottomNavigationBar: BottomNavigationBar(
-          elevation: 0.0,
-          landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
-          currentIndex: _selectedIndex,
-          onTap: (index) {
-            _onItemTapped(index);
-          },
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          items: [
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset("images/icon_home.svg"),
-              activeIcon: SvgPicture.asset(
-                "images/icon_home.svg",
-                color: const Color(0xff6564DB),
+        bottomNavigationBar: ClipRRect(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(30.0),
+            topRight: Radius.circular(30.0),
+          ),
+          child: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
+            currentIndex: _selectedIndex,
+            onTap: (index) {
+              _onItemTapped(index);
+            },
+            backgroundColor: Colors.white.withOpacity(0.92),
+            showSelectedLabels: false,
+            selectedItemColor: const Color(0xff6564DB),
+            showUnselectedLabels: false,
+            items: [
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset("images/icon_home.svg"),
+                activeIcon: SvgPicture.asset(
+                  "images/icon_home.svg",
+                  color: const Color(0xff6564DB),
+                ),
+                label: 'Home',
               ),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset("images/icon_search.svg"),
-              activeIcon: SvgPicture.asset(
-                "images/icon_search.svg",
-                color: const Color(0xff6564DB),
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset("images/icon_search.svg"),
+                activeIcon: SvgPicture.asset(
+                  "images/icon_search.svg",
+                  color: const Color(0xff6564DB),
+                ),
+                label: 'Search',
               ),
-              label: 'Search',
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset("images/icon_bookmarks.svg"),
-              activeIcon: SvgPicture.asset(
-                "images/icon_bookmarks.svg",
-                color: const Color(0xff6564DB),
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset("images/icon_bookmarks.svg"),
+                activeIcon: SvgPicture.asset(
+                  "images/icon_bookmarks.svg",
+                  color: const Color(0xff6564DB),
+                ),
+                label: 'Bookmarks',
               ),
-              label: 'Bookmarks',
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset("images/icon_profile.svg"),
-              activeIcon: SvgPicture.asset(
-                "images/icon_profile.svg",
-                color: const Color(0xff6564DB),
+              BottomNavigationBarItem(
+                icon: SvgPicture.asset("images/icon_profile.svg"),
+                activeIcon: SvgPicture.asset(
+                  "images/icon_profile.svg",
+                  color: const Color(0xff6564DB),
+                ),
+                label: 'Profile',
               ),
-              label: 'Profile',
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

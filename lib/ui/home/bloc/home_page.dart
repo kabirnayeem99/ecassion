@@ -58,9 +58,9 @@ class _HomePageState extends State<HomePage>
           builder: (context, state) {
             if (state is HomeBlocSuccessState) {
               return Scaffold(
+                backgroundColor: const Color(0xffeaeaf1),
                 appBar: buildAppBar(state.uiState.profilePictureUrl),
                 body: Container(
-                  color: Colors.white,
                   margin: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: SingleChildScrollView(
                     child: Column(
@@ -68,16 +68,16 @@ class _HomePageState extends State<HomePage>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        buildHidable25SizedBox(),
+                        buildHidable16SizedBox(),
                         buildHideableHeadingTextView(
                             "Trending Events near you"),
-                        buildHidable11SizedBox(),
+                        buildHidable8SizedBox(),
                         buildTrendingPlaceList(),
-                        buildHidable25SizedBox(),
+                        buildHidable16SizedBox(),
                         buildHideableHeadingTextView("Category"),
-                        buildHidable11SizedBox(),
+                        buildHidable8SizedBox(),
                         buildCategoriesList(state.uiState.categories),
-                        buildHidable25SizedBox(),
+                        buildHidable16SizedBox(),
                         const Text(
                           "Upcoming Events",
                           style: TextStyle(
@@ -118,12 +118,12 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  Widget buildHidable11SizedBox() {
-    return const SizedBox(height: 11.0);
+  Widget buildHidable8SizedBox() {
+    return const SizedBox(height: 8.0);
   }
 
-  Widget buildHidable25SizedBox() {
-    return const SizedBox(height: 25.0);
+  Widget buildHidable16SizedBox() {
+    return const SizedBox(height: 16.0);
   }
 
   Widget buildTrendingPlaceList() {
@@ -159,8 +159,8 @@ class _HomePageState extends State<HomePage>
         },
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          crossAxisSpacing: 11.0,
-          mainAxisSpacing: 11.0,
+          crossAxisSpacing: 4.0,
+          mainAxisSpacing: 4.0,
         ),
       ),
     );
@@ -265,6 +265,7 @@ class _HomePageState extends State<HomePage>
       width: _size.height * 0.12,
       height: _size.height * 0.12,
       child: Card(
+        color: const Color(0xfffcfcfe),
         semanticContainer: true,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         shape:
@@ -311,10 +312,11 @@ class _HomePageState extends State<HomePage>
         _navigateToEventDetailsPage(context, index);
       },
       child: Container(
-        margin: const EdgeInsets.only(right: 20.0),
+        margin: const EdgeInsets.only(right: 12.0),
         width: _size.width * 0.80,
         height: _size.height * 0.25,
         child: Card(
+          color: const Color(0xfffcfcfe),
           semanticContainer: true,
           clipBehavior: Clip.antiAliasWithSaveLayer,
           shape: RoundedRectangleBorder(
@@ -429,7 +431,7 @@ class _HomePageState extends State<HomePage>
 
     final appBar = AppBar(
       elevation: 0.0,
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xffeaeaf1),
       leading: Padding(
         padding: const EdgeInsets.all(12),
         child: SizedBox(
@@ -471,10 +473,10 @@ class _HomePageState extends State<HomePage>
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
             decoration: const BoxDecoration(
-              color: Colors.white,
+              color: Color(0xffeaeaf1),
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(14.0),
-                topRight: Radius.circular(14.0),
+                topLeft: Radius.circular(20.0),
+                topRight: Radius.circular(20.0),
               ),
             ),
             child: Center(

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -72,10 +74,11 @@ class _SearchPageState extends State<SearchPage> {
 
     return SafeArea(
       child: Scaffold(
+        backgroundColor: const Color(0xffeaeaf1),
         body: _uiState.isLoading
             ? const Center(child: CupertinoActivityIndicator())
             : Container(
-                color: Colors.white,
+                color: const Color(0xffeaeaf1),
                 margin: const EdgeInsets.symmetric(horizontal: 12.0),
                 child: SingleChildScrollView(
                   child: Column(
@@ -351,12 +354,24 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   Widget buildSearchField() {
-    return SizedBox(
-      height: _size.height * 0.06,
-      child: const CupertinoSearchTextField(
-        autofocus: true,
-        autocorrect: true,
-      ),
+    return CupertinoSearchTextField(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      placeholder: "Search for events",
+      autofocus: true,
+      autocorrect: true,
+      onSubmitted: (String text) {
+        final snackBar = SnackBar(
+          backgroundColor: Colors.white.withOpacity(0.9),
+          content: SizedBox(
+            width: _size.width,
+            child: Text(
+              "Searching for " + text,
+              style: const TextStyle(color: Colors.black87),
+            ),
+          ),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      },
     );
   }
 }

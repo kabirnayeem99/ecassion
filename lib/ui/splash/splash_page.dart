@@ -21,8 +21,8 @@ class _SplashPageState extends State<SplashPage>
   @override
   void initState() {
     _makePageFullScreen();
-    super.initState();
     _setUpAnimation(context);
+    super.initState();
   }
 
   void _setUpAnimation(BuildContext context) {
