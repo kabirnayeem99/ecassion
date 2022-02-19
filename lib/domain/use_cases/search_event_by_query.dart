@@ -7,10 +7,6 @@ class SearchEventByQuery {
   SearchEventByQuery(this._searchRepository);
 
   Future<List<Event>> getSearchResult(String query) async {
-    if (query.length < 3) {
-      return _searchRepository.searchEventByQuery(query);
-    } else {
-      return [];
-    }
+    return _searchRepository.searchEventByQuery(query);
   }
 }

@@ -1,18 +1,17 @@
-import 'dart:ui';
-
+import 'package:ecassion/ui/home/bloc/home_page.dart';
+import 'package:ecassion/ui/search/bloc/search_bloc_event.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:kiwi/kiwi.dart';
 
 import '../../core/utility.dart';
 import '../../domain/entity/city.dart';
 import '../../domain/entity/event.dart';
 import '../../domain/entity/interest.dart';
-import '../../domain/use_cases/get_interests.dart';
-import '../../domain/use_cases/get_nearby_events.dart';
-import '../../domain/use_cases/get_popular_cities.dart';
 import '../event_details/event_details_page.dart';
+import 'bloc/search_bloc.dart';
+import 'bloc/search_bloc_state.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -22,43 +21,27 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  final SearchUiState _uiState = SearchUiState();
   late Size _size;
 
-  final KiwiContainer _container = KiwiContainer();
+  late SearchBloc _searchBloc;
+
+  late TextEditingController _searchFieldController;
 
   @override
   void initState() {
-    _loadAllData();
+    _searchBloc = SearchBloc(SearchBlocLoadingState())
+      ..add(SearchBlocInitialLoadingEvent());
+    _searchFieldController = TextEditingController();
     super.initState();
   }
 
-  void _loadAllData() async {
-    setState(() {
-      _uiState.isLoading = true;
-    });
-
-    GetInterests getInterests = _container.resolve<GetInterests>();
-    GetPopularCities getPopularCities = _container.resolve<GetPopularCities>();
-    GetNearbyEvents getNearbyEvents = _container.resolve<GetNearbyEvents>();
-
-    getInterests.getInterests().then((value) => setState(() {
-          debugPrint("interests " + value.toString());
-          _uiState.interests = value;
-        }));
-
-    getPopularCities.getCities().then((value) => setState(() {
-          debugPrint("popular cities " + value.toString());
-          _uiState.cities = value;
-        }));
-
-    getNearbyEvents.getNearbyEvents().then((value) => setState(
-          () {
-            debugPrint("nearby events " + value.toString());
-            _uiState.nearbyEvents = value;
-            _uiState.isLoading = false;
-          },
-        ));
+  @override
+  void dispose() {
+    if (!_searchBloc.isClosed) {
+      _searchBloc.close();
+    }
+    _searchFieldController.dispose();
+    super.dispose();
   }
 
   @override
@@ -72,68 +55,121 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     _size = MediaQuery.of(context).size;
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: const Color(0xfff5f5f9),
-        body: _uiState.isLoading
-            ? const Center(child: CupertinoActivityIndicator())
-            : Container(
-                color: const Color(0xfff5f5f9),
-                margin: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      buildHidable11SizedBox(),
-                      buildSearchField(),
-                      buildHidable25SizedBox(),
-                      buildHideableHeadingTextView("Search by Interest"),
-                      buildHidable11SizedBox(),
-                      buildInterestList(),
-                      buildHidable25SizedBox(),
-                      buildHideableHeadingTextView("Search by Popular Cities"),
-                      buildHidable11SizedBox(),
-                      buildPopularCityList(),
-                      buildHidable25SizedBox(),
-                      const Text(
-                        "Currently in your city",
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 11.0),
-                      buildNearbyEventList(),
-                    ],
-                  ),
-                ),
-              ),
+    return BlocProvider(
+      create: (context) => _searchBloc,
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: const Color(0xfff5f5f9),
+          body: BlocBuilder<SearchBloc, SearchBlocState>(
+              builder: (context, state) {
+            if (state is SearchBlocLoadingState) {
+              return _buildLoadingState();
+            }
+            if (state is SearchBlocNormalSuccessState) {
+              return _buildPageOnNormalSuccess(state);
+            }
+            if (state is SearchBlocSearchingState) {
+              return _buildSearchResultList(state);
+            }
+            return const VisibleGoneContainer();
+          }),
+        ),
       ),
     );
   }
 
-  Widget buildNearbyEventList() {
-    return _uiState.nearbyEvents.isNotEmpty
-        ? Flexible(
-            child: GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: _uiState.nearbyEvents.length,
-              scrollDirection: Axis.vertical,
-              itemBuilder: (context, index) {
-                final upcomingEvent = _uiState.nearbyEvents[index];
-                return buildNearbyEventCard(context, upcomingEvent, index);
-              },
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 11.0,
-                mainAxisSpacing: 11.0,
+  Widget _buildSearchResultList(SearchBlocSearchingState state) {
+    final events = state.searchResults;
+
+    return Container(
+      color: const Color(0xfff5f5f9),
+      margin: const EdgeInsets.symmetric(horizontal: 12.0),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildHidable11SizedBox(),
+            buildSearchField(query: state.query),
+            buildHidable25SizedBox(),
+            const Text(
+              "Search Results",
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
               ),
             ),
-          )
-        : const CupertinoActivityIndicator();
+            const SizedBox(height: 8.0),
+            _buildEventList(events),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPageOnNormalSuccess(SearchBlocNormalSuccessState state) {
+    final _cities = state.cities;
+    final _interests = state.interests;
+    final _nearbyEvents = state.nearbyEvents;
+
+    return Container(
+      color: const Color(0xfff5f5f9),
+      margin: const EdgeInsets.symmetric(horizontal: 12.0),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildHidable11SizedBox(),
+            buildSearchField(),
+            buildHidable25SizedBox(),
+            buildHideableHeadingTextView("Search by Interest"),
+            buildHidable11SizedBox(),
+            buildInterestList(_interests),
+            buildHidable25SizedBox(),
+            buildHideableHeadingTextView("Search by Popular Cities"),
+            buildHidable11SizedBox(),
+            buildPopularCityList(_cities),
+            buildHidable25SizedBox(),
+            const Text(
+              "Currently in your city",
+              style: TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8.0),
+            _buildEventList(_nearbyEvents),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLoadingState() {
+    return const Center(child: CupertinoActivityIndicator());
+  }
+
+  Widget _buildEventList(List<Event> events) {
+    return Flexible(
+      child: GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: events.length,
+        scrollDirection: Axis.vertical,
+        itemBuilder: (context, index) {
+          final event = events[index];
+          return buildEventCard(context, event, index);
+        },
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 11.0,
+          mainAxisSpacing: 11.0,
+        ),
+      ),
+    );
   }
 
   void _navigateToEventDetailsPage(BuildContext context, int index) {
@@ -145,7 +181,7 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  Widget buildNearbyEventCard(BuildContext context, Event event, int index) {
+  Widget buildEventCard(BuildContext context, Event event, int index) {
     return GestureDetector(
       onTap: () {
         _navigateToEventDetailsPage(context, index);
@@ -215,30 +251,30 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  Widget buildInterestList() {
+  Widget buildInterestList(List<Interest> interests) {
     return SizedBox(
       height: _size.height * 0.14,
       child: ListView.builder(
         shrinkWrap: true,
-        itemCount: _uiState.interests.length,
+        itemCount: interests.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          final interest = _uiState.interests[index];
+          final interest = interests[index];
           return buildInterestCard(context, interest);
         },
       ),
     );
   }
 
-  Widget buildPopularCityList() {
+  Widget buildPopularCityList(List<City> cities) {
     return SizedBox(
       height: _size.height * 0.14,
       child: ListView.builder(
         shrinkWrap: true,
-        itemCount: _uiState.cities.length,
+        itemCount: cities.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          final city = _uiState.cities[index];
+          final city = cities[index];
           return buildCityCard(context, city);
         },
       ),
@@ -347,40 +383,35 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   Widget buildHidable25SizedBox() {
-    return const SizedBox(height: 25.0);
+    return const SizedBox(height: 16.0);
   }
 
   Widget buildHidable11SizedBox() {
-    return const SizedBox(height: 11.0);
+    return const SizedBox(height: 8.0);
   }
 
-  Widget buildSearchField() {
+  Widget buildSearchField({String query = ""}) {
+    if (query.isNotEmpty) {
+      _searchFieldController.value = TextEditingValue(text: query);
+    }
+
     return CupertinoSearchTextField(
+      controller: _searchFieldController,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       placeholder: "Search for events",
-      autofocus: true,
       autocorrect: true,
+      onChanged: (String text) {
+        if (text.isEmpty) {
+          _searchBloc.add(SearchBlocAfterClearLoadingEvent());
+        }
+      },
       onSubmitted: (String text) {
-        final snackBar = SnackBar(
-          backgroundColor: Colors.white.withOpacity(0.9),
-          content: SizedBox(
-            width: _size.width,
-            child: Text(
-              "Searching for " + text,
-              style: const TextStyle(color: Colors.black87),
-            ),
-          ),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        if (text.isNotEmpty) {
+          _searchBloc.add(SearchBlocSearchByQueryEvent(text));
+        } else {
+          _searchBloc.add(SearchBlocInitialLoadingEvent());
+        }
       },
     );
   }
-}
-
-class SearchUiState {
-  bool isLoading = false;
-  bool isSearching = false;
-  List<Interest> interests = [];
-  List<City> cities = [];
-  List<Event> nearbyEvents = [];
 }

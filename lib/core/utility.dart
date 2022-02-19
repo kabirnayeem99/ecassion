@@ -68,6 +68,6 @@ Widget loadRoundedNetworkImage({
 }
 
 Duration loadRandomDuration() {
-  final randomTimeMs = random.integer(1000);
+  final randomTimeMs = random.integer(400);
   return Duration(milliseconds: randomTimeMs);
 }

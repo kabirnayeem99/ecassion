@@ -1,3 +1,4 @@
+import 'package:ecassion/core/extenstions.dart';
 import 'package:ecassion/core/utility.dart';
 import 'package:faker/faker.dart';
 
@@ -120,7 +121,7 @@ class SearchLocalDataSource {
     await Future.delayed(loadRandomDuration());
     return [
       EventDto(
-        name: "The " + query + " World Team Cup",
+        name: "The " + query.capitalize() + " World Team Cup",
         imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(10000),
         time: faker.date.dateTime(),
@@ -129,7 +130,7 @@ class SearchLocalDataSource {
         isTop: random.boolean(),
       ),
       EventDto(
-        name: "The " + query + "Conference",
+        name: "The " + query.capitalize() + " Conference",
         imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(10000),
         time: faker.date.dateTime(),
@@ -138,7 +139,7 @@ class SearchLocalDataSource {
         isTop: random.boolean(),
       ),
       EventDto(
-        name: "The " + query + "World Cup",
+        name: "The " + query.capitalize() + " World Cup",
         imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(2000),
         address: faker.address.city() + ", " + faker.address.country(),
@@ -147,7 +148,7 @@ class SearchLocalDataSource {
         isTop: random.boolean(),
       ),
       EventDto(
-        name: "The " + query,
+        name: "The " + query.capitalize(),
         imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(10000),
         address: faker.address.city() + ", " + faker.address.country(),
@@ -156,7 +157,7 @@ class SearchLocalDataSource {
         isTop: random.boolean(),
       ),
       EventDto(
-        name: "The " + query + " Trophy",
+        name: "The " + query.capitalize() + " Trophy",
         imageUrl: randomImageUrl[random.integer(randomImageUrl.length)],
         price: random.integer(10000),
         address: faker.address.city() + ", " + faker.address.country(),
