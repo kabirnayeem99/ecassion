@@ -1,20 +1,20 @@
 import 'dart:core';
 
-import 'package:ecassion/core/utility.dart';
-import 'package:ecassion/core/widgets/animated_sized_and_fade.dart';
-import 'package:ecassion/domain/entity/event_details.dart';
-import 'package:ecassion/ui/checkout/checkout_page.dart';
-import 'package:ecassion/ui/event_details/bloc/event_details_bloc.dart';
-import 'package:ecassion/ui/event_details/bloc/event_details_events.dart';
-import 'package:ecassion/ui/event_details/bloc/event_details_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../core/utility.dart';
+import '../../core/widgets/animated_sized_and_fade.dart';
 import '../../data/data_sources/category_local_data_source.dart';
 import '../../domain/entity/event.dart';
+import '../../domain/entity/event_details.dart';
+import '../checkout/checkout_page.dart';
 import '../home/bloc/home_page.dart';
+import 'bloc/event_details_bloc.dart';
+import 'bloc/event_details_events.dart';
+import 'bloc/event_details_state.dart';
 
 class EventDetailsPage extends StatefulWidget {
   final int index;

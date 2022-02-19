@@ -1,4 +1,4 @@
-import 'package:ecassion/ui/checkout/bloc/checkout_page_ui_state.dart';
+import 'checkout_page_ui_state.dart';
 
 abstract class CheckoutPageBlocState {}
 

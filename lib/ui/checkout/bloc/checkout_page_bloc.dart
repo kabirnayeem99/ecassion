@@ -1,9 +1,11 @@
-import 'package:ecassion/domain/use_cases/get_event_details.dart';
-import 'package:ecassion/ui/checkout/bloc/checkout_page_bloc_event.dart';
-import 'package:ecassion/ui/checkout/bloc/checkout_page_bloc_state.dart';
-import 'package:ecassion/ui/checkout/bloc/checkout_page_ui_state.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
+
+import '../../../domain/use_cases/get_event_details.dart';
+import 'checkout_page_bloc_event.dart';
+import 'checkout_page_bloc_state.dart';
+import 'checkout_page_ui_state.dart';
 
 class CheckoutPageBloc
     extends Bloc<CheckoutPageBlocEvent, CheckoutPageBlocState> {
