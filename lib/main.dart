@@ -1,7 +1,8 @@
-import 'package:ecassion/core/di/injection_container.dart';
-import 'package:ecassion/core/widgets/no_glow_scroll_behaviour.dart';
 import 'package:ecassion/ui/splash/splash_page.dart';
 import 'package:flutter/material.dart';
+
+import 'core/di/injection_container.dart';
+import 'core/widgets/no_glow_scroll_behaviour.dart';
 
 void main() async {
   await setUpInjector();

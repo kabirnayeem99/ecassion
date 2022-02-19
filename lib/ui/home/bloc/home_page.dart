@@ -1,5 +1,3 @@
-import 'package:ecassion/data/data_sources/category_local_data_source.dart';
-import 'package:ecassion/ui/home/bloc/home_events.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,12 +6,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/utility.dart';
 import '../../../core/widgets/animated_sized_and_fade.dart';
+import '../../../data/data_sources/category_local_data_source.dart';
 import '../../../domain/entity/category.dart';
 import '../../../domain/entity/trending_event.dart';
 import '../../../domain/entity/upcoming_event.dart';
 import '../../event_details/event_details_page.dart';
 import '../home_states.dart';
 import 'home_bloc.dart';
+import 'home_events.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
