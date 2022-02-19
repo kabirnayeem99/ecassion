@@ -10,27 +10,27 @@ of [Uncle Bob's clean architecture](https://blog.cleancoder.com/uncle-bob/2012/0
 
 ![](https://miro.medium.com/max/556/0*zUtZYiJ1bDTugOYY)
 
-It is divided into three modules, namely data, domain, and UI. For state management, it will use bloc
-pattern, which is not implemented yet.
+It is divided into three modules, namely data, domain, and UI. For state management, it will use
+bloc pattern, which is not implemented yet.
 
 # Build
 
 ## Requirements
 
-Ensure you have Flutter version `2.10.0` and Dart version `2.16.1` installed.
+Ensure you have Flutter version `2.10+` and Dart version `2.15+` installed.
 
 To run this app on android devices, you need -
 
 - Android SDK
-- Platform android-30 or more, build-tools `30.0.0` or later
+- Platform `android 30+`, build-tools `30+` or later
 - Java binary
-- Java version OpenJDK Runtime Environment (build `11.0.11+0-b60-7772763`)
+- Java version OpenJDK Runtime Environment (build `11+`)
 - All Android licenses accepted.
 
 To run this app on iOS devices, you need -
 
-- Xcode
-- CocoaPods version `1.11.2` or later.
+- Xcode version `13+`
+- CocoaPods version `1.11+` or later.
 
 ## Build instructions
 
