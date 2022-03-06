@@ -1,10 +1,10 @@
 import 'dart:io';
 
+import 'package:ecassion/ui/notifications/notifications_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-import '../bookmarks/bookmarks_page.dart';
 import '../home/bloc/home_page.dart';
 import '../profile/profile_page.dart';
 import '../search/search_page.dart';
@@ -12,7 +12,7 @@ import '../search/search_page.dart';
 const homeScreenTabs = [
   HomePage(),
   SearchPage(),
-  BookmarksPage(),
+  NotificationsPage(),
   ProfilePage(),
 ];
 
@@ -71,36 +71,42 @@ class _LandingPageState extends State<LandingPage> {
             showSelectedLabels: false,
             selectedItemColor: const Color(0xff6564DB),
             showUnselectedLabels: false,
-            items: [
+            items: const [
               BottomNavigationBarItem(
-                icon: SvgPicture.asset("images/icon_home.svg"),
-                activeIcon: SvgPicture.asset(
-                  "images/icon_home.svg",
-                  color: const Color(0xff6564DB),
+                icon: Icon(
+                  CupertinoIcons.bubble_left,
+                ),
+                activeIcon: Icon(
+                  CupertinoIcons.bubble_left,
+                  color: Color(0xff6564DB),
                 ),
                 label: 'Home',
               ),
               BottomNavigationBarItem(
-                icon: SvgPicture.asset("images/icon_search.svg"),
-                activeIcon: SvgPicture.asset(
-                  "images/icon_search.svg",
-                  color: const Color(0xff6564DB),
+                icon: Icon(
+                  CupertinoIcons.search,
+                ),
+                activeIcon: Icon(
+                  CupertinoIcons.search,
+                  color: Color(0xff6564DB),
                 ),
                 label: 'Search',
               ),
               BottomNavigationBarItem(
-                icon: SvgPicture.asset("images/icon_bookmarks.svg"),
-                activeIcon: SvgPicture.asset(
-                  "images/icon_bookmarks.svg",
-                  color: const Color(0xff6564DB),
+                icon: Icon(
+                  CupertinoIcons.bell,
                 ),
-                label: 'Bookmarks',
+                activeIcon: Icon(
+                  CupertinoIcons.bell,
+                  color: Color(0xff6564DB),
+                ),
+                label: 'Notifications',
               ),
               BottomNavigationBarItem(
-                icon: SvgPicture.asset("images/icon_profile.svg"),
-                activeIcon: SvgPicture.asset(
-                  "images/icon_profile.svg",
-                  color: const Color(0xff6564DB),
+                icon: Icon(CupertinoIcons.person),
+                activeIcon: Icon(
+                  CupertinoIcons.person,
+                  color: Color(0xff6564DB),
                 ),
                 label: 'Profile',
               ),
